@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import './style/App.css'
 import { PrivateRoute } from "./pages/homepage/PrivateRoute";
 import { Dashboard } from "./pages/homepage/Dashboard";
-import { Login } from "./pages/Login";
+import { Login } from "./pages/login/Login";
 
 function App() {
 
