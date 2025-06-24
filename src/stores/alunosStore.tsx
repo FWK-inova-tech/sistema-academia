@@ -26,3 +26,5 @@ export const alunosSlice = createSlice({
     }
   }
 })
+
+export const { addAluno, deleteAluno, setAlunos, updateAluno } = alunosSlice.actions
