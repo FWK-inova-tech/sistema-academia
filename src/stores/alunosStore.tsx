@@ -2,9 +2,9 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Aluno } from "../types/Aluno";
 
 const initialState = {
-  alunos: [] as Aluno[]
+  alunos: [] as Aluno[],
+  loading: false as boolean
 }
-
 
 export const alunosSlice = createSlice({
   name: 'alunos',
