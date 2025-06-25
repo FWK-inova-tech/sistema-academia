@@ -2,29 +2,29 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Aluno } from "../types/Aluno";
 
 const initialState = {
-  alunos: [] as Aluno[],
+  students: [] as Aluno[],
   loading: false as boolean
 }
 
-export const alunosSlice = createSlice({
-  name: 'alunos',
+export const studentsSlice = createSlice({
+  name: 'students',
   initialState,
   reducers: {
     setAlunos: (state, action: PayloadAction<Aluno[]>) => {
-      state.alunos = action.payload
+      state.students = action.payload
     },
     addAluno: (state, action: PayloadAction<Aluno>) => {
-      state.alunos.push(action.payload)
+      state.students.push(action.payload)
     },
     deleteAluno: (state, action: PayloadAction<string>) => {
-      state.alunos = state.alunos.filter(aluno => aluno.id == action.payload)
+      state.students = state.students.filter(student=> student.id == action.payload)
     },
     updateAluno: (state, action: PayloadAction<Aluno>) => {
-      state.alunos = state.alunos.map(aluno => {
-        return aluno.id == action.payload.id ? action.payload : aluno
+      state.students = state.students.map(student=> {
+        return student.id == action.payload.id ? action.payload : student
       })
     }
   }
 })
 
-export const { addAluno, deleteAluno, setAlunos, updateAluno } = alunosSlice.actions
+export const { addAluno, deleteAluno, setAlunos, updateAluno } = studentsSlice.actions

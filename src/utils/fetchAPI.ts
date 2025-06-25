@@ -22,17 +22,17 @@ export const login = async (credentials: Adm) => {
 }
 
 export const getAlunos = async () => {
-  const { data } = await axios.get<{message: string; alunos: Aluno[]}>(backendUrl, {
+  const { data } = await axios.get<{message: string; students: Aluno[]}>(backendUrl, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
   })
 
-  return data.alunos
+  return data.students
 }
 
-export const registerAluno = async (aluno: NovoAluno) => {
-  const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {aluno}, {
+export const registerAluno = async (student: NovoAluno) => {
+  const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {student}, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
@@ -41,8 +41,8 @@ export const registerAluno = async (aluno: NovoAluno) => {
   return data.id
 }
 
-export const updateAluno = async (aluno: Aluno) => {
-  const { data } = await axios.put(`${backendUrl}/update/${aluno.id}`, {aluno}, {
+export const updateAluno = async (student: Aluno) => {
+  const { data } = await axios.put(`${backendUrl}/update/${student.id}`, {student}, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }

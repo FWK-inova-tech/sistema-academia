@@ -1,24 +1,25 @@
 import { useAppSelector } from "../stores/appStore"
 
 interface sidebarProps {
-  current: 'alunos' | 'config'
+  current: 'students' | 'settings'
   openAlunos: () => void;
   openConfig: () => void;
 }
 export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
-  const isLoading = useAppSelector((state)=> state.alunos.loading)
+  const isLoading = useAppSelector((state)=> state.students.loading
+)
   return (
   <aside>
     <button 
     type="button" 
     onClick={openAlunos}
-    disabled={isLoading || current === 'alunos'}> 
+    disabled={isLoading || current === 'students'}> 
       Alunos
     </button>
     <button 
     type="button"
     onClick={openConfig} 
-    disabled={isLoading || current === 'config'}>
+    disabled={isLoading || current === 'settings'}>
       Configurações
     </button>
   </aside>)

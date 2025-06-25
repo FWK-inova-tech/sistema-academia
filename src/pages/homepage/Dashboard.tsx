@@ -1,18 +1,18 @@
 import { useState } from "react"
 import { Sidebar } from "../../components/Sidebar"
-import { Alunos } from "../../components/Alunos"
-import { Config } from "../../components/Config"
+import { Students } from "../../components/Students"
+import { Settings } from "../../components/Settings"
 
 export const Dashboard = ()=>{
-  const [current, setCurrent] = useState<'alunos' | 'config'>('alunos')
+  const [current, setCurrent] = useState<'students' | 'settings'>('students')
   return (
     <div>
       <Sidebar 
       current={current}
-      openAlunos={()=> setCurrent('alunos')}
-      openConfig={()=> setCurrent('config')}/>
-      {current === 'alunos' && <Alunos/>}
-      {current === 'config' && <Config/>}
+      openAlunos={()=> setCurrent('students')}
+      openConfig={()=> setCurrent('settings')}/>
+      {current === 'students' && <Students/>}
+      {current === 'settings' && <Settings/>}
     </div>
   )
 }
