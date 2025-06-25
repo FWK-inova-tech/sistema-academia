@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import type { AppDispatch, RootState } from "../stores/appStore";
-import { loginUser } from "../stores/authStore";
+import { useAppDispatch, useAppSelector } from "../../stores/appStore";
+import { loginUser } from "../../stores/authStore";
 
 export const Login = () => {
-  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const status = useSelector((state: RootState) => state.auth.status)
-  const error = useSelector((state: RootState) => state.auth.error)
-  const authenticated = useSelector((state: RootState) => state.auth.authenticated)
+  const status = useAppSelector((state) => state.auth.status)
+  const error = useAppSelector((state) => state.auth.error)
+  const authenticated = useAppSelector((state) => state.auth.authenticated)
 
   if(authenticated) return <Navigate to={'/'}/>
 
