@@ -1,5 +1,5 @@
 export interface PerimetriaType {
-  data: string;
+  data: Date;
   medidas: PerimetriaMedidaType[];
 }
 

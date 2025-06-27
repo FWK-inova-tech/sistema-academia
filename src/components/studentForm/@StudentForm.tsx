@@ -20,7 +20,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   const [infoTreino, setInfoTreino] = useState<null | Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>>(null)
   const [perimetria, setPerimetria] = useState<PerimetriaType>(
     editingStudent?.perimetria ?? 
-    {medidas: itensPerimetria, data: ''})
+    {medidas: itensPerimetria, data: new Date()})
   const [treino, setTreino] = useState<null | TreinoType[]>(editingStudent?.treino ?? null)
 
 
@@ -36,7 +36,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     })
   }
 
-  function handleUpdatePerimetriaDate(newDate: string){
+  function handleUpdatePerimetriaDate(newDate: Date){
     setPerimetria(prev => {
       prev.data = newDate
       return prev
