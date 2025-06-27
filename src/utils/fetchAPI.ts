@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Aluno, NovoAluno } from "../types/Aluno";
+import type { AlunoType, NovoAluno } from "../types/AlunoType";
 import type { Adm } from "../types/Adm";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
@@ -22,7 +22,7 @@ export const login = async (credentials: Adm) => {
 }
 
 export const getAlunos = async () => {
-  const { data } = await axios.get<{message: string; students: Aluno[]}>(backendUrl, {
+  const { data } = await axios.get<{message: string; students: AlunoType[]}>(backendUrl, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
@@ -41,7 +41,7 @@ export const registerAluno = async (student: NovoAluno) => {
   return data.id
 }
 
-export const updateAluno = async (student: Aluno) => {
+export const updateAluno = async (student: AlunoType) => {
   const { data } = await axios.put(`${backendUrl}/update/${student.id}`, {student}, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
