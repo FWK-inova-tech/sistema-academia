@@ -7,6 +7,7 @@ import { itensPerimetria } from "../../constants/medidasPerimetria";
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
+import { Agenda } from "./Agenda";
 
 interface studentFormProps {
   editingStudent?: AlunoType;
@@ -55,9 +56,21 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   })
   const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
+  function handleAgendaChecklist(e: React.ChangeEvent<HTMLInputElement>) {
+  const { value, checked } = e.target
+
+    setAgenda(prev => {
+      if (checked) {
+        return [...prev, value]
+      } else {
+        return prev.filter(agenda => agenda !== value)
+      }
+    })
+  }
+
   useEffect(()=>{
-    console.log(infosTreino)
-  },[infosTreino])
+    console.log(agenda)
+  },[agenda])
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
     setPerimetria(prev => ({
@@ -68,14 +81,12 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     }))
   } 
 
-
   function handleUpdatePerimetriaDate(newDate: Date){
     setPerimetria(prev => ({
       ...prev,
       data: newDate
     }))
   }
-
 
   function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
   const { value, checked } = e.target
@@ -122,6 +133,14 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
 
       <span>
         Agenda
+        { section === 'agenda' && 
+          <Agenda
+          editingAgenda={agenda}
+          handleAgendaChecklist={handleAgendaChecklist}/> }
+        <button type="button"
+        onClick={()=> setSection( section === 'agenda' ? false : 'agenda')}>
+          {section === 'agenda' ? 'Fechar' : 'Abrir'}
+        </button>
       </span>
 
       <span>
