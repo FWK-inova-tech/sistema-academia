@@ -1,5 +1,6 @@
 import { treinosOpcoes } from "../../constants/exerciciosOpcoes"
 import type { TreinoType } from "../../types/TreinoType";
+import { v4 as uuidv4 } from 'uuid';
 
 interface treinoProps {
   handleTreinoChecklist: (e: React.ChangeEvent<HTMLInputElement>, categoria: string) => void;
@@ -16,11 +17,11 @@ export const Treino = ({ handleTreinoChecklist, editingTreino } : treinoProps) =
   return (
     <div>
       {treinosOpcoes.map(treino =>
-        <div>
+        <div key={uuidv4()}>
           <p>{treino.categoria}</p>
           <span>
             {treino.exercicios.map(exercicioNome =>
-              <div>
+              <div key={uuidv4()}>
                 <p>{ exercicioNome }</p>
                 <input type="checkbox"
                 value={ exercicioNome }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType";
 import { IMaskInput } from "react-imask";
+import { getLocalDate } from "../../utils/getLocalDate";
 
 
 interface informacoesPessoaisProps {
@@ -27,7 +28,7 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes } 
     setDate(dateString)
     handleUpdateInformacoes({
       ...editingStudent,
-      dataNascimento: new Date(dateString)
+      dataNascimento: getLocalDate(dateString)
     })
   }
 
@@ -40,6 +41,7 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes } 
       maxLength={150}
       minLength={10}
       type="text"
+      placeholder="Nome do aluno"
       onChange={(e)=> handleInputChange('nome', e.target.value)}/>
     </span>
 
@@ -48,8 +50,8 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes } 
       <input id="birth-date" name="birth-date"
       value={date}
       type="date"
+      placeholder="Data de nascimento"
       onChange={(e)=> handleDateInput(e.target.value)} />
-
     </span>
 
     <span>

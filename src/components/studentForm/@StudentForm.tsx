@@ -116,11 +116,57 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     })
   }
 
+  // form
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const isEmptyString = (val: string) => val.trim() === '';
+    const invalidFields: string[] = [];
+
+    if (isEmptyString(infoPessoais.nome)) invalidFields.push('Nome');
+    if (isEmptyString(infoPessoais.contato)) invalidFields.push('Contato');
+
+    if (!infoPessoais.dataNascimento || isNaN(infoPessoais.dataNascimento.getTime())) {
+      invalidFields.push('Data de nascimento');
+    }
+
+    if (agenda.length === 0) invalidFields.push('Agenda (mínimo 1 dia)');
+
+    if (isEmptyString(infosTreino.professor)) invalidFields.push('Professor');
+    if (isEmptyString(infosTreino.nivel)) invalidFields.push('Nível');
+    if (isEmptyString(infosTreino.objetivo)) invalidFields.push('Objetivo');
+    if (isEmptyString(infosTreino.anaminese)) invalidFields.push('Anamnese');
+
+    if (!infosTreino.dataInicio || isNaN(infosTreino.dataInicio.getTime())) {
+      invalidFields.push('Data de início');
+    }
+
+    if (!infosTreino.dataRevisao || isNaN(infosTreino.dataRevisao.getTime())) {
+      invalidFields.push('Data de revisão');
+    }
+
+    if (invalidFields.length > 0) {
+      alert(`Preencha os seguintes campos corretamente:\n- ${invalidFields.join('\n- ')}`);
+      return;
+    }
+
+    console.log('Dados prontos para envio:', {
+      ...infoPessoais,
+      agenda,
+      ...infosTreino,
+      perimetria,
+      treino
+    });
+
+
+}
 
   
   return (
-    <form>
-      <span>
+    <form 
+    onSubmit={handleSubmit}
+    className="form-student">
+      <span className="form-item">
         Informações pessoais
         { section === 'pessoais' && <InformacoesPessoais 
         editingStudent={infoPessoais}
@@ -131,7 +177,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
         </button>
       </span>
 
-      <span>
+      <span className="form-item">
         Agenda
         { section === 'agenda' && 
           <Agenda
@@ -143,7 +189,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
         </button>
       </span>
 
-      <span>
+      <span className="form-item">
         Informações para treino
         { section === 'infoTreino' && 
         <InfoTreino 
@@ -155,7 +201,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
         </button>
       </span>
 
-      <span>
+      <span className="form-item">
         Perimetria
         { section === 'perimetria' && 
         <Perimetria
@@ -168,7 +214,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
         </button>
       </span>
 
-      <span>
+      <span className="form-item">
         Treino
         { section === 'treino' && <Treino handleTreinoChecklist={handleTreinoChecklist}/> }
         <button type="button"

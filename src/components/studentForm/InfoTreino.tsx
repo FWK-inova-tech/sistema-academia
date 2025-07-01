@@ -72,6 +72,7 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo } : infoTreinoProps) 
           maxLength={150}
           minLength={10}
           value={teacher}
+          placeholder="Nome do professor(a)"
           onChange={handleTeacherChange}/>
       </span>
 
