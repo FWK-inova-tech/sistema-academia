@@ -6,6 +6,7 @@ import type { PerimetriaType } from "../../types/PerimetriaType";
 import { itensPerimetria } from "../../constants/medidasPerimetria";
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
+import { InfoTreino } from "./InfoTreino";
 
 interface studentFormProps {
   editingStudent?: AlunoType;
@@ -39,7 +40,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     nome: studentInitialValue.nome
   })
   const [agenda, setAgenda] = useState(studentInitialValue.agenda)
-  const [infoTreino, setInfoTreino] = useState<Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>>({
+  const [infosTreino, setInfosTreino] = useState<Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>>({
     anaminese: studentInitialValue.anaminese,
     dataInicio: studentInitialValue.dataInicio,
     dataRevisao: studentInitialValue.dataRevisao,
@@ -54,7 +55,9 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   })
   const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
-
+  useEffect(()=>{
+    console.log(infosTreino)
+  },[infosTreino])
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
     setPerimetria(prev => ({
@@ -123,6 +126,14 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
 
       <span>
         Informações para treino
+        { section === 'infoTreino' && 
+        <InfoTreino 
+        editingInfoTreino={infosTreino}
+        updateInfo={setInfosTreino}/> }
+        <button type="button"
+        onClick={()=> setSection( section === 'infoTreino' ? false : 'infoTreino')}>
+          {section === 'infoTreino' ? 'Fechar' : 'Abrir'}
+        </button>
       </span>
 
       <span>
