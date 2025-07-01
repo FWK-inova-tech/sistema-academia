@@ -33,7 +33,7 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
 
   type sectionType = 
     false | 'pessoais' | 'agenda' | 'infoTreino' | 'perimetria' | 'treino'
-  const [section, setSection] = useState<sectionType>(false)
+  const [section, setSection] = useState<sectionType[]>([])
   
   const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
     contato: studentInitialValue.contato,
@@ -163,71 +163,120 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
 
   
   return (
-    <form 
-    onSubmit={handleSubmit}
-    className="form-student">
-      <span className="form-item">
-        Informações pessoais
-        { section === 'pessoais' && <InformacoesPessoais 
+    <form onSubmit={handleSubmit} className="form-student">
+  <span className="form-item">
+    Informações pessoais
+    {section.includes('pessoais') && (
+      <InformacoesPessoais
         editingStudent={infoPessoais}
-        handleUpdateInformacoes={setInfoPessoais}/> }
-        <button type="button"
-        onClick={()=> setSection( section === 'pessoais' ? false : 'pessoais')}>
-          {section === 'pessoais' ? 'Fechar' : 'Abrir'}
-        </button>
-      </span>
+        handleUpdateInformacoes={setInfoPessoais}
+      />
+    )}
+    <button
+      type="button"
+      onClick={() =>
+        setSection((prev) =>
+          prev.includes('pessoais')
+            ? prev.filter((s) => s !== 'pessoais')
+            : [...prev, 'pessoais']
+        )
+      }
+    >
+      {section.includes('pessoais') ? 'Fechar' : 'Abrir'}
+    </button>
+  </span>
 
-      <span className="form-item">
-        Agenda
-        { section === 'agenda' && 
-          <Agenda
-          editingAgenda={agenda}
-          handleAgendaChecklist={handleAgendaChecklist}/> }
-        <button type="button"
-        onClick={()=> setSection( section === 'agenda' ? false : 'agenda')}>
-          {section === 'agenda' ? 'Fechar' : 'Abrir'}
-        </button>
-      </span>
+  <span className="form-item">
+    Agenda
+    {section.includes('agenda') && (
+      <Agenda
+        editingAgenda={agenda}
+        handleAgendaChecklist={handleAgendaChecklist}
+      />
+    )}
+    <button
+      type="button"
+      onClick={() =>
+        setSection((prev) =>
+          prev.includes('agenda')
+            ? prev.filter((s) => s !== 'agenda')
+            : [...prev, 'agenda']
+        )
+      }
+    >
+      {section.includes('agenda') ? 'Fechar' : 'Abrir'}
+    </button>
+  </span>
 
-      <span className="form-item">
-        Informações para treino
-        { section === 'infoTreino' && 
-        <InfoTreino 
+  <span className="form-item">
+    Informações para treino
+    {section.includes('infoTreino') && (
+      <InfoTreino
         editingInfoTreino={infosTreino}
-        updateInfo={setInfosTreino}/> }
-        <button type="button"
-        onClick={()=> setSection( section === 'infoTreino' ? false : 'infoTreino')}>
-          {section === 'infoTreino' ? 'Fechar' : 'Abrir'}
-        </button>
-      </span>
+        updateInfo={setInfosTreino}
+      />
+    )}
+    <button
+      type="button"
+      onClick={() =>
+        setSection((prev) =>
+          prev.includes('infoTreino')
+            ? prev.filter((s) => s !== 'infoTreino')
+            : [...prev, 'infoTreino']
+        )
+      }
+    >
+      {section.includes('infoTreino') ? 'Fechar' : 'Abrir'}
+    </button>
+  </span>
 
-      <span className="form-item">
-        Perimetria
-        { section === 'perimetria' && 
-        <Perimetria
+  <span className="form-item">
+    Perimetria
+    {section.includes('perimetria') && (
+      <Perimetria
         editingPerimetria={perimetria}
         handleUpdatePerimetriaDate={handleUpdatePerimetriaDate}
-        handleUpdatePerimetriaMedidas={handleUpdatePerimetriaMedidas}/> }
-        <button type="button"
-        onClick={()=> setSection( section === 'perimetria' ? false : 'perimetria')}>
-          {section === 'perimetria' ? 'Fechar' : 'Abrir'}
-        </button>
-      </span>
+        handleUpdatePerimetriaMedidas={handleUpdatePerimetriaMedidas}
+      />
+    )}
+    <button
+      type="button"
+      onClick={() =>
+        setSection((prev) =>
+          prev.includes('perimetria')
+            ? prev.filter((s) => s !== 'perimetria')
+            : [...prev, 'perimetria']
+        )
+      }
+    >
+      {section.includes('perimetria') ? 'Fechar' : 'Abrir'}
+    </button>
+  </span>
 
-      <span className="form-item">
-        Treino
-        { section === 'treino' && <Treino handleTreinoChecklist={handleTreinoChecklist}/> }
-        <button type="button"
-        onClick={()=> setSection( section === 'treino' ? false : 'treino')}>
-          {section === 'treino' ? 'Fechar' : 'Abrir'}
-        </button>
-      </span>
+  <span className="form-item">
+    Treino
+    {section.includes('treino') && (
+      <Treino handleTreinoChecklist={handleTreinoChecklist} />
+    )}
+    <button
+      type="button"
+      onClick={() =>
+        setSection((prev) =>
+          prev.includes('treino')
+            ? prev.filter((s) => s !== 'treino')
+            : [...prev, 'treino']
+        )
+      }
+    >
+      {section.includes('treino') ? 'Fechar' : 'Abrir'}
+    </button>
+  </span>
 
-      <button type="submit">Salvar</button>
-      <button type="button"
-      onClick={closeForm}>
-        Cancelar
-      </button>
-    </form>
+  <button type="submit">Salvar</button>
+  <button type="button" onClick={closeForm}>
+    Cancelar
+  </button>
+</form>
+
   )
 }
