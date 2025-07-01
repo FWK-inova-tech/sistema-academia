@@ -1,4 +1,4 @@
-import { treinos } from "../../constants/exercicios"
+import { treinosOpcoes } from "../../constants/exerciciosOpcoes"
 import type { TreinoType } from "../../types/TreinoType";
 
 interface treinoProps {
@@ -15,7 +15,7 @@ export const Treino = ({ handleTreinoChecklist, editingTreino } : treinoProps) =
   
   return (
     <div>
-      {treinos.map(treino =>
+      {treinosOpcoes.map(treino =>
         <div>
           <p>{treino.categoria}</p>
           <span>
