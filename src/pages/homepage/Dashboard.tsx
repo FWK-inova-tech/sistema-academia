@@ -8,6 +8,7 @@ export const Dashboard = ()=>{
   const [current, setCurrent] = useState<'students' | 'settings'>('students')
   return (
     <div>
+      <p>Teste</p>
       <Sidebar 
       current={current}
       openAlunos={()=> setCurrent('students')}

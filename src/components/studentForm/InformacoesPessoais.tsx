@@ -7,8 +7,9 @@ import { getLocalDate } from "../../utils/getLocalDate";
 interface informacoesPessoaisProps {
   editingStudent: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>,
   handleUpdateInformacoes: (updatedInfos: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>) => void;
+  erroMsg?: string;
 } 
-export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes } : informacoesPessoaisProps) => {
+export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, erroMsg } : informacoesPessoaisProps) => {
   const [name, setName] = useState(editingStudent.nome)
   const [contact, setContact] = useState(editingStudent.nome)
   const [date, setDate] = useState(editingStudent.dataNascimento.toISOString().split('T')[0])
@@ -64,6 +65,7 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes } 
       value={contact}
       onChange={(e) => handleInputChange('contato', (e.target as HTMLInputElement).value)}/>
     </span>
+    {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
   </div>
   )
 }

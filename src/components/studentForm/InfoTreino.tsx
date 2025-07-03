@@ -5,30 +5,35 @@ import { getLocalDate } from "../../utils/getLocalDate";
 interface infoTreinoProps {
   editingInfoTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>;
   updateInfo: (newInfoTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>) => void;
+  erroMsg?: string;
 }
-export const InfoTreino = ({ editingInfoTreino, updateInfo } : infoTreinoProps) => {
+export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg } : infoTreinoProps) => {
   const [teacher, setTeacher] = useState(editingInfoTreino.professor)
+  const [goal, setGoal] = useState(editingInfoTreino.objetivo)
+  const [anaminese, setAnaminese] = useState(editingInfoTreino.anaminese)
   const [startDate, setStartDate] = useState(
     editingInfoTreino.dataInicio.toISOString().split('T')[0]
-  );
+  )
   const [reviewDate, setReviewDate] = useState(
     editingInfoTreino.dataRevisao.toISOString().split('T')[0]
-  );
+  )
 
 
 
   function handleLevelChange(e: React.ChangeEvent<HTMLSelectElement>){
     updateInfo({...editingInfoTreino, nivel: e.target.value as 'Iniciante' | 'Intermediário' | 'Avançado'})
-    console.log('info atualizada', editingInfoTreino)
   }
 
-  function handleTeacherChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setTeacher(value);
+  // inputs teacher, goal
+  function handleInputChange(info: string, value: string){
     updateInfo({
       ...editingInfoTreino,
-      professor: value
-    });
+      [info]: value,
+    })
+
+    if(info === 'objetivo'){ setGoal(value) }
+    if(info === 'professor'){ setTeacher(value) }
+    if(info === 'anaminese'){ setAnaminese(value) }
   }
 
   function handleStartDateChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -48,7 +53,6 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo } : infoTreinoProps) 
       dataRevisao: getLocalDate(value)
     });
   }
-
 
   return (
   <div>
@@ -73,8 +77,8 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo } : infoTreinoProps) 
           minLength={10}
           value={teacher}
           placeholder="Nome do professor(a)"
-          onChange={handleTeacherChange}/>
-      </span>
+          onChange={(e)=>handleInputChange('professor', e.target.value)}/>
+    </span>
 
       <span>
         <label htmlFor="start-date">Data de início</label>
@@ -93,6 +97,31 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo } : infoTreinoProps) 
           value={reviewDate}
           onChange={handleReviewDateChange} />
       </span>
+
+      <span>
+        <label htmlFor="goal">Objetivo</label>
+        <input
+          id="goal"
+          type="text"
+          maxLength={500}
+          minLength={20}
+          value={goal}
+          placeholder="Objetivo do aluno"
+          onChange={(e)=> handleInputChange('objetivo', e.target.value)}/>
+      </span>
+
+      <span>
+        <label htmlFor="anaminese">Anaminese</label>
+        <textarea
+          id="anaminese"
+          maxLength={500}
+          minLength={20}
+          value={anaminese}
+          placeholder="Anaminese"
+          onChange={(e)=> handleInputChange('anaminese', e.target.value)}/>
+      </span>
+
+      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
   </div>
 )
 }

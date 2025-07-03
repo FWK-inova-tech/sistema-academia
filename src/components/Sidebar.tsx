@@ -11,6 +11,7 @@ export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
   return (
   <aside>
     <button 
+    id='butao-abrir-alunos'
     type="button" 
     onClick={openAlunos}
     disabled={isLoading || current === 'students'}> 

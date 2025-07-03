@@ -1,12 +1,12 @@
 import { treinosOpcoes } from "../../constants/exerciciosOpcoes"
 import type { TreinoType } from "../../types/TreinoType";
-import { v4 as uuidv4 } from 'uuid';
 
 interface treinoProps {
   handleTreinoChecklist: (e: React.ChangeEvent<HTMLInputElement>, categoria: string) => void;
-  editingTreino?: TreinoType[];
+  editingTreino: TreinoType[];
+  erroMsg?: string;
 }
-export const Treino = ({ handleTreinoChecklist, editingTreino } : treinoProps) => {
+export const Treino = ({ handleTreinoChecklist, editingTreino, erroMsg } : treinoProps) => {
 
   // caso esteja tratando um Treino de um aluno existente, verifica quais exercicios estão marcados
   function checkValue(exercicio: string, categoria: string){
@@ -17,11 +17,11 @@ export const Treino = ({ handleTreinoChecklist, editingTreino } : treinoProps) =
   return (
     <div>
       {treinosOpcoes.map(treino =>
-        <div key={uuidv4()}>
+        <div key={treino.categoria}>
           <p>{treino.categoria}</p>
           <span>
             {treino.exercicios.map(exercicioNome =>
-              <div key={uuidv4()}>
+              <div key={exercicioNome}>
                 <p>{ exercicioNome }</p>
                 <input type="checkbox"
                 value={ exercicioNome }
@@ -32,6 +32,7 @@ export const Treino = ({ handleTreinoChecklist, editingTreino } : treinoProps) =
           </span>
         </div>
       )}
+    {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
     </div>
 )
 }

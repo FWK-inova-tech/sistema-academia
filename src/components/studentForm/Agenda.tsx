@@ -1,9 +1,10 @@
 interface agendaProps {
   handleAgendaChecklist: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  editingAgenda: string[]
+  editingAgenda: string[];
+  erroMsg?: string;
 }
 
-export const Agenda = ({ editingAgenda, handleAgendaChecklist } : agendaProps) => {
+export const Agenda = ({ editingAgenda, handleAgendaChecklist, erroMsg } : agendaProps) => {
   const days = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
   function checkValue(check: string){
     return editingAgenda.find(item => item === check)
@@ -22,6 +23,7 @@ export const Agenda = ({ editingAgenda, handleAgendaChecklist } : agendaProps) =
           {day}
         </label>
       ))}
+      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
     </div>
   )
 }
