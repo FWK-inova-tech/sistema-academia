@@ -19,7 +19,10 @@ export const studentsSlice = createSlice({
     deleteAluno: (state, action: PayloadAction<string>) => {
       state.studentsList = state.studentsList.filter(student=> student.id == action.payload)
     },
+    setLoading: (state, action: PayloadAction<false | string>) => {
+      state.loading = action.payload
+    }
   }
 })
 
-export const { addAluno, deleteAluno, setAlunos, updateAluno } = studentsSlice.actions
+export const { addAluno, deleteAluno, setAlunos, setLoading } = studentsSlice.actions
