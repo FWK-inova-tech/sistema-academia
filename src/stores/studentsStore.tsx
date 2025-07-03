@@ -2,8 +2,8 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { AlunoType } from "../types/AlunoType";
 
 const initialState = {
-  students: [] as AlunoType[],
-  loading: false as boolean
+  studentsList: [] as Pick<AlunoType, 'id' | 'nome'>[],
+  loading: false as false | string
 }
 
 export const studentsSlice = createSlice({
@@ -11,19 +11,14 @@ export const studentsSlice = createSlice({
   initialState,
   reducers: {
     setAlunos: (state, action: PayloadAction<AlunoType[]>) => {
-      state.students = action.payload
+      state.studentsList = action.payload
     },
     addAluno: (state, action: PayloadAction<AlunoType>) => {
-      state.students.push(action.payload)
+      state.studentsList.push(action.payload)
     },
     deleteAluno: (state, action: PayloadAction<string>) => {
-      state.students = state.students.filter(student=> student.id == action.payload)
+      state.studentsList = state.studentsList.filter(student=> student.id == action.payload)
     },
-    updateAluno: (state, action: PayloadAction<AlunoType>) => {
-      state.students = state.students.map(student=> {
-        return student.id == action.payload.id ? action.payload : student
-      })
-    }
   }
 })
 
