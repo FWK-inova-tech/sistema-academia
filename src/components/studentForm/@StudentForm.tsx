@@ -8,6 +8,8 @@ import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
 import { Agenda } from "./Agenda";
+import type { SectionErrorType, sectionType } from "../../types/SectionTypes";
+import { validadeFormSubmit } from "./formHooks";
 
 interface studentFormProps {
   editingStudent?: AlunoType;
@@ -31,14 +33,10 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
       medidas: itensPerimetria} 
   }
 
-  type sectionType = 
-    'pessoais' | 'agenda' | 'infoTreino' | 'perimetria' | 'treino'
   const [section, setSection] = useState<sectionType[]>([])
 
-  type SectionError = {
-  [key in sectionType]?: string;
-  }
-  const [sectionErrors, setSectionErrors] = useState<SectionError>({})
+  
+  const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
 
   
   const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
@@ -121,71 +119,13 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     })
   }
 
-  // form
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-
-    const newErrors: SectionError = {}
-
-    // pessoais
-    if(!infoPessoais.nome.trim() || !infoPessoais.contato.trim()) {
-      newErrors.pessoais = 'Todos os campos de informação pessoal devem ser preenchidos'
-    }
-    if(!infoPessoais.dataNascimento || isNaN(infoPessoais.dataNascimento.getTime())) {
-      newErrors.pessoais = 'Informe uma data de nascimento válida.'
-    }
-    const currentDate = new Date()
-    const minYearDate = new Date(
-      currentDate.getFullYear() - 18,
-      currentDate.getMonth(),
-      currentDate.getDate()
-    )
-    if (infoPessoais.dataNascimento > minYearDate) {
-      newErrors.pessoais = 'O aluno precisa ter no mínimo 18 anos ou mais.';
-    }
-
-    // agenda
-    if(agenda.length === 0) {
-      newErrors.agenda = 'Marque ao menos um dia da semana.'
-    }
-
-    // info treino
-    if(!infosTreino.professor.trim() || !infosTreino.objetivo.trim() || !infosTreino.anaminese.trim()) {
-      newErrors.infoTreino = 'Todos os campos são obrigatórios.'
-    }
-    if(!infosTreino.dataInicio || isNaN(infosTreino.dataInicio.getTime())) {
-      newErrors.infoTreino = 'Informe uma data de início válida.'
-    }
-    if(!infosTreino.dataRevisao || isNaN(infosTreino.dataRevisao.getTime())) {
-      newErrors.infoTreino = 'Informe uma data de revisão válida.'
-    }
-
-    // treino
-    if(treino.length == 0) {
-      newErrors.treino = 'A lista de treino do aluno está vazia'
-    }
-
-    setSectionErrors(newErrors)
-
-    if (Object.keys(newErrors).length > 0) {
-      return
-    }
-
-    const saveStudent:  Omit<AlunoType, 'id'>  = {
-      nome: infoPessoais.nome,
-      contato: infoPessoais.contato,
-      dataNascimento: infoPessoais.dataNascimento,
-      agenda,
-      anaminese: infosTreino.anaminese,
-      dataInicio: infosTreino.dataInicio,
-      dataRevisao: infosTreino.dataRevisao,
-      nivel: infosTreino.nivel,
-      objetivo: infosTreino.objetivo,
-      professor: infosTreino.professor,
-      perimetria,
-      treino,
-    }
-    console.log('aluno:', saveStudent )
+    validadeFormSubmit({
+      data: {infoPessoais, agenda, infosTreino, perimetria, treino},
+      setSectionErrors: setSectionErrors
+    })
+    
   }
 
   
