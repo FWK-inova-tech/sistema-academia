@@ -1,6 +1,8 @@
 import axios from "axios";
 import type { AlunoType, NovoAluno } from "../types/AlunoType";
 import type { Adm } from "../types/Adm";
+import { itensPerimetria } from "../constants/medidasPerimetria";
+import { listAllStudents } from "../constants/studentsListForTest";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const getToken = () => {
@@ -12,7 +14,7 @@ const getToken = () => {
   }
 }
 
-export const login = async (credentials: Adm) => {
+export const login = async (credentials: Adm): Promise<string> => {
   const { data } = await axios.post<{message: string, token: string}>(`${backendUrl}/login`, {
     email: credentials.email,
     password: credentials.password
@@ -21,17 +23,20 @@ export const login = async (credentials: Adm) => {
   return data.token
 }
 
-export const getAlunos = async () => {
-  const { data } = await axios.get<{message: string; students: AlunoType[]}>(backendUrl, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    }
-  })
-
-  return data.students
+export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | 'id'>[]> => {
+  // const { data } = await axios.get<{message: string; students: AlunoType[]}>(backendUrl, {
+  //   headers: {
+  //     Authorization: `Bearer ${getToken()}`,
+  //   }
+  // })
+  // return data.students
+  
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  await delay(10000)
+  return listAllStudents
 }
 
-export const registerAluno = async (student: NovoAluno) => {
+export const registerAluno = async (student: NovoAluno): Promise<string> => {
   const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {student}, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
@@ -42,7 +47,7 @@ export const registerAluno = async (student: NovoAluno) => {
 }
 
 export const updateAluno = async (student: AlunoType) => {
-  const { data } = await axios.put(`${backendUrl}/update/${student.id}`, {student}, {
+  const { data } = await axios.put<{message: string, student: AlunoType}>(`${backendUrl}/update/${student.id}`, {student}, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }

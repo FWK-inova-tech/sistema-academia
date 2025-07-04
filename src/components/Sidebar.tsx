@@ -14,13 +14,13 @@ export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
     id='butao-abrir-alunos'
     type="button" 
     onClick={openAlunos}
-    disabled={isLoading || current === 'students'}> 
+    disabled={isLoading || current === 'students' ? true : false}> 
       Alunos
     </button>
     <button 
     type="button"
     onClick={openConfig} 
-    disabled={isLoading || current === 'settings'}>
+    disabled={isLoading || current === 'settings' ? true : false}>
       Configurações
     </button>
   </aside>)

@@ -10,10 +10,10 @@ export const studentsSlice = createSlice({
   name: 'students',
   initialState,
   reducers: {
-    setAlunos: (state, action: PayloadAction<AlunoType[]>) => {
+    setAlunos: (state, action: PayloadAction<Pick<AlunoType, 'id' | 'nome'>[]>) => {
       state.studentsList = action.payload
     },
-    addAluno: (state, action: PayloadAction<AlunoType>) => {
+    addAluno: (state, action: PayloadAction<Pick<AlunoType, 'id' | 'nome'>>) => {
       state.studentsList.push(action.payload)
     },
     deleteAluno: (state, action: PayloadAction<string>) => {
