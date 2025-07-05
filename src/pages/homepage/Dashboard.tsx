@@ -2,9 +2,11 @@ import { useEffect, useState } from "react"
 import { Sidebar } from "../../components/Sidebar"
 import { Students } from "../../components/students/@Students"
 import { Settings } from "../../components/Settings"
-import { useAppDispatch } from "../../stores/appStore"
+import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../utils/fetchAPI"
+import { SearchStudent } from "../../components/students/SearchStudent"
+import type { AlunoType } from "../../types/AlunoType"
 
 export const Dashboard = ()=>{
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit'>('students')
@@ -14,6 +16,9 @@ export const Dashboard = ()=>{
   }
   const [apiError, setApiError] = useState<false | apiErrorType>(false)
   const dispatch = useAppDispatch()
+  const students = useAppSelector((state)=> state.students.studentsList)
+  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, 'id' | 'nome'>[]>(students)
+  
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
@@ -27,6 +32,17 @@ export const Dashboard = ()=>{
     }catch(error){
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
       setApiError({message: errorMessage, callback: fetchData})
+    }
+  }
+
+  function handleSearch(name: string) {
+    if (name.trim() === "") {
+      setCurrentStudentsList(students)
+    } else {
+      const filtered = students.filter(aluno =>
+        aluno.nome.toLowerCase().includes(name.toLowerCase())
+      )
+      setCurrentStudentsList(filtered)
     }
   }
 
@@ -54,10 +70,13 @@ export const Dashboard = ()=>{
           {current !== 'settings' && <>
             {current === 'students' &&
               <div className="top-bar">
-                barra de pesquisa + button cadastrar aluno
+                <SearchStudent
+                handleSearch={handleSearch}/>
               </div>
             }
-            <Students setError={setApiError}/>
+            <Students 
+            currentStudentsList={currentStudentsList}
+            setError={setApiError}/>
           </>}
           {current === 'settings' && <Settings/>}
         </>

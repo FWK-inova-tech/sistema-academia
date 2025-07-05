@@ -6,17 +6,17 @@ import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
 
 interface studentsProps {
+  currentStudentsList: Pick<AlunoType, 'id' | 'nome'>[];
   setError: ( error: {
     message: string;
     callback: ()=> Promise<void> | void;
   }) => void;
 }
-export const Students = ({ setError } : studentsProps) => {
+export const Students = ({ setError,currentStudentsList } : studentsProps) => {
   // false => nenhuma ficha de aluno aberta, mostrar lista normalmente
   // null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
   const [openStudent, setOpenStudent] = useState<AlunoType | null | false>(false)
 
-  const students = useAppSelector((state)=> state.students.studentsList)
   const loading = useAppSelector((state)=> state.students.loading)
   const dispatch = useAppDispatch()
 
@@ -59,6 +59,8 @@ export const Students = ({ setError } : studentsProps) => {
         </>
         : openStudent !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p> 
         : 
+        <>
+        {currentStudentsList.length > 0 ? 
           <table className="students-list">
             <thead>
               <tr>
@@ -68,7 +70,7 @@ export const Students = ({ setError } : studentsProps) => {
               </tr>
             </thead>
             <tbody>
-              {students.map(student => (
+              {currentStudentsList.map(student => (
                 <tr key={student.id}>
                   <td>{student.id}</td>
                   <td>{student.nome}</td>
@@ -83,6 +85,8 @@ export const Students = ({ setError } : studentsProps) => {
               ))}
             </tbody>
           </table>
+          : <p>Não há nenhum aluno registrado</p>}
+          </>
         }
         </>
       }
