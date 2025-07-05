@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { TreinoType } from "../../types/TreinoType"
+import '../../style/styledCheckbox.css'
 
 interface itemTreinoProps {
   item: TreinoType;
@@ -20,14 +21,18 @@ export const ItemTreino = ({ item, editing, studentList } : itemTreinoProps) => 
       <p>{item.categoria}</p>
         {open && <>
           {item.exercicios.map(exercicio =>
-            <div key={exercicio}>
-              <p>{ exercicio }</p>
-              <input type="checkbox"
-              value={ exercicio }
+            <label key={exercicio} className="custom-checkbox">
+            <input
+              type="checkbox"
+              id={exercicio}
+              value={exercicio}
               checked={!editing ? true : checkValue(exercicio)}
               disabled={!editing}
-              onChange={(e) => editing && editing.handleTreinoChecklist(e, item.categoria)}/>
-            </div>
+              onChange={(e) => editing && editing.handleTreinoChecklist(e, item.categoria)}
+            />
+            <span className="checkmark"></span>
+            {exercicio}
+          </label>
           )}
         </>}
       <button
