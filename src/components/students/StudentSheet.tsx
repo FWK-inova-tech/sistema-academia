@@ -81,7 +81,7 @@ export const StudentSheet = ({ student } : { student: AlunoType }) => {
           <h2>Agenda</h2>
           <div>
             {getDaysChecklist().map(day => (
-              <label
+              <label className="checklist-circle"
               key={day.day}
               htmlFor={day.day}>
                 <input
@@ -89,6 +89,7 @@ export const StudentSheet = ({ student } : { student: AlunoType }) => {
                 id={day.day}
                 checked={day.checked}
                 disabled/>
+                <span className="checkmark-circle"></span>
                 {day.day}
               </label>
             ))}
@@ -101,12 +102,14 @@ export const StudentSheet = ({ student } : { student: AlunoType }) => {
             {getLevels().map(level => (
               <label
               htmlFor={level.level}
-              key={level.level}>
+              key={level.level}
+              className="checklist-circle">
                 <input
                 type="checkbox"
                 id={level.level}
                 checked={level.checked}
                 disabled/>
+                <span className="checkmark-circle"></span>
                 {level.level}
               </label>
             ))}
