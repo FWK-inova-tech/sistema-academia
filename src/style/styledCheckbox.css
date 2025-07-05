@@ -1,5 +1,4 @@
-
-.custom-checkbox {
+.checklist-square {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,17 +13,17 @@
   cursor: pointer;
 }
 
-.custom-checkbox input {
+.checklist-square input {
   display: none;
 }
 
-.custom-checkbox .checkmark {
+.checklist-square .checkmark-square {
   width: 30px;
   height: 30px;
   min-width: 30px;
   min-height: 30px;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 8px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,15 +32,15 @@
   font-weight: bold;
 }
 
-.custom-checkbox input:checked + .checkmark::after {
+.checklist-square input:checked + .checkmark-square::after {
   content: "X";
 }
 
-.custom-checkbox input:checked + .checkmark {
+.checklist-square input:checked + .checkmark-square {
   background-color: white;
 }
 
-.custom-checkbox .label-text {
+.checklist-square .label-text {
   flex: 1;
   padding-left: 10px;
 }

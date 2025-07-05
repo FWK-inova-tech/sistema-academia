@@ -21,18 +21,17 @@ export const ItemTreino = ({ item, editing, studentList } : itemTreinoProps) => 
       <p>{item.categoria}</p>
         {open && <>
           {item.exercicios.map(exercicio =>
-            <label key={exercicio} className="custom-checkbox">
+            <label key={exercicio} className="checklist-square">
+            {exercicio}
             <input
               type="checkbox"
               id={exercicio}
               value={exercicio}
               checked={!editing ? true : checkValue(exercicio)}
               disabled={!editing}
-              onChange={(e) => editing && editing.handleTreinoChecklist(e, item.categoria)}
-            />
-            <span className="checkmark"></span>
-            {exercicio}
-          </label>
+              onChange={(e) => editing && editing.handleTreinoChecklist(e, item.categoria)}/>
+            <span className="checkmark-square"></span>
+            </label>
           )}
         </>}
       <button
