@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { TreinoType } from "../../types/TreinoType"
-import '../../style/styledCheckbox.css'
 
 interface itemTreinoProps {
   item: TreinoType;

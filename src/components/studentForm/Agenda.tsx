@@ -13,15 +13,16 @@ export const Agenda = ({ editingAgenda, handleAgendaChecklist, erroMsg } : agend
   return (
     <div>
       {days.map((day) => (
-        <label key={day}>
-          <input
-            type="checkbox"
-            value={day}
-            checked={checkValue(day) ? true : false}
-            onChange={handleAgendaChecklist}
-          />
-          {day}
-        </label>
+        <label key={day} className="checklist-circle">
+        <input
+          type="checkbox"
+          value={day}
+          checked={checkValue(day) ? true : false}
+          onChange={handleAgendaChecklist}
+        />
+        <span className="checkmark-circle"></span>
+        {day}
+      </label>
       ))}
       {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
     </div>
