@@ -1,8 +1,7 @@
 import axios from "axios";
 import type { AlunoType, NovoAluno } from "../types/AlunoType";
 import type { Adm } from "../types/Adm";
-import { itensPerimetria } from "../constants/medidasPerimetria";
-import { listAllStudents } from "../constants/studentsListForTest";
+import { listAllStudents, allStudents } from "../constants/studentsListForTest";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const getToken = () => {
@@ -34,6 +33,20 @@ export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | 'id'>[]> => 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
   await delay(10000)
   return listAllStudents
+}
+
+export const getAluno = async (id: string): Promise<AlunoType | null> => {
+  // const { data } = await axios.get<{message: string; student: AlunoType}>(`${backendUrl}/${id}`, {
+  //   headers: {
+  //     Authorization: `Bearer ${getToken()}`,
+  //   }
+  // })
+  // return data.student
+  
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  await delay(10000)
+  const search = allStudents.find(student => student.id === id)
+  return  search ? search : null
 }
 
 export const registerAluno = async (student: NovoAluno): Promise<string> => {

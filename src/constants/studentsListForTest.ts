@@ -7,12 +7,12 @@ export const allStudents =  [
         objetivo: 'exemplo objetivo',
         dataNascimento: new Date(),
         professor: 'professor1',
-        nivel: "Iniciante",
-        contato: '77 7 7777-7777',
+        nivel: "Iniciante" as 'Iniciante' | 'Intermediário' | 'Avançado',
+        contato: '22533000000',
         dataInicio: new Date(),
         dataRevisao: new Date(),
         anaminese: 'exemplo anaminese',
-        agenda: [],
+        agenda: ['Segunda'],
         treino: [],
         perimetria: { 
         data: new Date(),
@@ -24,13 +24,24 @@ export const allStudents =  [
         objetivo: 'exemplo objetivo',
         dataNascimento: new Date(),
         professor: 'professor2',
-        nivel: "Intermediário",
-        contato: '77 7 7777-7777',
+        nivel: "Intermediário" as 'Iniciante' | 'Intermediário' | 'Avançado',
+        contato: '55000007777',
         dataInicio: new Date(),
         dataRevisao: new Date(),
         anaminese: 'exemplo anaminese',
-        agenda: [],
-        treino: [],
+        agenda: ['Quinta', 'Sexta'],
+        treino: [
+          {categoria: 'Quadril e Adutores',
+            exercicios: [
+              'Agachamento guiado',
+              'Agachamento terra',]},
+          {categoria: 'Panturrilha',
+            exercicios: [
+              'Sóleos',
+              'Livre'
+            ]
+          },
+        ],
         perimetria: { 
         data: new Date(),
         medidas: itensPerimetria} 

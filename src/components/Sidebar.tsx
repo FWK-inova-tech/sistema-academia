@@ -1,7 +1,7 @@
 import { useAppSelector } from "../stores/appStore"
 
 interface sidebarProps {
-  current: 'students' | 'settings'
+  current: 'students' | 'settings' | 'register/edit'
   openAlunos: () => void;
   openConfig: () => void;
 }
@@ -14,7 +14,7 @@ export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
     id='butao-abrir-alunos'
     type="button" 
     onClick={openAlunos}
-    disabled={isLoading || current === 'students' ? true : false}> 
+    disabled={isLoading || current !== 'settings' ? true : false}> 
       Alunos
     </button>
     <button 

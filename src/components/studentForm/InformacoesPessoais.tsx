@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType";
-import { IMaskInput } from "react-imask";
+import { IMask, IMaskInput } from "react-imask";
 import { getLocalDate } from "../../utils/getLocalDate";
 
 
@@ -11,7 +11,7 @@ interface informacoesPessoaisProps {
 } 
 export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, erroMsg } : informacoesPessoaisProps) => {
   const [name, setName] = useState(editingStudent.nome)
-  const [contact, setContact] = useState(editingStudent.nome)
+  const [contact, setContact] = useState(editingStudent.contato)
   const [date, setDate] = useState(editingStudent.dataNascimento.toISOString().split('T')[0])
 
   function handleInputChange(info: 'nome' | 'contato'| 'dataNascimento', value: string){
@@ -31,6 +31,12 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, e
       ...editingStudent,
       dataNascimento: getLocalDate(dateString)
     })
+  }
+
+  function getFormatedMaskContact(defaultString: string){
+    const mask = IMask.createMask({ mask: '(00) 0 0000-0000' })
+    mask.resolve(defaultString)
+    return mask.value
   }
 
   return(
@@ -61,9 +67,10 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, e
       mask="(00) 0 0000-0000"
       placeholder="(00) 0 0000-0000"
       id="contact"
+      unmask="typed"
       name="contact"
-      value={contact}
-      onChange={(e) => handleInputChange('contato', (e.target as HTMLInputElement).value)}/>
+      value={getFormatedMaskContact(contact)}
+      onAccept={(value) => handleInputChange('contato', value)}/>
     </span>
     {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
   </div>

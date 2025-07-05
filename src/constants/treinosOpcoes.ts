@@ -30,4 +30,12 @@ export const treinosOpcoes: TreinoType[] = [
       'Elevação Pélvica',
     ]
   },
+  {
+    categoria: 'Panturrilha',
+    exercicios: [
+      'Plantar',
+      'Sóleos',
+      'Livre'
+    ]
+  },
 ]

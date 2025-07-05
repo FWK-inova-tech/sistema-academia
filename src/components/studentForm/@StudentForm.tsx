@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
 import type { TreinoType } from "../../types/TreinoType";
-import { Treino } from "./Treino";
 import type { PerimetriaType } from "../../types/PerimetriaType";
 import { itensPerimetria } from "../../constants/medidasPerimetria";
 import { Perimetria } from "./Perimetria";
@@ -10,6 +9,8 @@ import { InfoTreino } from "./InfoTreino";
 import { Agenda } from "./Agenda";
 import type { SectionErrorType, sectionType } from "../../types/SectionTypes";
 import { validadeFormSubmit } from "./formHooks";
+import { ItemTreino } from "../treino/@ItemTreino";
+import { treinosOpcoes } from "../../constants/treinosOpcoes";
 
 interface studentFormProps {
   editingStudent?: AlunoType;
@@ -34,8 +35,6 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   }
 
   const [section, setSection] = useState<sectionType[]>([])
-
-  
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
 
   
@@ -71,7 +70,6 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
       }
     })
   }
-
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
     setPerimetria(prev => ({
@@ -242,13 +240,14 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
       <span className={`form-item ${sectionErrors.treino && 'error-section'}`}>
         Treino
         {section.includes('treino') && (
-          <Treino
-          editingTreino={treino}
-            handleTreinoChecklist={(e, categoria) => {
-              handleTreinoChecklist(e, categoria)
-              setSectionErrors(prev => ({ ...prev, treino: undefined }))
-            }}
-            erroMsg={sectionErrors.treino} />
+          <div>
+            {treinosOpcoes.map(categoria => <ItemTreino
+              item={categoria}
+              studentList={treino.find(item => item.categoria === categoria.categoria)?.exercicios ?? []}
+              key={categoria.categoria}
+              editing={{handleTreinoChecklist}}/>
+            )}
+          </div>
         )}
         <button
           type="button"

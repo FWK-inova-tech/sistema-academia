@@ -3,6 +3,9 @@
 ## GET /
 Rota principal, retorna a lista de alunos contendo apenas as informações `id` e `nome` do aluno.
 
+## GET /:id
+Retornar todos os dados do aluno daquele `id`
+
 ## POST /register
 Recebe no corpo o `{student}` e salva no banco de dados, retornando na response apenas o `id` do aluno no banco de dados que será usado para buscar as mais informações sobre esse aluno depois
 
@@ -11,3 +14,6 @@ Recebe no corpo os dados do aluno e atualiza no banco de dados
 
 ## DELETE /delete:id
 Dele o aluno do banco de dados e retorna uma mensagem confirmando que a exclusão foi feita com sucesso
+
+# Database Models
+Os tipos dos atributos do Aluno estão descritos nos arquivos dentro da pasta `@/src/types`
