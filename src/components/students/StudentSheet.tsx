@@ -44,12 +44,6 @@ export const StudentSheet = ({ student,openEdit } : studentSheetProps) => {
 
 
   return (<>
-    {/* {openForm ? 
-      <StudentForm 
-      editingStudent={student}
-      closeForm={()=>setOpenForm(false)}/> 
-      : 
-    } */}
       <div className="student-sheet">
         <div className="actions">
           <button

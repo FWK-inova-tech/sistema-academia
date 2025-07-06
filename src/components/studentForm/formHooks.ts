@@ -75,5 +75,5 @@ export function validadeFormSubmit(param: validadeFormSubmitParams) {
     perimetria,
     treino,
   }
-  console.log('aluno:', saveStudent )
+  return saveStudent
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../utils/fetchAPI"
@@ -66,7 +66,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
         {openStudent ? <>
           {openEdit ? 
             <StudentForm 
-            editingStudent={openStudent}
+            editingStudent={{student:openStudent, update: setOpenStudent}}
             closeForm={handleCloseEdit}/> 
             : <>
             <button type="button"

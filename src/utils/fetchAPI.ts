@@ -50,23 +50,32 @@ export const getAluno = async (id: string): Promise<AlunoType | null> => {
 }
 
 export const registerAluno = async (student: NovoAluno): Promise<string> => {
-  const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {student}, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    }
-  })
+  // const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {student}, {
+  //   headers: {
+  //     Authorization: `Bearer ${getToken()}`,
+  //   }
+  // })
 
-  return data.id
+  // return data.id
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  await delay(10000)
+  return  '003'
 }
 
 export const updateAluno = async (student: AlunoType) => {
-  const { data } = await axios.put<{message: string, student: AlunoType}>(`${backendUrl}/update/${student.id}`, {student}, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    }
-  })
+  // const { data } = await axios.put<{message: string, student: AlunoType}>(`${backendUrl}/update/${student.id}`, {student}, {
+  //   headers: {
+  //     Authorization: `Bearer ${getToken()}`,
+  //   }
+  // })
 
-  return data
+  // return data
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  await delay(10000)
+  throw new Error('erro teste')
+  // return  'ok'
 }
 
 export const deleteAluno = async (id: string) => {

@@ -11,13 +11,22 @@ import type { SectionErrorType, sectionType } from "../../types/SectionTypes";
 import { validadeFormSubmit } from "./formHooks";
 import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
+import { toast } from "react-toastify";
+import { registerAluno, updateAluno } from "../../utils/fetchAPI";
+import { useAppDispatch } from "../../stores/appStore";
+import { addAluno } from "../../stores/studentsStore";
 
 interface studentFormProps {
-  editingStudent?: AlunoType;
+  editingStudent?: {
+    student: AlunoType;
+    update: (newInfo: AlunoType) => void;
+  };
   closeForm: () => void;
 }
 export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) => {
-  const studentInitialValue: Omit<AlunoType, 'id'> = editingStudent ?? {
+  const dispatch = useAppDispatch()
+
+  const studentInitialValue: Omit<AlunoType, 'id'> | AlunoType = editingStudent?.student as AlunoType ?? {
     nome: '',
     objetivo: '',
     dataNascimento: new Date(),
@@ -32,7 +41,8 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
     perimetria: { 
       data: new Date(),
       medidas: itensPerimetria} 
-  }
+  } as Omit<AlunoType, 'id'> 
+
 
   const [section, setSection] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
@@ -60,26 +70,25 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
   function handleAgendaChecklist(e: React.ChangeEvent<HTMLInputElement>) {
-  const { value, checked } = e.target
-
-    setAgenda(prev => {
-      if (checked) {
-        return [...prev, value]
-      } else {
-        return prev.filter(agenda => agenda !== value)
-      }
+    const { value, checked } = e.target
+      setAgenda(prev => {
+        if (checked) {
+          return [...prev, value]
+        } else {
+          return prev.filter(agenda => agenda !== value)
+        }
     })
   }
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
     setPerimetria(prev => ({
-    ...prev,
-    medidas: prev.medidas.map(medida =>
-      medida.nome === name
-        ? (medida.valor !== value ? { ...medida, valor: value } : medida)
-        : medida
-    )
-  }))
+      ...prev,
+      medidas: prev.medidas.map(medida =>
+        medida.nome === name
+          ? (medida.valor !== value ? { ...medida, valor: value } : medida)
+          : medida
+      )
+    }))
   } 
 
   function handleUpdatePerimetriaDate(newDate: Date){
@@ -92,37 +101,85 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
   function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
   const { value, checked } = e.target
 
-  setTreino(prev => {
-    const existing = prev.find(item => item.categoria === categoria)
-
-    if (checked) {
-      if (existing) {
-        return prev.map(item =>
-          item.categoria === categoria
-            ? { ...item, exercicios: [...item.exercicios, value] }
-            : item
-        )
-      } else {
-        return [...prev, { categoria, exercicios: [value] }]
-      }
-      } else {
-        return prev
-          .map(item =>
+    setTreino(prev => {
+      const existing = prev.find(item => item.categoria === categoria)
+      if (checked) {
+        if (existing) {
+          return prev.map(item =>
             item.categoria === categoria
-              ? { ...item, exercicios: item.exercicios.filter(ex => ex !== value) }
+              ? { ...item, exercicios: [...item.exercicios, value] }
               : item
           )
-          .filter(item => item.exercicios.length > 0)
-      }
+        } else {
+          return [...prev, { categoria, exercicios: [value] }]
+        }
+        } else {
+          return prev
+            .map(item =>
+              item.categoria === categoria
+                ? { ...item, exercicios: item.exercicios.filter(ex => ex !== value) }
+                : item
+            )
+            .filter(item => item.exercicios.length > 0)
+        }
     })
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    validadeFormSubmit({
+    let validatedData: Omit<AlunoType, 'id'> | AlunoType | undefined = validadeFormSubmit({
       data: {infoPessoais, agenda, infosTreino, perimetria, treino},
       setSectionErrors: setSectionErrors
-    })
+    }) 
+
+    
+
+    async function handleRegister(){
+      closeForm()
+      try{
+        const registerAndGetId = await registerAluno(validatedData as Omit<AlunoType, 'id'>)
+        // atualiza a lista de alunos da store com o novo aluno agora com o id retornado pelo backend
+        dispatch(addAluno({id: registerAndGetId, nome: validatedData!.nome}))
+      } catch (error){
+        const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
+        throw new Error(errorMessage)
+      }
+    }
+
+    async function handleUpdate(){
+      // fecha o form e volta pro studentSheet mas com as informações atualizadas
+      const oldData = editingStudent?.student
+      closeForm()
+      editingStudent?.update(validatedData as AlunoType)
+      await updateAluno(validatedData as AlunoType).catch((error)=>{
+        const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
+        if (editingStudent?.student) editingStudent?.update(oldData!)
+          
+        throw new Error(errorMessage)
+      })
+    }
+    
+    if(validatedData){
+      if('id' in studentInitialValue){
+        validatedData = {...validatedData, id: studentInitialValue.id}
+      }
+
+      if('id' in validatedData ){
+        console.log('is uodate')
+        toast.promise(handleUpdate,{
+          pending: 'Salvando alterações na ficha',
+          error: 'Erro ao tentar salvar alterações',
+          success: 'Alteraçoes salvas com sucesso'
+        })
+      } else {
+        console.log('is register')
+        toast.promise(handleRegister, {
+          pending: 'Registrando ficha do aluno',
+          error: 'Erro ao tentar salvar ficha',
+          success: 'Ficha registrada com sucesso'
+        })
+      }
+    }
     
   }
 

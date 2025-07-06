@@ -8,6 +8,7 @@ import { getAlunos } from "../../utils/fetchAPI"
 import { SearchStudent } from "../../components/students/SearchStudent"
 import type { AlunoType } from "../../types/AlunoType"
 import { StudentForm } from "../../components/studentForm/@StudentForm"
+import { ToastContainer } from "react-toastify"
 
 export const Dashboard = ()=>{
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
@@ -26,11 +27,14 @@ export const Dashboard = ()=>{
     dispatch(setLoading("Carregando lista de alunos"))
   }, [dispatch])
 
+  useEffect(()=>{
+    setCurrentStudentsList(students)
+  },[students])
+
   async function fetchData(){
     try{
       const req = await getAlunos()
       dispatch(setAlunos(req))
-      setCurrentStudentsList(req)
       dispatch(setLoading(false))
     }catch(error){
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
@@ -74,7 +78,8 @@ export const Dashboard = ()=>{
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
-  return (
+  return (<>
+    <ToastContainer/>
     <div>
       <Sidebar 
       current={current}
@@ -117,5 +122,5 @@ export const Dashboard = ()=>{
         }
       </main>
     </div>
-  )
+  </>)
 }
