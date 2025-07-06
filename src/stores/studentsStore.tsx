@@ -4,7 +4,6 @@ import type { AlunoType } from "../types/AlunoType";
 const initialState = {
   studentsList: [] as Pick<AlunoType, 'id' | 'nome'>[],
   loading: false as false | string,
-  currentStudentSheet: false as AlunoType | null | false,
 }
 
 export const studentsSlice = createSlice({
@@ -17,17 +16,11 @@ export const studentsSlice = createSlice({
     addAluno: (state, action: PayloadAction<Pick<AlunoType, 'id' | 'nome'>>) => {
       state.studentsList.push(action.payload)
     },
-    deleteAluno: (state, action: PayloadAction<string>) => {
-      state.studentsList = state.studentsList.filter(student=> student.id == action.payload)
+    removeAluno: (state, action: PayloadAction<string>) => {
+      state.studentsList = state.studentsList.filter(student=> student.id !== action.payload)
     },
     setLoading: (state, action: PayloadAction<false | string>) => {
       state.loading = action.payload
-    },
-    openStudentSheet: (state, action: PayloadAction<AlunoType | null>) => {
-      state.currentStudentSheet = action.payload
-    },
-    closeStudentSheet: (state) => {
-      state.currentStudentSheet = false
     },
     updateStudentNameOnList: (state, action: PayloadAction<{nome: string, id: string}>) =>{
       state.studentsList = state.studentsList.map(student => {
@@ -41,4 +34,4 @@ export const studentsSlice = createSlice({
   }
 })
 
-export const { addAluno, deleteAluno, setAlunos, setLoading, openStudentSheet, closeStudentSheet, updateStudentNameOnList } = studentsSlice.actions
+export const { addAluno, removeAluno, setAlunos, setLoading, updateStudentNameOnList } = studentsSlice.actions

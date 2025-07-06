@@ -13,19 +13,21 @@ import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
 import { toast } from "react-toastify";
 import { registerAluno, updateAluno } from "../../utils/fetchAPI";
-import { useAppDispatch, useAppSelector } from "../../stores/appStore";
-import { addAluno, openStudentSheet, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
+import { useAppDispatch } from "../../stores/appStore";
+import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
 
 interface studentFormProps {
+  currentStudentSheet?: {
+    student: AlunoType;
+    updateCurrentStudentSheet: (data: AlunoType) => void
+  };
   closeForm: () => void;
 }
-export const StudentForm = ({ closeForm } : studentFormProps) => {
+export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProps) => {
   const dispatch = useAppDispatch()
-  const currentStudentSheet = useAppSelector((state)=> state.students.currentStudentSheet)
 
   const studentInitialValue: Omit<AlunoType, 'id'> | AlunoType = 
-  currentStudentSheet !== null && currentStudentSheet !== false
-    ? currentStudentSheet
+  currentStudentSheet ? currentStudentSheet.student
     : {
         nome: '',
         objetivo: '',
@@ -146,7 +148,7 @@ export const StudentForm = ({ closeForm } : studentFormProps) => {
     }
 
     async function handleUpdate(){
-      const oldData = currentStudentSheet
+      const oldData = currentStudentSheet?.student
       dispatch(setLoading("Atualizando ficha do aluno"))
 
       await updateAluno(validatedData as AlunoType)
@@ -156,7 +158,8 @@ export const StudentForm = ({ closeForm } : studentFormProps) => {
           dispatch(updateStudentNameOnList({id: oldData.id, nome: validatedData.nome}))
         }
         // atualiza as informações de studentSheet
-        dispatch(openStudentSheet(validatedData as AlunoType))
+        if(currentStudentSheet) currentStudentSheet.updateCurrentStudentSheet(validatedData as AlunoType)
+        
       })
       .catch((error)=>{
         const errorMessage = error instanceof Error ? `Erro ao tentar registrar ficha: ${error.message}` : 'Erro ao tentar registrar ficha'

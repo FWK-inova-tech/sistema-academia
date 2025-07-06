@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
-import { closeStudentSheet, openStudentSheet, setLoading } from "../../stores/studentsStore"
+import { setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../utils/fetchAPI"
 import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
@@ -22,7 +22,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
 
   // currentStudentSheet == false => nenhuma ficha de aluno aberta, mostrar lista normalmente
   // currentStudentSheet == null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
-  const currentStudentSheet = useAppSelector((state)=> state.students.currentStudentSheet)
+  const [currentStudentSheet, setCurrentStudentSheet] = useState<false | AlunoType | null>(false)
   const dispatch = useAppDispatch()
 
   async function handleOpenStudentSheet(id: string){
@@ -31,9 +31,9 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
       const req = await getAluno(id)
       if(req){
         dispatch(setLoading(false))
-        dispatch(openStudentSheet(req))
+        setCurrentStudentSheet(req)
       } else {
-        dispatch(openStudentSheet(null))
+        setCurrentStudentSheet(null)
       }
     }catch(error){
       const errorMessage = error instanceof Error? error.message : "Erro na requisição para buscar a lista de alunos"
@@ -44,7 +44,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
   }
 
   function handleCloseStudentSheet(){
-    dispatch(closeStudentSheet())
+    setCurrentStudentSheet(false)
     controlOpenSheet('close')
   }
 
@@ -66,13 +66,16 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
         {currentStudentSheet ? <>
           {openEdit ? 
             <StudentForm 
+            currentStudentSheet={{student: currentStudentSheet, updateCurrentStudentSheet: setCurrentStudentSheet}}
             closeForm={handleCloseEdit}/> 
             : <>
             <button type="button"
             onClick={handleCloseStudentSheet}>
               Voltar para a lista de alunos
             </button>
-            <StudentSheet 
+            <StudentSheet
+            closeStudentSheet={handleCloseStudentSheet}
+            currentStudentSheet={currentStudentSheet} 
             openEdit={handleOpenEdit}/>
           </>}
         </>
