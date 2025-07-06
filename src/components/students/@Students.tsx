@@ -4,6 +4,7 @@ import { setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../utils/fetchAPI"
 import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
+import { StudentForm } from "../studentForm/@StudentForm";
 
 interface studentsProps {
   currentStudentsList: Pick<AlunoType, 'id' | 'nome'>[];
@@ -11,11 +12,13 @@ interface studentsProps {
     message: string;
     callback: ()=> Promise<void> | void;
   }) => void;
+  controlOpenSheet: (action: 'close' | 'open') => void;
 }
-export const Students = ({ setError,currentStudentsList } : studentsProps) => {
+export const Students = ({ setError, currentStudentsList, controlOpenSheet } : studentsProps) => {
   // false => nenhuma ficha de aluno aberta, mostrar lista normalmente
   // null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
   const [openStudent, setOpenStudent] = useState<AlunoType | null | false>(false)
+  const [openEdit, setOpenEdit] = useState(false)
 
   const loading = useAppSelector((state)=> state.students.loading)
   const dispatch = useAppDispatch()
@@ -40,6 +43,16 @@ export const Students = ({ setError,currentStudentsList } : studentsProps) => {
 
   function closeStudentSheet(){
     setOpenStudent(false)
+    controlOpenSheet('close')
+  }
+
+  function handleOpenEdit(){
+    controlOpenSheet('open')
+    setOpenEdit(true)
+  }
+  
+  function handleCloseEdit(){
+    setOpenEdit(false)
   }
 
 
@@ -49,13 +62,21 @@ export const Students = ({ setError,currentStudentsList } : studentsProps) => {
         <div className="loading-text">
           <p>{loading}</p>
         </div>
-      : <>        
+      : <>
         {openStudent ? <>
-          <button type="button"
-          onClick={closeStudentSheet}>
-            Voltar para a lista de alunos
-          </button>
-          <StudentSheet student={openStudent}/>
+          {openEdit ? 
+            <StudentForm 
+            editingStudent={openStudent}
+            closeForm={handleCloseEdit}/> 
+            : <>
+            <button type="button"
+            onClick={closeStudentSheet}>
+              Voltar para a lista de alunos
+            </button>
+            <StudentSheet 
+            openEdit={handleOpenEdit}
+            student={openStudent}/>
+          </>}
         </>
         : openStudent !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p> 
         : 
@@ -77,7 +98,9 @@ export const Students = ({ setError,currentStudentsList } : studentsProps) => {
                   <td className="student-actions">
                     <button 
                     type='button'
-                    onClick={()=>openStudentSheet(student.id)}>
+                    onClick={()=>{
+                      openStudentSheet(student.id)
+                      controlOpenSheet('open')}}>
                       Abrir ficha
                     </button>
                   </td>

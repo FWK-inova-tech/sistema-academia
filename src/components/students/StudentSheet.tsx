@@ -1,11 +1,11 @@
-import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
 import { ItemTreino } from "../treino/@ItemTreino";
-import { StudentForm } from "../studentForm/@StudentForm";
 
-export const StudentSheet = ({ student } : { student: AlunoType }) => {
-  const [openForm, setOpenForm] = useState(false)
-
+interface studentSheetProps {
+  student: AlunoType;
+  openEdit: () => void;
+}
+export const StudentSheet = ({ student,openEdit } : studentSheetProps) => {
   function formatDateToString(date: Date): string {
     return date.toLocaleDateString('pt-BR');
   }
@@ -44,16 +44,17 @@ export const StudentSheet = ({ student } : { student: AlunoType }) => {
 
 
   return (<>
-    {openForm ? 
+    {/* {openForm ? 
       <StudentForm 
       editingStudent={student}
       closeForm={()=>setOpenForm(false)}/> 
       : 
+    } */}
       <div className="student-sheet">
         <div className="actions">
           <button
           type="button"
-          onClick={()=>setOpenForm(true)}>
+          onClick={openEdit}>
             Editar ficha
           </button>
         </div>
@@ -167,7 +168,6 @@ export const StudentSheet = ({ student } : { student: AlunoType }) => {
           </div>
         </section>
       </div>
-    }
   </>
   )
 }

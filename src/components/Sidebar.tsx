@@ -1,7 +1,7 @@
 import { useAppSelector } from "../stores/appStore"
 
 interface sidebarProps {
-  current: 'students' | 'settings' | 'register/edit'
+  current: 'students' | 'settings' | 'register/edit/sheet'
   openAlunos: () => void;
   openConfig: () => void;
 }
