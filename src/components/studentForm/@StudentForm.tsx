@@ -13,36 +13,36 @@ import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
 import { toast } from "react-toastify";
 import { registerAluno, updateAluno } from "../../utils/fetchAPI";
-import { useAppDispatch } from "../../stores/appStore";
-import { addAluno } from "../../stores/studentsStore";
+import { useAppDispatch, useAppSelector } from "../../stores/appStore";
+import { addAluno, openStudentSheet, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
 
 interface studentFormProps {
-  editingStudent?: {
-    student: AlunoType;
-    update: (newInfo: AlunoType) => void;
-  };
   closeForm: () => void;
 }
-export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) => {
+export const StudentForm = ({ closeForm } : studentFormProps) => {
   const dispatch = useAppDispatch()
+  const currentStudentSheet = useAppSelector((state)=> state.students.currentStudentSheet)
 
-  const studentInitialValue: Omit<AlunoType, 'id'> | AlunoType = editingStudent?.student as AlunoType ?? {
-    nome: '',
-    objetivo: '',
-    dataNascimento: new Date(),
-    professor: '',
-    nivel: "Iniciante",
-    contato: '',
-    dataInicio: new Date(),
-    dataRevisao: new Date(),
-    anaminese: '',
-    agenda: [],
-    treino: [],
-    perimetria: { 
-      data: new Date(),
-      medidas: itensPerimetria} 
-  } as Omit<AlunoType, 'id'> 
-
+  const studentInitialValue: Omit<AlunoType, 'id'> | AlunoType = 
+  currentStudentSheet !== null && currentStudentSheet !== false
+    ? currentStudentSheet
+    : {
+        nome: '',
+        objetivo: '',
+        dataNascimento: new Date(),
+        professor: '',
+        nivel: "Iniciante",
+        contato: '',
+        dataInicio: new Date(),
+        dataRevisao: new Date(),
+        anaminese: '',
+        agenda: [],
+        treino: [],
+        perimetria: {
+          data: new Date(),
+          medidas: itensPerimetria
+        }
+      }
 
   const [section, setSection] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
@@ -132,30 +132,39 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
       setSectionErrors: setSectionErrors
     }) 
 
-    
-
     async function handleRegister(){
       closeForm()
-      try{
-        const registerAndGetId = await registerAluno(validatedData as Omit<AlunoType, 'id'>)
+      await registerAluno(validatedData as Omit<AlunoType, 'id'>)
+      .then((data)=>{
         // atualiza a lista de alunos da store com o novo aluno agora com o id retornado pelo backend
-        dispatch(addAluno({id: registerAndGetId, nome: validatedData!.nome}))
-      } catch (error){
+        dispatch(addAluno({id: data, nome: validatedData!.nome}))
+      })
+      .catch(error =>{
         const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
-        throw new Error(errorMessage)
-      }
+        throw new Error(errorMessage) 
+      })
     }
 
     async function handleUpdate(){
-      // fecha o form e volta pro studentSheet mas com as informações atualizadas
-      const oldData = editingStudent?.student
-      closeForm()
-      editingStudent?.update(validatedData as AlunoType)
-      await updateAluno(validatedData as AlunoType).catch((error)=>{
-        const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
-        if (editingStudent?.student) editingStudent?.update(oldData!)
-          
-        throw new Error(errorMessage)
+      const oldData = currentStudentSheet
+      dispatch(setLoading("Atualizando ficha do aluno"))
+
+      await updateAluno(validatedData as AlunoType)
+      .then(()=>{
+        if(oldData && validatedData && oldData.nome !== validatedData.nome){
+          // atualiza o nome do aluno na lista de alunos
+          dispatch(updateStudentNameOnList({id: oldData.id, nome: validatedData.nome}))
+        }
+        // atualiza as informações de studentSheet
+        dispatch(openStudentSheet(validatedData as AlunoType))
+      })
+      .catch((error)=>{
+        const errorMessage = error instanceof Error ? `Erro ao tentar registrar ficha: ${error.message}` : 'Erro ao tentar registrar ficha'
+        toast.error(errorMessage)
+      })
+      .finally(()=>{
+        closeForm()
+        dispatch(setLoading(false))
       })
     }
     
@@ -165,14 +174,8 @@ export const StudentForm = ({ editingStudent, closeForm } : studentFormProps) =>
       }
 
       if('id' in validatedData ){
-        console.log('is uodate')
-        toast.promise(handleUpdate,{
-          pending: 'Salvando alterações na ficha',
-          error: 'Erro ao tentar salvar alterações',
-          success: 'Alteraçoes salvas com sucesso'
-        })
+        handleUpdate()
       } else {
-        console.log('is register')
         toast.promise(handleRegister, {
           pending: 'Registrando ficha do aluno',
           error: 'Erro ao tentar salvar ficha',

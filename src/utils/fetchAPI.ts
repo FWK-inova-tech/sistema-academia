@@ -74,8 +74,7 @@ export const updateAluno = async (student: AlunoType) => {
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
   await delay(10000)
-  throw new Error('erro teste')
-  // return  'ok'
+  return  'ok'
 }
 
 export const deleteAluno = async (id: string) => {

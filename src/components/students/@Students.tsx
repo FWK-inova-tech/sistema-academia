@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
-import { setLoading } from "../../stores/studentsStore"
+import { closeStudentSheet, openStudentSheet, setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../utils/fetchAPI"
 import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
 import { StudentForm } from "../studentForm/@StudentForm";
+import { Loading } from "../Loading";
 
 interface studentsProps {
   currentStudentsList: Pick<AlunoType, 'id' | 'nome'>[];
@@ -15,34 +16,35 @@ interface studentsProps {
   controlOpenSheet: (action: 'close' | 'open') => void;
 }
 export const Students = ({ setError, currentStudentsList, controlOpenSheet } : studentsProps) => {
-  // false => nenhuma ficha de aluno aberta, mostrar lista normalmente
-  // null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
-  const [openStudent, setOpenStudent] = useState<AlunoType | null | false>(false)
   const [openEdit, setOpenEdit] = useState(false)
-
+  
   const loading = useAppSelector((state)=> state.students.loading)
+
+  // currentStudentSheet == false => nenhuma ficha de aluno aberta, mostrar lista normalmente
+  // currentStudentSheet == null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
+  const currentStudentSheet = useAppSelector((state)=> state.students.currentStudentSheet)
   const dispatch = useAppDispatch()
 
-  async function openStudentSheet(id: string){
+  async function handleOpenStudentSheet(id: string){
     dispatch(setLoading("Buscando dados do aluno"))
     try{
       const req = await getAluno(id)
       if(req){
         dispatch(setLoading(false))
-        setOpenStudent(req)
+        dispatch(openStudentSheet(req))
       } else {
-        setOpenStudent(null)
+        dispatch(openStudentSheet(null))
       }
     }catch(error){
       const errorMessage = error instanceof Error? error.message : "Erro na requisição para buscar a lista de alunos"
       setError({
         message: errorMessage, 
-        callback: () => {openStudentSheet(id)}})
+        callback: () => {handleOpenStudentSheet(id)}})
     }
   }
 
-  function closeStudentSheet(){
-    setOpenStudent(false)
+  function handleCloseStudentSheet(){
+    dispatch(closeStudentSheet())
     controlOpenSheet('close')
   }
 
@@ -59,26 +61,22 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
   return (
     <>
       { loading ? 
-        <div className="loading-text">
-          <p>{loading}</p>
-        </div>
+        <Loading loadingMessage={loading}/>
       : <>
-        {openStudent ? <>
+        {currentStudentSheet ? <>
           {openEdit ? 
             <StudentForm 
-            editingStudent={{student:openStudent, update: setOpenStudent}}
             closeForm={handleCloseEdit}/> 
             : <>
             <button type="button"
-            onClick={closeStudentSheet}>
+            onClick={handleCloseStudentSheet}>
               Voltar para a lista de alunos
             </button>
             <StudentSheet 
-            openEdit={handleOpenEdit}
-            student={openStudent}/>
+            openEdit={handleOpenEdit}/>
           </>}
         </>
-        : openStudent !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p> 
+        : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p> 
         : 
         <>
         {currentStudentsList.length > 0 ? 
@@ -99,7 +97,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
                     <button 
                     type='button'
                     onClick={()=>{
-                      openStudentSheet(student.id)
+                      handleOpenStudentSheet(student.id)
                       controlOpenSheet('open')}}>
                       Abrir ficha
                     </button>
