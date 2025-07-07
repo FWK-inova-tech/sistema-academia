@@ -90,3 +90,17 @@ export const deleteAluno = async (id: string) => {
   await delay(10000)
   return  'ok'
 }
+
+export const changePassword = async (newPassword: string) => {
+  // const { data } = await axios.post<{message: string; updatedStatus: number}>(`${backendUrl}/change-password`, {password: newPassword} ,{
+  //   headers: {
+  //     Authorization: `Bearer ${getToken()}`,
+  //   }
+  // })
+
+  // return data.updatedStatus
+
+  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  await delay(10000)
+  return  200
+}

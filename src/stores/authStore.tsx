@@ -8,7 +8,8 @@ const initialState = {
   authenticated: true,
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
-  error: null as string | null
+  error: null as string | null,
+  loading: false as false | string
 }
 
 export const loginUser = createAsyncThunk(

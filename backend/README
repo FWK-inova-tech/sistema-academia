@@ -1,5 +1,11 @@
 # Rotas
 
+## POST /login
+Rota de login que recebe no corpo as credenciais para verificar e retonar um erro ou um token em caso de sucesso
+
+## POST /change-password
+Rota que recebe uma nova senha e atualiza no banco de dados
+
 ## GET /
 Rota principal, retorna a lista de alunos contendo apenas as informações `id` e `nome` do aluno.
 
