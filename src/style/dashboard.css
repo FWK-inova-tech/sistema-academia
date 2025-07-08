@@ -1,0 +1,12 @@
+#root{
+  display: flex;
+  flex-direction: row;
+  min-width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (max-width: 600px){
+  #root{
+    flex-direction: column;
+  }
+}

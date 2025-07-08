@@ -9,6 +9,8 @@ import { SearchStudent } from "../../components/students/SearchStudent"
 import type { AlunoType } from "../../types/AlunoType"
 import { StudentForm } from "../../components/studentForm/@StudentForm"
 import { ToastContainer } from "react-toastify"
+import '../../style/dashboard.css'
+import '../../style/studentsList.css'
 
 export const Dashboard = ()=>{
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
@@ -80,47 +82,45 @@ export const Dashboard = ()=>{
 
   return (<>
     <ToastContainer/>
-    <div>
-      <Sidebar 
-      current={current}
-      openAlunos={()=> setCurrent('students')}
-      openConfig={()=> setCurrent('settings')}/>
-      <main>
-        {apiError ? <div>
-          <p>Erro</p>
-          <p>{apiError.message}</p>
-          <p>Tente novamente em alguns minutos</p>
-          </div>
-        : 
-        <>
-          {current !== 'settings' && <>
-            {current === 'students' &&
-              <div className="top-bar">
-                <SearchStudent
-                handleSearch={handleSearch}/>
-                <button
-                type="button"
-                onClick={handleOpenRegister}>
-                  Cadastrar aluno
-                </button>
-              </div>
-            }
-            {openRegister ? 
-            <>
-            <StudentForm
-            closeForm={handleCloseRegister}/>
-            </> 
-            : 
-            <Students
-            controlOpenSheet={handleCloseOpenEdit} 
-            currentStudentsList={currentStudentsList}
-            setError={setApiError}/>
-            }
-          </>}
-          {current === 'settings' && <Settings/>}
-        </>
-        }
-      </main>
-    </div>
+    <Sidebar 
+    current={current}
+    openAlunos={()=> setCurrent('students')}
+    openConfig={()=> setCurrent('settings')}/>
+    <main>
+      {apiError ? <div>
+        <p>Erro</p>
+        <p>{apiError.message}</p>
+        <p>Tente novamente em alguns minutos</p>
+        </div>
+      : 
+      <>
+        {current !== 'settings' && <>
+          {current === 'students' &&
+            <div className="top-bar">
+              <SearchStudent
+              handleSearch={handleSearch}/>
+              <button
+              type="button"
+              onClick={handleOpenRegister}>
+                Cadastrar aluno
+              </button>
+            </div>
+          }
+          {openRegister ? 
+          <>
+          <StudentForm
+          closeForm={handleCloseRegister}/>
+          </> 
+          : 
+          <Students
+          controlOpenSheet={handleCloseOpenEdit} 
+          currentStudentsList={currentStudentsList}
+          setError={setApiError}/>
+          }
+        </>}
+        {current === 'settings' && <Settings/>}
+      </>
+      }
+    </main>
   </>)
 }
