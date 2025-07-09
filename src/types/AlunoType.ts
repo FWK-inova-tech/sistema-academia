@@ -11,7 +11,7 @@ export interface AlunoType {
   dataInicio: Date;
   dataRevisao: Date;
   anaminese: string;
-  id: string;
+  _id: string;
   agenda: string[];
   treino: TreinoType[];
   perimetria: PerimetriaType;

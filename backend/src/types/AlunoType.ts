@@ -1,30 +1,35 @@
+// export interface PerimetriaType {
+//     bracoDireito: number;
+//     bracoEsquerdo: number;
+//     coxaDireita: number;
+//     coxaEsquerda: number;
+//     panturrilhaDireita: number;
+//     panturrilhaEsquerda: number;
+//     peito: number;
+//     cintura: number;
+//     quadril: number;
+//     dataMedicao: Date;
+// }
 export interface PerimetriaType {
-    bracoDireito: number;
-    bracoEsquerdo: number;
-    coxaDireita: number;
-    coxaEsquerda: number;
-    panturrilhaDireita: number;
-    panturrilhaEsquerda: number;
-    peito: number;
-    cintura: number;
-    quadril: number;
-    dataMedicao: Date;
+    data: Date;
+    medidas: {
+        nome: string;
+        valor: number
+    }[]
 }
 
-export interface TreinoItemType {
-    exercicio: string;
-    series: string;
-    repeticoes: string;
-    carga: string;
-    observacoes: string;
-}
+
+// export interface TreinoItemType {
+//     exercicio: string;
+//     series: string;
+//     repeticoes: string;
+//     carga: string;
+//     observacoes: string;
+// }
 
 export interface TreinoType {
-    nomeTreino: string;
-    dataTreino: Date;
-    intensidade: string;
-    exercicio: TreinoItemType[];
-    observacoesGerais?: string;
+    categoria: string;
+    exercicios: string[];
 }
 
 export type NivelAluno = 'Iniciante' | 'Intermediário' | 'Avançado';

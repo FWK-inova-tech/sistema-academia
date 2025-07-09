@@ -1,33 +1,29 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import { AlunoType, PerimetriaType, TreinoType, TreinoItemType } from '../types/AlunoType';
+import { AlunoType, PerimetriaType, TreinoType } from '../types/AlunoType';
 
-const TreinoItemSchema: Schema = new Schema<TreinoItemType>({
-    exercicio: { type: String, required: true },
-    series: { type: String, required: true },
-    repeticoes: { type: String, required: false },
-    carga: { type: String, required: false  },
-    observacoes: { type: String, required: false }
-}, { _id: false });
+// const TreinoItemSchema: Schema = new Schema<TreinoItemType>({
+//     exercicio: { type: String, required: true },
+//     series: { type: String, required: true },
+//     repeticoes: { type: String, required: false },
+//     carga: { type: String, required: false  },
+//     observacoes: { type: String, required: false }
+// }, { _id: false });
+
+
 
 const TreinoSchema: Schema = new Schema<TreinoType>({
-    nomeTreino: { type: String, required: true },
-    dataTreino: { type: Date, required: true },
-    intensidade: { type: String, required: true },
-    exercicio: { type: [TreinoItemSchema], required: true },
-    observacoesGerais: { type: String, required: false },
+    exercicios: { type: [String], required: true },
+    categoria: { type: String, required: true },
 }, { _id: false });
 
 const PerimetriaSchema: Schema = new Schema<PerimetriaType>({
-    bracoDireito: { type: Number, required: true },
-    bracoEsquerdo: { type: Number, required: true },
-    coxaDireita: { type: Number, required: true },
-    coxaEsquerda: { type: Number, required: true },
-    panturrilhaDireita: { type: Number, required: true },
-    panturrilhaEsquerda: { type: Number, required: true },
-    peito: { type: Number, required: true },
-    cintura: { type: Number, required: true },
-    quadril: { type: Number, required: true },
-    dataMedicao: { type: Date, required: true, default: Date.now },
+    data: { type: Date, required: true, default: Date.now },
+    medidas: [{
+        type: {
+            nome: {type: String},
+            valor: {type: Number}
+        }, required: true
+    }]
 }, { _id: false });
 
 export interface IAluno extends AlunoType, Document {}
