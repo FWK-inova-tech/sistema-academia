@@ -60,7 +60,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
           cancel: ()=> setModalDelete(false),
           success: handleSuccessDelete
         }}
-        student={{id: currentStudentSheet.id, name: currentStudentSheet.nome}}/>
+        student={{_id: currentStudentSheet._id, name: currentStudentSheet.nome}}/>
         : <>
           <div className="actions">
             <button

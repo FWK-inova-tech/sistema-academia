@@ -8,7 +8,7 @@ import { StudentForm } from "../studentForm/@StudentForm";
 import { Loading } from "../Loading";
 
 interface studentsProps {
-  currentStudentsList: Pick<AlunoType, 'id' | 'nome'>[];
+  currentStudentsList: Pick<AlunoType, '_id' | 'nome'>[];
   setError: ( error: {
     message: string;
     callback: ()=> Promise<void> | void;
@@ -93,14 +93,14 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
             </thead>
             <tbody>
               {currentStudentsList.map(student => (
-                <tr key={student.id}>
-                  <td>{student.id}</td>
+                <tr key={student._id}>
+                  <td>{student._id}</td>
                   <td>{student.nome}</td>
                   <td className="student-actions">
                     <button 
                     type='button'
                     onClick={()=>{
-                      handleOpenStudentSheet(student.id)
+                      handleOpenStudentSheet(student._id)
                       controlOpenSheet('open')}}>
                       Abrir ficha
                     </button>

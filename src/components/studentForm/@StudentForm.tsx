@@ -26,7 +26,7 @@ interface studentFormProps {
 export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProps) => {
   const dispatch = useAppDispatch()
 
-  const studentInitialValue: Omit<AlunoType, 'id'> | AlunoType = 
+  const studentInitialValue: Omit<AlunoType, '_id'> | AlunoType = 
   currentStudentSheet ? currentStudentSheet.student
     : {
         nome: '',
@@ -155,7 +155,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
       .then(()=>{
         if(oldData && validatedData && oldData.nome !== validatedData.nome){
           // atualiza o nome do aluno na lista de alunos
-          dispatch(updateStudentNameOnList({id: oldData.id, nome: validatedData.nome}))
+          dispatch(updateStudentNameOnList({id: oldData._id, nome: validatedData.nome}))
         }
         // atualiza as informações de studentSheet
         if(currentStudentSheet) currentStudentSheet.updateCurrentStudentSheet(validatedData as AlunoType)
@@ -172,11 +172,11 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
     }
     
     if(validatedData){
-      if('id' in studentInitialValue){
-        validatedData = {...validatedData, id: studentInitialValue.id}
+      if('_id' in studentInitialValue){
+        validatedData = {...validatedData, _id: studentInitialValue._id}
       }
 
-      if('id' in validatedData ){
+      if('_id' in validatedData ){
         handleUpdate()
       } else {
         toast.promise(handleRegister, {
