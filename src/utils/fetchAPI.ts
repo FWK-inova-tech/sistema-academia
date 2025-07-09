@@ -6,6 +6,7 @@ import { listAllStudents, allStudents } from "../constants/studentsListForTest";
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const getToken = () => {
   const token = localStorage.getItem('token')
+  return 'stoken'
   if(!token){
     throw new Error("Token ausente, operação não permitida")
   } else {
@@ -22,31 +23,28 @@ export const login = async (credentials: Adm): Promise<string> => {
   return data.token
 }
 
-export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | 'id'>[]> => {
-  // const { data } = await axios.get<{message: string; students: AlunoType[]}>(backendUrl, {
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //   }
-  // })
-  // return data.students
+export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | '_id'>[]> => {
+  const { data } = await axios.get<AlunoType[]>(backendUrl, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    }
+  })
+  return data
   
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  return listAllStudents
 }
 
-export const getAluno = async (id: string): Promise<AlunoType | null> => {
-  // const { data } = await axios.get<{message: string; student: AlunoType}>(`${backendUrl}/${id}`, {
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //   }
-  // })
-  // return data.student
+export const getAluno = async (_id: string): Promise<AlunoType | null> => {
+  const { data } = await axios.get<AlunoType>(`${backendUrl}/${_id}`, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    }
+  })
+  return data
   
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  const search = allStudents.find(student => student.id === id)
-  return  search ? search : null
+  // const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+  // await delay(10000)
+  // const search = allStudents.find(student => student._id === _id)
+  // return  search ? search : null
 }
 
 export const registerAluno = async (student: NovoAluno): Promise<string> => {

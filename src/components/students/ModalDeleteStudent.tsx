@@ -4,7 +4,7 @@ import { removeAluno, setLoading } from "../../stores/studentsStore";
 import { deleteAluno } from "../../utils/fetchAPI";
 
 interface modalDeleteStudentProps{
-  student: {name: string, id: string};
+  student: {name: string, _id: string};
   actions: {
     cancel: () => void;
     success: () => void;
@@ -15,9 +15,9 @@ export const ModalDeleteStudent = ({student, actions} : modalDeleteStudentProps)
 
   async function deleteStudent(){
     dispatch(setLoading(`Deletando ficha do aluno(a) ${student.name}`))
-    await deleteAluno(student.id)
+    await deleteAluno(student._id)
     .then(()=>{
-      dispatch(removeAluno(student.id))
+      dispatch(removeAluno(student._id))
       toast.success('Ficha deletada')
       actions.success()
     })
