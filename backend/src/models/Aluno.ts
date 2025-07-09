@@ -1,15 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { AlunoType, PerimetriaType, TreinoType } from '../types/AlunoType';
 
-// const TreinoItemSchema: Schema = new Schema<TreinoItemType>({
-//     exercicio: { type: String, required: true },
-//     series: { type: String, required: true },
-//     repeticoes: { type: String, required: false },
-//     carga: { type: String, required: false  },
-//     observacoes: { type: String, required: false }
-// }, { _id: false });
-
-
 
 const TreinoSchema: Schema = new Schema<TreinoType>({
     exercicios: { type: [String], required: true },
@@ -40,7 +31,7 @@ const AlunoSchema: Schema = new Schema<IAluno>({
     anaminese: { type: String, required: true },
     agenda: { type: [String], required: true },
     treino: { type: [TreinoSchema], required: true },
-    perimetria: { type: [PerimetriaSchema], required: true }
+    perimetria: { type: PerimetriaSchema, required: true }
 }, { timestamps: true });
 
 const Aluno = mongoose.model<IAluno>('Aluno', AlunoSchema);

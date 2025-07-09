@@ -1,15 +1,3 @@
-// export interface PerimetriaType {
-//     bracoDireito: number;
-//     bracoEsquerdo: number;
-//     coxaDireita: number;
-//     coxaEsquerda: number;
-//     panturrilhaDireita: number;
-//     panturrilhaEsquerda: number;
-//     peito: number;
-//     cintura: number;
-//     quadril: number;
-//     dataMedicao: Date;
-// }
 export interface PerimetriaType {
     data: Date;
     medidas: {
@@ -17,15 +5,6 @@ export interface PerimetriaType {
         valor: number
     }[]
 }
-
-
-// export interface TreinoItemType {
-//     exercicio: string;
-//     series: string;
-//     repeticoes: string;
-//     carga: string;
-//     observacoes: string;
-// }
 
 export interface TreinoType {
     categoria: string;
@@ -46,5 +25,5 @@ export interface AlunoType {
     anaminese: string;
     agenda: string[];
     treino: TreinoType[];
-    perimetria: PerimetriaType[];
+    perimetria: PerimetriaType;
 }
