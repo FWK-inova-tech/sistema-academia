@@ -37,21 +37,25 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg } : infoTrei
   }
 
   function handleStartDateChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setStartDate(value);
+    const value = e.target.value
+    setStartDate(value) 
+    if (value.length === 10) {
     updateInfo({
       ...editingInfoTreino,
       dataInicio: getLocalDate(value)
     });
   }
+  }
 
   function handleReviewDateChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setReviewDate(value);
-    updateInfo({
-      ...editingInfoTreino,
-      dataRevisao: getLocalDate(value)
-    });
+    const value = e.target.value
+    setReviewDate(value)
+    if(value.length === 10){
+      updateInfo({
+        ...editingInfoTreino,
+        dataRevisao: getLocalDate(value)
+      })
+    }
   }
 
   return (

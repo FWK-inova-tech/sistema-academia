@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
 import { ItemTreino } from "../treino/@ItemTreino";
 import { ModalDeleteStudent } from "./ModalDeleteStudent";
+import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "./useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;
@@ -11,34 +12,6 @@ interface studentSheetProps {
 export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet } : studentSheetProps) => {
   const [modalDelete, setModalDelete] = useState(false)
 
-  function formatDateToString(date: Date): string {
-    console.log(date)
-    const parsedDate = typeof date === 'string' ? new Date(date) : date;
-
-  if (isNaN(parsedDate.getTime())) {
-    return 'Data inválida'
-  }
-
-  return parsedDate.toLocaleDateString('pt-BR')
-  }
-
-  function getDaysChecklist(){
-    const getStudentInfoValue = (toCheck: string) => {
-      return currentStudentSheet.agenda.includes(toCheck)
-    }
-
-    const days = [
-      {day: 'Segunda', checked: getStudentInfoValue('Segunda')},
-      {day: 'Terça', checked: getStudentInfoValue('Terça')},
-      {day: 'Quarta', checked: getStudentInfoValue('Quarta')},
-      {day: 'Quinta', checked: getStudentInfoValue('Quinta')},
-      {day: 'Sexta', checked: getStudentInfoValue('Sexta')},
-      {day: 'Sábado', checked: getStudentInfoValue('Sábado')},
-    ]
-
-
-  return days
-  }
 
   function getLevels(){
     const getStudentInfoValue = (toCheck: string) => {
@@ -91,7 +64,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
 
               <span>
                 <p>Contato:</p>
-                <p>{currentStudentSheet.contato}</p>
+                <p>{formatPhoneNumber(currentStudentSheet.contato)}</p>
               </span>
 
               <span>
@@ -104,7 +77,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
           <section>
             <h2>Agenda</h2>
             <div>
-              {getDaysChecklist().map(day => (
+              {getDaysChecklist(currentStudentSheet.agenda).map(day => (
                 <label className="checklist-circle"
                 key={day.day}
                 htmlFor={day.day}>
@@ -172,8 +145,8 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
               {currentStudentSheet.perimetria.medidas.map(itemPerimetria => 
                 <span
                 key={itemPerimetria.nome}>
-                  <p>{itemPerimetria.nome}</p>
-                  <p>{itemPerimetria.valor}</p>
+                  <p>{itemPerimetria.nome}:</p>
+                  <p>{itemPerimetria.valor.toString()}</p>
                 </span>
               )}
             </div>
