@@ -81,17 +81,13 @@ export const updateAluno = async (student: AlunoType) => {
 }
 
 export const deleteAluno = async (id: string) => {
-  // const { data } = await axios.delete<{message: string; deletedStatus: number}>(`${backendUrl}/delete/${id}`,  {
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //   }
-  // })
+  const { data } = await axios.delete<{message: string}>(`${backendUrl}/${id}`,  {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    }
+  })
+  return data
 
-  // return data.deletedStatus
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  return  'ok'
 }
 
 export const changePassword = async (newPassword: string) => {
