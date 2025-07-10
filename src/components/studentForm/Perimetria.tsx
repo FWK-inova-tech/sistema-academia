@@ -14,7 +14,9 @@ export const Perimetria = ({ editingPerimetria, handleUpdatePerimetriaMedidas, h
 
   function handleDateChange(dateString: string){
     setDate(dateString)
-    handleUpdatePerimetriaDate(getLocalDate(dateString));
+    if(dateString.length === 10){
+      handleUpdatePerimetriaDate(getLocalDate(dateString));
+    }
   }
 
   return (

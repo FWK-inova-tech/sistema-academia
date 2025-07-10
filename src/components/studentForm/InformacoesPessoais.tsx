@@ -27,10 +27,12 @@ export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, e
 
   function handleDateInput(dateString: string){
     setDate(dateString)
-    handleUpdateInformacoes({
-      ...editingStudent,
-      dataNascimento: getLocalDate(dateString)
-    })
+    if(dateString.length === 10){
+      handleUpdateInformacoes({
+        ...editingStudent,
+        dataNascimento: getLocalDate(dateString)
+      })
+    }
   }
 
   function getFormatedMaskContact(defaultString: string){

@@ -41,24 +41,29 @@ export const getAluno = async (_id: string): Promise<AlunoType | null> => {
   })
   return data
   
-  // const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  // await delay(10000)
-  // const search = allStudents.find(student => student._id === _id)
-  // return  search ? search : null
 }
 
-export const registerAluno = async (student: NovoAluno): Promise<string> => {
-  // const { data } = await axios.post<{message: string; id: string}>(`${backendUrl}/register/`, {student}, {
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //   }
-  // })
+export const registerAluno = async (student: Omit<NovoAluno, '_id'>): Promise<string> => {
+  const { data } = await axios.post<AlunoType>(`${backendUrl}`, {
+    nome: student.nome,
+    objetivo: student.objetivo,
+    dataNascimento: student.dataNascimento,
+    professor: student.professor,
+    nivel: student.nivel,
+    contato: student.contato,
+    dataInicio: student.dataInicio,
+    dataRevisao: student.dataRevisao,
+    anaminese: student.anaminese,
+    agenda: student.agenda,
+    treino: student.treino,
+    perimetria: student.perimetria
+  }, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    }
+  })
+  return data._id
 
-  // return data.id
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  return  '003'
 }
 
 export const updateAluno = async (student: AlunoType) => {

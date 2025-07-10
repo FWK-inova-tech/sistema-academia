@@ -129,17 +129,17 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    let validatedData: Omit<AlunoType, 'id'> | AlunoType | undefined = validadeFormSubmit({
+    let validatedData: Omit<AlunoType, '_id'> | AlunoType | undefined = validadeFormSubmit({
       data: {infoPessoais, agenda, infosTreino, perimetria, treino},
       setSectionErrors: setSectionErrors
     }) 
 
     async function handleRegister(){
       closeForm()
-      await registerAluno(validatedData as Omit<AlunoType, 'id'>)
+      await registerAluno(validatedData as Omit<AlunoType, '_id'>)
       .then((data)=>{
-        // atualiza a lista de alunos da store com o novo aluno agora com o id retornado pelo backend
-        dispatch(addAluno({id: data, nome: validatedData!.nome}))
+        // atualiza a lista de alunos da store com o novo aluno agora com o _id retornado pelo backend
+        dispatch(addAluno({_id: data, nome: validatedData!.nome}))
       })
       .catch(error =>{
         const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
@@ -155,7 +155,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
       .then(()=>{
         if(oldData && validatedData && oldData.nome !== validatedData.nome){
           // atualiza o nome do aluno na lista de alunos
-          dispatch(updateStudentNameOnList({id: oldData._id, nome: validatedData.nome}))
+          dispatch(updateStudentNameOnList({_id: oldData._id, nome: validatedData.nome}))
         }
         // atualiza as informações de studentSheet
         if(currentStudentSheet) currentStudentSheet.updateCurrentStudentSheet(validatedData as AlunoType)

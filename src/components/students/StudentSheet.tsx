@@ -12,14 +12,13 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
   const [modalDelete, setModalDelete] = useState(false)
 
   function formatDateToString(date: Date): string {
-    console.log(date)
     const parsedDate = typeof date === 'string' ? new Date(date) : date;
 
-  if (isNaN(parsedDate.getTime())) {
-    return 'Data inválida'
-  }
+    if (isNaN(parsedDate.getTime())) {
+      return 'Data inválida'
+    }
 
-  return parsedDate.toLocaleDateString('pt-BR')
+    return parsedDate.toLocaleDateString('pt-BR')
   }
 
   function getDaysChecklist(){
