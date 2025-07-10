@@ -1,4 +1,4 @@
-# Rotas
+# Rotas Auth
 
 ## POST /login
 Rota de login que recebe no corpo as credenciais para verificar e retonar um erro ou um token em caso de sucesso
@@ -6,20 +6,19 @@ Rota de login que recebe no corpo as credenciais para verificar e retonar um err
 ## POST /change-password
 Rota que recebe uma nova senha e atualiza no banco de dados
 
+# Rotas CRUD alunos
+
 ## GET /
-Rota principal, retorna a lista de alunos contendo apenas as informações `id` e `nome` do aluno.
+Obter lista de alunos.
 
 ## GET /:id
-Retornar todos os dados do aluno daquele `id`
+Obter aluno pelo id
 
-## POST /register
-Recebe no corpo o `{student}` e salva no banco de dados, retornando na response apenas o `id` do aluno no banco de dados que será usado para buscar as mais informações sobre esse aluno depois
+## POST /
+Registrar alubno
 
-## PUT /update/:id
-Recebe no corpo os dados do aluno e atualiza no banco de dados
+## PUT /:id
+Atualizar aluno
 
-## DELETE /delete:id
-Dele o aluno do banco de dados e retorna uma mensagem confirmando que a exclusão foi feita com sucesso
-
-# Database Models
-Os tipos dos atributos do Aluno estão descritos nos arquivos dentro da pasta `@/src/types`
+## DELETE /:id
+Deletar aluno
