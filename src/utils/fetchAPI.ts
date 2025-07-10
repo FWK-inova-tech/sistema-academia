@@ -103,9 +103,6 @@ export const updateAluno = async (student: AlunoType) => {
   console.log('update data', data)
   return data
 
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  return  'ok'
 }
 
 export const deleteAluno = async (id: string) => {
