@@ -6,7 +6,7 @@ Rota de login que recebe no corpo as credenciais para verificar e retonar um err
 ## POST /change-password
 Rota que recebe uma nova senha e atualiza no banco de dados
 
-# Rotas CRUD alunos
+# /api/alunos
 
 ## GET /
 Obter lista de alunos.
