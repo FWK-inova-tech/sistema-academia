@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
 import type { TreinoType } from "../../types/TreinoType";
 import type { PerimetriaType } from "../../types/PerimetriaType";
-import { itensPerimetria } from "../../constants/medidasPerimetria";
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
@@ -15,6 +14,7 @@ import { toast } from "react-toastify";
 import { registerAluno, updateAluno } from "../../utils/fetchAPI";
 import { useAppDispatch } from "../../stores/appStore";
 import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
+import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
 
 interface studentFormProps {
   currentStudentSheet?: {
@@ -27,28 +27,10 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
   const dispatch = useAppDispatch()
 
   const studentInitialValue: Omit<AlunoType, '_id'> | AlunoType = 
-  currentStudentSheet ? currentStudentSheet.student
-    : {
-        nome: '',
-        objetivo: '',
-        dataNascimento: new Date(),
-        professor: '',
-        nivel: "Iniciante",
-        contato: '',
-        dataInicio: new Date(),
-        dataRevisao: new Date(),
-        anaminese: '',
-        agenda: [],
-        treino: [],
-        perimetria: {
-          data: new Date(),
-          medidas: itensPerimetria
-        }
-      }
+    currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
 
   const [section, setSection] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
-
   
   const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
     contato: studentInitialValue.contato,
@@ -197,10 +179,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
       {section.includes('pessoais') && (
         <InformacoesPessoais
           editingStudent={infoPessoais}
-          handleUpdateInformacoes={(updated) => {
-          setInfoPessoais(updated)
-          setSectionErrors(prev => ({ ...prev, pessoais: undefined }))
-        }}
+          resetError={()=>setSectionErrors(prev => ({ ...prev, pessoais: undefined }))}
+          handleUpdateInformacoes={setInfoPessoais}
           erroMsg={sectionErrors.pessoais}
         />
       )}
