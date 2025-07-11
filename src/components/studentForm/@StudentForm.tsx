@@ -53,25 +53,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
   })
   const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
-
-  function handleUpdatePerimetriaMedidas(name: string, value: number) {
-    setPerimetria(prev => ({
-      ...prev,
-      medidas: prev.medidas.map(medida =>
-        medida.nome === name
-          ? (medida.valor !== value ? { ...medida, valor: value } : medida)
-          : medida
-      )
-    }))
-  } 
-
-  function handleUpdatePerimetriaDate(newDate: Date){
-    setPerimetria(prev => ({
-      ...prev,
-      data: newDate
-    }))
-  }
-
   function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
   const { value, checked } = e.target
 
@@ -243,14 +224,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
         {section.includes('perimetria') && (
           <Perimetria
           editingPerimetria={perimetria}
-          handleUpdatePerimetriaDate={(newDate) => {
-            handleUpdatePerimetriaDate(newDate)
-            setSectionErrors(prev => ({ ...prev, perimetria: undefined }))
-          }}
-          handleUpdatePerimetriaMedidas={(name, value) => {
-            handleUpdatePerimetriaMedidas(name, value)
-            setSectionErrors(prev => ({ ...prev, perimetria: undefined }))
-          }}
+          resetError={()=>setSectionErrors(prev => ({ ...prev, perimetria: undefined }))}
+          setPerimetria={setPerimetria}
           erroMsg={sectionErrors.perimetria}/>
 
         )}
