@@ -53,16 +53,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
   })
   const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
-  function handleAgendaChecklist(e: React.ChangeEvent<HTMLInputElement>) {
-    const { value, checked } = e.target
-      setAgenda(prev => {
-        if (checked) {
-          return [...prev, value]
-        } else {
-          return prev.filter(agenda => agenda !== value)
-        }
-    })
-  }
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
     setPerimetria(prev => ({
@@ -202,12 +192,10 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
         Agenda
         {section.includes('agenda') && (
           <Agenda
+            resetError={()=>setSectionErrors(prev => ({ ...prev, agenda: undefined }))}
             editingAgenda={agenda}
+            setAgenda={setAgenda}
             erroMsg={sectionErrors.agenda}
-            handleAgendaChecklist={(e) => {
-            handleAgendaChecklist(e)
-            setSectionErrors(prev => ({ ...prev, agenda: undefined }))
-          }}
           />
         )}
         <button
