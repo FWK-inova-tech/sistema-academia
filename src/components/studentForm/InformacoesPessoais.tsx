@@ -6,26 +6,28 @@ import { getLocalDate } from "../../utils/getLocalDate";
 
 interface informacoesPessoaisProps {
   editingStudent: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>,
+  resetError: () => void;
   handleUpdateInformacoes: (updatedInfos: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>) => void;
   erroMsg?: string;
 } 
-export const InformacoesPessoais = ({ editingStudent, handleUpdateInformacoes, erroMsg } : informacoesPessoaisProps) => {
+export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInformacoes, resetError } : informacoesPessoaisProps) => {
   const [name, setName] = useState(editingStudent.nome)
   const [contact, setContact] = useState(editingStudent.contato)
   const [date, setDate] = useState(editingStudent.dataNascimento.toISOString().split('T')[0])
 
   function handleInputChange(info: 'nome' | 'contato'| 'dataNascimento', value: string){
+    resetError()
     const updatedInfo = {
       ...editingStudent,
       [info]: value
     }
     if(info === 'nome') { setName(value) } 
     if(info === 'contato') { setContact(value) } 
-
     handleUpdateInformacoes(updatedInfo)
   }
 
   function handleDateInput(dateString: string){
+    resetError()
     setDate(dateString)
     if(dateString.length === 10){
       handleUpdateInformacoes({

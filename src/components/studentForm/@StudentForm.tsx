@@ -1,8 +1,5 @@
 import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
-import type { TreinoType } from "../../types/TreinoType";
-import type { PerimetriaType } from "../../types/PerimetriaType";
-import { itensPerimetria } from "../../constants/medidasPerimetria";
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
@@ -15,6 +12,8 @@ import { toast } from "react-toastify";
 import { registerAluno, updateAluno } from "../../utils/fetchAPI";
 import { useAppDispatch } from "../../stores/appStore";
 import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
+import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
+import { useStudentForm } from "../../hooks/useStudentForm";
 
 interface studentFormProps {
   currentStudentSheet?: {
@@ -25,80 +24,17 @@ interface studentFormProps {
 }
 export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProps) => {
   const dispatch = useAppDispatch()
-
+  
   const studentInitialValue: Omit<AlunoType, '_id'> | AlunoType = 
-  currentStudentSheet ? currentStudentSheet.student
-    : {
-        nome: '',
-        objetivo: '',
-        dataNascimento: new Date(),
-        professor: '',
-        nivel: "Iniciante",
-        contato: '',
-        dataInicio: new Date(),
-        dataRevisao: new Date(),
-        anaminese: '',
-        agenda: [],
-        treino: [],
-        perimetria: {
-          data: new Date(),
-          medidas: itensPerimetria
-        }
-      }
+  currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
+
+  const {
+    infoPessoais, agenda, infosTreino, perimetria, treino,
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino
+  } = useStudentForm(studentInitialValue)
 
   const [section, setSection] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
-
-  
-  const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
-    contato: studentInitialValue.contato,
-    dataNascimento: studentInitialValue.dataNascimento,
-    nome: studentInitialValue.nome
-  })
-  const [agenda, setAgenda] = useState(studentInitialValue.agenda)
-  const [infosTreino, setInfosTreino] = useState<Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>>({
-    anaminese: studentInitialValue.anaminese,
-    dataInicio: studentInitialValue.dataInicio,
-    dataRevisao: studentInitialValue.dataRevisao,
-    nivel: studentInitialValue.nivel,
-    objetivo: studentInitialValue.objetivo,
-    professor: studentInitialValue.professor 
-  })
-  const [perimetria, setPerimetria] = useState<PerimetriaType>
-  ({
-    medidas: studentInitialValue.perimetria.medidas, 
-    data: studentInitialValue.perimetria.data
-  })
-  const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
-
-  function handleAgendaChecklist(e: React.ChangeEvent<HTMLInputElement>) {
-    const { value, checked } = e.target
-      setAgenda(prev => {
-        if (checked) {
-          return [...prev, value]
-        } else {
-          return prev.filter(agenda => agenda !== value)
-        }
-    })
-  }
-
-  function handleUpdatePerimetriaMedidas(name: string, value: number) {
-    setPerimetria(prev => ({
-      ...prev,
-      medidas: prev.medidas.map(medida =>
-        medida.nome === name
-          ? (medida.valor !== value ? { ...medida, valor: value } : medida)
-          : medida
-      )
-    }))
-  } 
-
-  function handleUpdatePerimetriaDate(newDate: Date){
-    setPerimetria(prev => ({
-      ...prev,
-      data: newDate
-    }))
-  }
 
   function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
   const { value, checked } = e.target
@@ -189,7 +125,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
     
   }
 
-  
   return (
     <form onSubmit={handleSubmit} className="form-student">
       <span className={`form-item ${sectionErrors.pessoais && 'error-section'}`}>
@@ -197,10 +132,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
       {section.includes('pessoais') && (
         <InformacoesPessoais
           editingStudent={infoPessoais}
-          handleUpdateInformacoes={(updated) => {
-          setInfoPessoais(updated)
-          setSectionErrors(prev => ({ ...prev, pessoais: undefined }))
-        }}
+          resetError={()=>setSectionErrors(prev => ({ ...prev, pessoais: undefined }))}
+          handleUpdateInformacoes={setInfoPessoais}
           erroMsg={sectionErrors.pessoais}
         />
       )}
@@ -222,12 +155,10 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
         Agenda
         {section.includes('agenda') && (
           <Agenda
+            resetError={()=>setSectionErrors(prev => ({ ...prev, agenda: undefined }))}
             editingAgenda={agenda}
+            setAgenda={setAgenda}
             erroMsg={sectionErrors.agenda}
-            handleAgendaChecklist={(e) => {
-            handleAgendaChecklist(e)
-            setSectionErrors(prev => ({ ...prev, agenda: undefined }))
-          }}
           />
         )}
         <button
@@ -275,14 +206,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
         {section.includes('perimetria') && (
           <Perimetria
           editingPerimetria={perimetria}
-          handleUpdatePerimetriaDate={(newDate) => {
-            handleUpdatePerimetriaDate(newDate)
-            setSectionErrors(prev => ({ ...prev, perimetria: undefined }))
-          }}
-          handleUpdatePerimetriaMedidas={(name, value) => {
-            handleUpdatePerimetriaMedidas(name, value)
-            setSectionErrors(prev => ({ ...prev, perimetria: undefined }))
-          }}
+          resetError={()=>setSectionErrors(prev => ({ ...prev, perimetria: undefined }))}
+          setPerimetria={setPerimetria}
           erroMsg={sectionErrors.perimetria}/>
 
         )}

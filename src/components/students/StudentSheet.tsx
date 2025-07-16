@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
 import { ItemTreino } from "../treino/@ItemTreino";
 import { ModalDeleteStudent } from "./ModalDeleteStudent";
-import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "./useStudentSheet";
+import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../../hooks/useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;
@@ -11,7 +11,6 @@ interface studentSheetProps {
 }
 export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet } : studentSheetProps) => {
   const [modalDelete, setModalDelete] = useState(false)
-
 
   function getLevels(){
     const getStudentInfoValue = (toCheck: string) => {
