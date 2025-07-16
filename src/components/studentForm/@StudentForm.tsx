@@ -1,7 +1,5 @@
 import { useState } from "react";
 import type { AlunoType } from "../../types/AlunoType"
-import type { TreinoType } from "../../types/TreinoType";
-import type { PerimetriaType } from "../../types/PerimetriaType";
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
@@ -15,6 +13,7 @@ import { registerAluno, updateAluno } from "../../utils/fetchAPI";
 import { useAppDispatch } from "../../stores/appStore";
 import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
 import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
+import { useStudentForm } from "../../hooks/useStudentForm";
 
 interface studentFormProps {
   currentStudentSheet?: {
@@ -25,33 +24,17 @@ interface studentFormProps {
 }
 export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProps) => {
   const dispatch = useAppDispatch()
-
+  
   const studentInitialValue: Omit<AlunoType, '_id'> | AlunoType = 
-    currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
+  currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
+
+  const {
+    infoPessoais, agenda, infosTreino, perimetria, treino,
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino
+  } = useStudentForm(studentInitialValue)
 
   const [section, setSection] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
-  
-  const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
-    contato: studentInitialValue.contato,
-    dataNascimento: studentInitialValue.dataNascimento,
-    nome: studentInitialValue.nome
-  })
-  const [agenda, setAgenda] = useState(studentInitialValue.agenda)
-  const [infosTreino, setInfosTreino] = useState<Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>>({
-    anaminese: studentInitialValue.anaminese,
-    dataInicio: studentInitialValue.dataInicio,
-    dataRevisao: studentInitialValue.dataRevisao,
-    nivel: studentInitialValue.nivel,
-    objetivo: studentInitialValue.objetivo,
-    professor: studentInitialValue.professor 
-  })
-  const [perimetria, setPerimetria] = useState<PerimetriaType>
-  ({
-    medidas: studentInitialValue.perimetria.medidas, 
-    data: studentInitialValue.perimetria.data
-  })
-  const [treino, setTreino] = useState<TreinoType[]>(studentInitialValue.treino)
 
   function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
   const { value, checked } = e.target
@@ -142,7 +125,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet } : studentFormProp
     
   }
 
-  
   return (
     <form onSubmit={handleSubmit} className="form-student">
       <span className={`form-item ${sectionErrors.pessoais && 'error-section'}`}>
