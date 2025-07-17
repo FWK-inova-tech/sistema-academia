@@ -81,7 +81,8 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
         </>
         : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p> 
         : 
-        <>
+        <div className="content students-list">
+          <h1>Alunos</h1>
         {currentStudentsList.length > 0 ? 
           <table className="students-list">
             <thead>
@@ -94,10 +95,13 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
             <tbody>
               {currentStudentsList.map(student => (
                 <tr key={student._id}>
-                  <td>{student._id}</td>
+                  <td className={'id'} title={student._id}>
+                    #{student._id.slice(0, 7)}...
+                  </td>
                   <td>{student.nome}</td>
                   <td className="student-actions">
-                    <button 
+                    <button
+                    className='btn-green' 
                     type='button'
                     onClick={()=>{
                       handleOpenStudentSheet(student._id)
@@ -110,7 +114,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet } : s
             </tbody>
           </table>
           : <p>Não há nenhum aluno registrado</p>}
-          </>
+          </div>
         }
         </>
       }

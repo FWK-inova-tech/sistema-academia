@@ -10,7 +10,7 @@ export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
   const isAuthLoading = useAppSelector((state)=> state.auth.loading)
 
   return (
-  <aside>
+  <aside className='sidebar'>
     <button 
     id='butao-abrir-alunos'
     type="button" 

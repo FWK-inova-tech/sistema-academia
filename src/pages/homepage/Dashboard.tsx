@@ -21,7 +21,7 @@ export const Dashboard = ()=>{
   const [apiError, setApiError] = useState<false | apiErrorType>(false)
   const dispatch = useAppDispatch()
   const students = useAppSelector((state)=> state.students.studentsList)
-  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, 'id' | 'nome'>[]>(students)
+  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, '_id' | 'nome'>[]>(students)
   const [openRegister, setOpenRegister] = useState(false)
   
 
