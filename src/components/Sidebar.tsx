@@ -9,18 +9,21 @@ export const Sidebar = ({ openAlunos, openConfig, current } : sidebarProps) => {
   const isStudentsLoading = useAppSelector((state)=> state.students.loading)
   const isAuthLoading = useAppSelector((state)=> state.auth.loading)
 
+
   return (
   <aside className='sidebar'>
     <button 
     id='butao-abrir-alunos'
     type="button" 
     onClick={openAlunos}
+    className={`${current !== "settings" && 'active'}`}
     disabled={isStudentsLoading || isAuthLoading || current !== 'settings' ? true : false}> 
       Alunos
     </button>
     <button 
     type="button"
     onClick={openConfig} 
+    className={`${current === "settings" && 'active'}`}
     disabled={isStudentsLoading || isAuthLoading  || current === 'settings' ? true : false}>
       Configurações
     </button>
