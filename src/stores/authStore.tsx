@@ -5,7 +5,7 @@ const userToken = localStorage.getItem('userToken') ?? null as string | null
 
 const initialState = {
   // true durante o desenvolvimento
-  authenticated: true,
+  authenticated: false,
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
   error: null as string | null,
@@ -15,16 +15,16 @@ const initialState = {
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (credentials: { email: string, password: string }, thunkAPI) => {
-    try{
+    try {
       const res = await login(credentials)
       const token = res
       localStorage.setItem('userToken', token)
 
-    }catch(error){
+    } catch (error) {
       const message = error as Error
-      return thunkAPI.rejectWithValue( message.message || "Erro ao tentar fazer a requisição do login")
+      return thunkAPI.rejectWithValue(message.message || "Erro ao tentar fazer a requisição do login")
     }
-  } 
+  }
 )
 
 export const authSlice = createSlice({
@@ -39,13 +39,13 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state)=> {
+      .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(loginUser.fulfilled, (state)=>{
+      .addCase(loginUser.fulfilled, (state) => {
         state.status = 'succeeded'
       })
-      .addCase(loginUser.rejected, (state)=>{
+      .addCase(loginUser.rejected, (state) => {
         state.status = 'failed'
       })
   }
