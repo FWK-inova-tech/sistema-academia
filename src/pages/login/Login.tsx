@@ -31,7 +31,7 @@ export const Login = () => {
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email</label><br />
+          <label>Email</label>
           <input
             type="email"
             value={email}
@@ -40,7 +40,7 @@ export const Login = () => {
           />
         </div>
         <div>
-          <label>Senha</label><br />
+          <label>Senha</label>
           <input
             type="password"
             value={password}
