@@ -6,8 +6,7 @@ import type { PerimetriaType } from "../types/PerimetriaType";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 const getToken = () => {
-  const token = localStorage.getItem('token')
-  return 'stoken'
+  const token = localStorage.getItem('userToken')
   if (!token) {
     throw new Error("Token ausente, operação não permitida")
   } else {
