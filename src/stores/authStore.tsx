@@ -1,24 +1,28 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { login } from "../utils/fetchAPI";
 
 const userToken = localStorage.getItem('userToken') ?? null as string | null
+interface ICredentials {
+  email: string;
+  password: string;
+}
 
 const initialState = {
   // true durante o desenvolvimento
-  authenticated: false,
+  authenticated: userToken ? true : false,
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
   error: null as string | null,
   loading: false as false | string
 }
 
-export const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async (credentials: { email: string, password: string }, thunkAPI) => {
+export const loginUser = createAsyncThunk<string, ICredentials, { rejectValue: string }>("auth/login",
+  async (credentials, thunkAPI) => {
     try {
       const res = await login(credentials)
       const token = res
       localStorage.setItem('userToken', token)
+      return token
 
     } catch (error) {
       const message = error as Error
@@ -42,7 +46,9 @@ export const authSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(loginUser.fulfilled, (state) => {
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<string>) => {
+        state.authenticated = true
+        state.token = action.payload
         state.status = 'succeeded'
       })
       .addCase(loginUser.rejected, (state) => {
@@ -52,3 +58,4 @@ export const authSlice = createSlice({
 })
 
 export const { logout } = authSlice.actions
+

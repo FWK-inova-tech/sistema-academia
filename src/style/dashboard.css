@@ -72,7 +72,7 @@
   }
 }
 
-main#dasboard {
+main#dashboard {
   width: 100%;
   display: flex;
   flex-direction: column;
