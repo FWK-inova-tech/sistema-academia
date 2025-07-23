@@ -1,0 +1,64 @@
+#root {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('login-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+}
+
+
+main#login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 100px;
+}
+
+h1 {
+  display: flex;
+  background: var(--secondaryColor);
+  color: var(--primaryColor);
+  font-size: 2.5em;
+  font-weight: 500;
+  padding: 2px 20%;
+  border-radius: 2rem;
+}
+
+form {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    width: fit-content;
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+
+
+    label,
+    input {
+      background: var(--secondaryColor);
+      border: 2px solid var(--primaryColor);
+      color: black;
+    }
+
+    label {
+      border-bottom: transparent;
+      width: fit-content;
+      padding: 0px 5px;
+    }
+
+    input {
+      padding: 3px 5px;
+      font-size: 1.05em;
+    }
+  }
+}

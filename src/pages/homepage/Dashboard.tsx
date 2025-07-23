@@ -12,35 +12,35 @@ import { ToastContainer } from "react-toastify"
 import '../../style/dashboard.css'
 import '../../style/studentsList.css'
 
-export const Dashboard = ()=>{
+export const Dashboard = () => {
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
   type apiErrorType = {
     message: string;
-    callback: ()=> Promise<void> | void;
+    callback: () => Promise<void> | void;
   }
   const [apiError, setApiError] = useState<false | apiErrorType>(false)
   const dispatch = useAppDispatch()
-  const students = useAppSelector((state)=> state.students.studentsList)
-  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, 'id' | 'nome'>[]>(students)
+  const students = useAppSelector((state) => state.students.studentsList)
+  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, '_id' | 'nome'>[]>(students)
   const [openRegister, setOpenRegister] = useState(false)
-  
+
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
   }, [dispatch])
 
-  useEffect(()=>{
+  useEffect(() => {
     setCurrentStudentsList(students)
-  },[students])
+  }, [students])
 
-  async function fetchData(){
-    try{
+  async function fetchData() {
+    try {
       const req = await getAlunos()
       dispatch(setAlunos(req))
       dispatch(setLoading(false))
-    }catch(error){
+    } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
-      setApiError({message: errorMessage, callback: fetchData})
+      setApiError({ message: errorMessage, callback: fetchData })
     }
   }
 
@@ -55,71 +55,71 @@ export const Dashboard = ()=>{
     }
   }
 
-  function handleOpenRegister(){
+  function handleOpenRegister() {
     setOpenRegister(true)
     setCurrent('register/edit/sheet')
   }
 
-  function handleCloseRegister(){
+  function handleCloseRegister() {
     setOpenRegister(false)
     setCurrent('students')
   }
 
-  function handleCloseOpenEdit(action: 'close' | 'open'){
-    if(action === 'open'){
+  function handleCloseOpenEdit(action: 'close' | 'open') {
+    if (action === 'open') {
       setCurrent('register/edit/sheet')
     } else {
       setCurrent('students')
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(setLoading("Buscando lista de alunos"))
-    
+
     fetchData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (<>
-    <ToastContainer/>
-    <Sidebar 
-    current={current}
-    openAlunos={()=> setCurrent('students')}
-    openConfig={()=> setCurrent('settings')}/>
-    <main>
+    <ToastContainer />
+    <Sidebar
+      current={current}
+      openAlunos={() => setCurrent('students')}
+      openConfig={() => setCurrent('settings')} />
+    <main id='dashboard'>
       {apiError ? <div>
         <p>Erro</p>
         <p>{apiError.message}</p>
         <p>Tente novamente em alguns minutos</p>
-        </div>
-      : 
-      <>
-        {current !== 'settings' && <>
-          {current === 'students' &&
-            <div className="top-bar">
-              <SearchStudent
-              handleSearch={handleSearch}/>
-              <button
-              type="button"
-              onClick={handleOpenRegister}>
-                Cadastrar aluno
-              </button>
-            </div>
-          }
-          {openRegister ? 
-          <>
-          <StudentForm
-          closeForm={handleCloseRegister}/>
-          </> 
-          : 
-          <Students
-          controlOpenSheet={handleCloseOpenEdit} 
-          currentStudentsList={currentStudentsList}
-          setError={setApiError}/>
-          }
-        </>}
-        {current === 'settings' && <Settings/>}
-      </>
+      </div>
+        :
+        <>
+          {current !== 'settings' && <>
+            {current === 'students' &&
+              <div className="top-bar">
+                <SearchStudent
+                  handleSearch={handleSearch} />
+                <button
+                  type="button"
+                  onClick={handleOpenRegister}>
+                  Cadastrar aluno
+                </button>
+              </div>
+            }
+            {openRegister ?
+              <>
+                <StudentForm
+                  closeForm={handleCloseRegister} />
+              </>
+              :
+              <Students
+                controlOpenSheet={handleCloseOpenEdit}
+                currentStudentsList={currentStudentsList}
+                setError={setApiError} />
+            }
+          </>}
+          {current === 'settings' && <Settings />}
+        </>
       }
     </main>
   </>)
