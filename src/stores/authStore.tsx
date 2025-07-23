@@ -9,7 +9,7 @@ interface ICredentials {
 
 const initialState = {
   // true durante o desenvolvimento
-  authenticated: false,
+  authenticated: userToken ? true : false,
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
   error: null as string | null,
