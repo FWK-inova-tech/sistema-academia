@@ -22,7 +22,8 @@ export const Login = () => {
     const result = await dispatch(loginUser({ email, password }))
 
     if (loginUser.fulfilled.match(result)) {
-      navigate("/dashboard")
+      console.log('navigate')
+      navigate("/")
     }
   }
 

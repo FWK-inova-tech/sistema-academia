@@ -8,7 +8,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL
 const getToken = () => {
   const token = localStorage.getItem('token')
   return 'stoken'
-  if(!token){
+  if (!token) {
     throw new Error("Token ausente, operação não permitida")
   } else {
     return token
@@ -16,50 +16,49 @@ const getToken = () => {
 }
 
 export const login = async (credentials: Adm): Promise<string> => {
-  const { data } = await axios.post<{message: string, token: string}>(`${backendUrl}/login`, {
+  const { data } = await axios.post<{ message: string, token: string }>(`${backendUrl}/auth/login`, {
     email: credentials.email,
     password: credentials.password
   })
-
   return data.token
 }
 
 export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | '_id'>[]> => {
-  const { data } = await axios.get<AlunoType[]>(backendUrl, {
+  const { data } = await axios.get<AlunoType[]>(`${backendUrl}/alunos`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
   })
   return data
-  
+
 }
 
 type RequestAlunoDataType = ReplaceDateWithString<AlunoType>;
 
 export const getAluno = async (_id: string): Promise<AlunoType | null> => {
-  const { data } = await axios.get<RequestAlunoDataType>(`${backendUrl}/${_id}`, {
+  const { data } = await axios.get<RequestAlunoDataType>(`${backendUrl}/alunos/${_id}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
   })
-  
+
   const formatedPerimetria: PerimetriaType = {
     ...data.perimetria,
     data: new Date(data.perimetria.data)
-  } 
+  }
   const formatedData: AlunoType = {
     ...data,
     perimetria: formatedPerimetria,
     dataNascimento: new Date(data.dataNascimento),
     dataInicio: new Date(data.dataInicio),
     dataRevisao: new Date(data.dataRevisao),
-  } 
+  }
   return formatedData
-  
+
 }
 
 export const registerAluno = async (student: Omit<NovoAluno, '_id'>): Promise<string> => {
-  const { data } = await axios.post<AlunoType>(`${backendUrl}`, {
+  const { data } = await axios.post<AlunoType>(`${backendUrl}/alunos`, {
     nome: student.nome,
     objetivo: student.objetivo,
     dataNascimento: student.dataNascimento,
@@ -82,7 +81,7 @@ export const registerAluno = async (student: Omit<NovoAluno, '_id'>): Promise<st
 }
 
 export const updateAluno = async (student: AlunoType) => {
-  const { data } = await axios.put<{message: string, student: AlunoType}>(`${backendUrl}/${student._id}`, {
+  const { data } = await axios.put<{ message: string, student: AlunoType }>(`${backendUrl}/alunos/${student._id}`, {
     nome: student.nome,
     objetivo: student.objetivo,
     dataNascimento: student.dataNascimento,
@@ -106,7 +105,7 @@ export const updateAluno = async (student: AlunoType) => {
 }
 
 export const deleteAluno = async (id: string) => {
-  const { data } = await axios.delete<{message: string}>(`${backendUrl}/${id}`,  {
+  const { data } = await axios.delete<{ message: string }>(`${backendUrl}/alunos/${id}`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
@@ -126,5 +125,5 @@ export const changePassword = async (newPassword: string) => {
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
   await delay(10000)
-  return  200
+  return 200
 }
