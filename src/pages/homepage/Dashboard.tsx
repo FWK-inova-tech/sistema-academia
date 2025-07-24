@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Sidebar } from "../../components/Sidebar"
+import { useNavigate } from "react-router-dom";
 import { Students } from "../../components/students/@Students"
 import { Settings } from "../../components/Settings"
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
@@ -11,8 +12,11 @@ import { StudentForm } from "../../components/studentForm/@StudentForm"
 import { ToastContainer } from "react-toastify"
 import '../../style/dashboard.css'
 import '../../style/studentsList.css'
+import axios from "axios"
+import { logout } from "../../stores/authStore";
 
 export const Dashboard = () => {
+  const navigate = useNavigate()
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
   type apiErrorType = {
     message: string;
@@ -40,6 +44,11 @@ export const Dashboard = () => {
       dispatch(setLoading(false))
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        dispatch(logout())
+        navigate('/login')
+
+      }
       setApiError({ message: errorMessage, callback: fetchData })
     }
   }
