@@ -76,3 +76,49 @@ export const login = async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Erro no servidor.' });
   }
 };
+
+export const changePassword = async (req: Request, res: Response): Promise<Response> => {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.user?.id; // Obtido do middleware 'auth'
+
+    // Validação básica de entrada
+    if (!oldPassword || !newPassword) {
+        return res.status(400).json({ message: 'Senha antiga e nova senha são obrigatórias.' });
+    }
+
+    if (!userId) {
+        // Isso não deve acontecer se o middleware 'auth' estiver funcionando corretamente
+        return res.status(401).json({ message: 'ID do usuário não encontrado na requisição. Autorização falhou.' });
+    }
+
+    try {
+        const user: IUser | null = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        }
+
+        // 1. Verificar a senha antiga
+        const isMatch = await user.comparePassword(oldPassword);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Senha antiga incorreta.' });
+        }
+
+        user.password = newPassword; // Atribua a nova senha (ela será criptografada automaticamente)
+        await user.save(); // Salve o usuário, o hook pre('save') será executado
+
+        return res.status(200).json({ message: 'Senha alterada com sucesso.' });
+
+    } catch (error: unknown) {
+        console.error('Erro ao alterar senha:', error);
+        if (error instanceof mongoose.Error.ValidationError) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const messages = Object.values(error.errors).map(err => (err as any).message);
+            return res.status(400).json({ message: 'Erro de validação: ' + messages.join(', ') });
+        }
+        if (error instanceof Error) {
+            return res.status(500).json({ message: error.message || 'Erro interno do servidor.' });
+        }
+        return res.status(500).json({ message: 'Ocorreu um erro desconhecido ao alterar a senha.' });
+    }
+};
