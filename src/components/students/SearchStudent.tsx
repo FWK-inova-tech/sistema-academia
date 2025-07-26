@@ -3,7 +3,7 @@ import { useState } from "react";
 interface searchStudentProps {
   handleSearch: (name: string) => void;
 }
-export const SearchStudent = ({ handleSearch } : searchStudentProps) => {
+export const SearchStudent = ({ handleSearch }: searchStudentProps) => {
   const [searchTerm, setSearchTerm] = useState("")
 
   function handleInputChange(name: string) {
@@ -14,10 +14,11 @@ export const SearchStudent = ({ handleSearch } : searchStudentProps) => {
   return (
     <div className="search-student">
       <input
-      type="text"
-      placeholder="Buscar aluno pelo nome..."
-      value={searchTerm}
-      onChange={(e)=>handleInputChange(e.target.value)}/>
+        className='bg-[var(--secondaryColor)] px-3 py-1 rounded-3xl'
+        type="text"
+        placeholder="Buscar aluno pelo nome..."
+        value={searchTerm}
+        onChange={(e) => handleInputChange(e.target.value)} />
     </div>
   )
 }

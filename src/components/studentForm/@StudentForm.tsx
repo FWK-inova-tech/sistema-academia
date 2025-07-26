@@ -140,8 +140,10 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
 
   return (
     <form onSubmit={handleSubmit} className="form-student">
+      <h1>{currentStudentSheet ? 'Editando ' : 'Cadastrando '} aluno</h1>
+      {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
       <span className={`form-item ${sectionErrors.pessoais && 'error-section'}`}>
-        Informações pessoais
+        <h3>Informações pessoais</h3>
         {section.includes('pessoais') && (
           <InformacoesPessoais
             editingStudent={infoPessoais}
@@ -154,7 +156,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </span>
 
       <span className={`form-item ${sectionErrors.agenda && 'error-section'}`}>
-        Agenda
+        <h3>Agenda</h3>
         {section.includes('agenda') && (
           <Agenda
             resetError={() => setSectionErrors(prev => ({ ...prev, agenda: undefined }))}
@@ -167,7 +169,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </span>
 
       <span className={`form-item ${sectionErrors.infoTreino && 'error-section'}`}>
-        Informações para treino
+        <h3>Informações para treino</h3>
         {section.includes('infoTreino') && (
           <InfoTreino
             editingInfoTreino={infosTreino}
@@ -182,7 +184,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </span>
 
       <span className={`form-item ${sectionErrors.perimetria && 'error-section'}`}>
-        Perimetria
+        <h3>Perimetria</h3>
         {section.includes('perimetria') && (
           <Perimetria
             editingPerimetria={perimetria}
@@ -195,9 +197,9 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </span>
 
       <span className={`form-item ${sectionErrors.treino && 'error-section'}`}>
-        Treino
+        <h3>Treino</h3>
         {section.includes('treino') && (
-          <div>
+          <div className='treino'>
             {treinosOpcoes.map(categoria => <ItemTreino
               item={categoria}
               studentList={treino.find(item => item.categoria === categoria.categoria)?.exercicios ?? []}
@@ -214,6 +216,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       <button type="button" onClick={closeForm}>
         Cancelar
       </button>
-    </form>
+    </form >
   )
 }

@@ -9,7 +9,7 @@ interface perimetriaProps {
   resetError: () => void;
   setPerimetria: (value: React.SetStateAction<PerimetriaType>) => void;
 }
-export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetError } : perimetriaProps) => {
+export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetError }: perimetriaProps) => {
   const [date, setDate] = useState(editingPerimetria.data.toISOString().split('T')[0])
 
   function handleUpdatePerimetriaMedidas(name: string, value: number) {
@@ -22,18 +22,18 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
           : medida
       )
     }))
-  } 
-  function handleUpdatePerimetriaDate(newDate: Date){
+  }
+  function handleUpdatePerimetriaDate(newDate: Date) {
     setPerimetria(prev => ({
       ...prev,
       data: newDate
     }))
   }
 
-  function handleDateInputChange(dateString: string){
+  function handleDateInputChange(dateString: string) {
     resetError()
     setDate(dateString)
-    if(dateString.length === 10){
+    if (dateString.length === 10) {
       handleUpdatePerimetriaDate(getLocalDate(dateString));
     }
   }
@@ -41,25 +41,25 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
 
 
   return (
-  <div>
-    <span>
-      <label htmlFor="perimetria-date">Data da Perimetria</label>
-      <input 
-      type='date'
-      id="perimetria-date" 
-      value={date}
-      onChange={(e)=> handleDateInputChange(e.target.value)}/>
-    </span>
-    <span>
-      {editingPerimetria.medidas.map(item =>
-        <span key={item.nome}>
-          <PerimetriaItem
-          item={item}
-          handleUpdateMedida={handleUpdatePerimetriaMedidas}/>
-        </span>
-      )}
-    </span>
-    {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
-  </div>
-)
+    <div className='perimetria'>
+      <span className='perimetria-date'>
+        <label htmlFor="perimetria-date">Data</label>
+        <input
+          type='date'
+          id="perimetria-date"
+          value={date}
+          onChange={(e) => handleDateInputChange(e.target.value)} />
+      </span>
+      <span className='perimetria-list'>
+        {editingPerimetria.medidas.map(item =>
+          <span key={item.nome}>
+            <PerimetriaItem
+              item={item}
+              handleUpdateMedida={handleUpdatePerimetriaMedidas} />
+          </span>
+        )}
+      </span>
+      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
+    </div>
+  )
 }

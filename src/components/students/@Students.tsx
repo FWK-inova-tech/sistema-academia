@@ -83,7 +83,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet }: st
             : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p>
               :
               <div className="content students-list">
-                <h1>Alunos</h1>
+                <h1 className='text-3xl mb-2'>Alunos</h1>
                 {currentStudentsList.length > 0 ?
                   <table className="students-list">
                     <thead>
@@ -102,7 +102,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet }: st
                           <td>{student.nome}</td>
                           <td className="student-actions">
                             <button
-                              className='btn-green'
+                              className='btn btn-green'
                               type='button'
                               onClick={() => {
                                 handleOpenStudentSheet(student._id)

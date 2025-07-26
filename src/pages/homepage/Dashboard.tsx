@@ -89,47 +89,50 @@ export const Dashboard = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (<>
-    <ToastContainer />
-    <Sidebar
-      current={current}
-      openAlunos={() => setCurrent('students')}
-      openConfig={() => setCurrent('settings')} />
-    <main id='dashboard'>
-      {apiError ? <div>
-        <p>Erro</p>
-        <p>{apiError.message}</p>
-        <p>Tente novamente em alguns minutos</p>
-      </div>
-        :
-        <>
-          {current !== 'settings' && <>
-            {current === 'students' &&
-              <div className="top-bar">
-                <SearchStudent
-                  handleSearch={handleSearch} />
-                <button
-                  type="button"
-                  onClick={handleOpenRegister}>
-                  Cadastrar aluno
-                </button>
-              </div>
-            }
-            {openRegister ?
-              <>
-                <StudentForm
-                  closeForm={handleCloseRegister} />
-              </>
-              :
-              <Students
-                controlOpenSheet={handleCloseOpenEdit}
-                currentStudentsList={currentStudentsList}
-                setError={setApiError} />
-            }
-          </>}
-          {current === 'settings' && <Settings />}
-        </>
-      }
-    </main>
-  </>)
+  return (
+    <div className='flex flex-col w-screen md:flex-row'>
+      <ToastContainer />
+      <Sidebar
+        current={current}
+        openAlunos={() => setCurrent('students')}
+        openConfig={() => setCurrent('settings')} />
+      <main className='w-full bg-[var(--secondaryColor)]'
+        id='dashboard'>
+        {apiError ? <div>
+          <p>Erro</p>
+          <p>{apiError.message}</p>
+          <p>Tente novamente em alguns minutos</p>
+        </div>
+          :
+          <>
+            {current !== 'settings' && <>
+              {current === 'students' &&
+                <div className="top-bar flex flex-row justify-between w-full px-2 py-4 bg-white">
+                  <SearchStudent
+                    handleSearch={handleSearch} />
+                  <button
+                    className='btn btn-green'
+                    type="button"
+                    onClick={handleOpenRegister}>
+                    Cadastrar aluno
+                  </button>
+                </div>
+              }
+              {openRegister ?
+                <>
+                  <StudentForm
+                    closeForm={handleCloseRegister} />
+                </>
+                :
+                <Students
+                  controlOpenSheet={handleCloseOpenEdit}
+                  currentStudentsList={currentStudentsList}
+                  setError={setApiError} />
+              }
+            </>}
+            {current === 'settings' && <Settings />}
+          </>
+        }
+      </main>
+    </div>)
 }
