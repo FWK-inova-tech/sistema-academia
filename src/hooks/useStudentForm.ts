@@ -5,7 +5,7 @@ import type { TreinoType } from "../types/TreinoType";
 import type { SectionErrorType, sectionType } from "../types/SectionTypes";
 
 export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
-  const [section, setSection] = useState<sectionType[]>([])
+  const [activeSections, setActiveSections] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
 
   const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
@@ -34,7 +34,7 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
   const [treino, setTreino] = useState<TreinoType[]>(student.treino)
 
   return {
-    infoPessoais, agenda, infosTreino, perimetria, treino, section, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setSection, setSectionErrors
+    infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors
   }
 }

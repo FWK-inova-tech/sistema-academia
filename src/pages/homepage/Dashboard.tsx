@@ -96,7 +96,7 @@ export const Dashboard = () => {
         current={current}
         openAlunos={() => setCurrent('students')}
         openConfig={() => setCurrent('settings')} />
-      <main className='w-full bg-[var(--secondaryColor)]'
+      <main className='w-full h-full bg-[var(--secondaryColor)]'
         id='dashboard'>
         {apiError ? <div>
           <p>Erro</p>

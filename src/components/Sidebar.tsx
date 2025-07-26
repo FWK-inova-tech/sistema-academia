@@ -12,12 +12,12 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
 
   return (
     <aside
-      className='sidebar flex flex-col bg-[var(--primaryColor)] w-[200px] px-2 pt-2'>
+      className='sidebar flex flex-row gap-3 md:flex-col bg-[var(--primaryColor)] md:w-[200px] w-full px-2 py-2 pt-2 items-center justify-center md:justify-start'>
       <button
         id='botao-abrir-alunos'
         type="button"
         onClick={openAlunos}
-        className={`rounded-[10px] font-medium text-[1.25em]
+        className={`rounded-[10px] w-fit px-3 md:w-full font-medium text-[1.25em]
         ${current !== "settings" ?
             'active bg-[var(--secondaryColor)] text-[var(--primaryColor)]'
             :
@@ -28,7 +28,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
       <button
         type="button"
         onClick={openConfig}
-        className={`rounded-[10px] font-medium text-[1.25em]
+        className={`rounded-[10px] font-medium text-[1.25em] w-fit md:w-full px-3
         ${current === "settings" && 'active' ?
             'active bg-[var(--secondaryColor)] text-[var(--primaryColor)]'
             :
