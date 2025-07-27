@@ -42,12 +42,16 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
     mask.resolve(defaultString)
     return mask.value
   }
+  const spanContainerClassname = 'flex flex-row items-center gap-2'
+  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl'
+
 
   return (
-    <div className="info-pessoais">
-      <span>
-        <label htmlFor="student-name">Nome</label>
+    <div className="info-pessoais flex flex-col items-center gap-3">
+      <span className={spanContainerClassname}>
+        <label htmlFor="student-name" className="border-none bg-none">Nome:</label>
         <input id="student-name" name="student-name"
+          className={inputClassname}
           value={name}
           maxLength={150}
           minLength={10}
@@ -56,18 +60,20 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
           onChange={(e) => handleInputChange('nome', e.target.value)} />
       </span>
 
-      <span>
-        <label htmlFor="birth-date">Data de nascimento</label>
+      <span className={spanContainerClassname}>
+        <label htmlFor="birth-date">Data de nascimento:</label>
         <input id="birth-date" name="birth-date"
+          className={inputClassname}
           value={date}
           type="date"
           placeholder="Data de nascimento"
           onChange={(e) => handleDateInput(e.target.value)} />
       </span>
 
-      <span>
-        <label htmlFor="contact">Contato</label>
+      <span className={spanContainerClassname}>
+        <label htmlFor="contact">Contato:</label>
         <IMaskInput
+          className={inputClassname}
           mask="(00) 0 0000-0000"
           placeholder="(00) 0 0000-0000"
           id="contact"

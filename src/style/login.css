@@ -19,7 +19,7 @@ main#login {
 
 
 
-form {
+#login form {
   display: flex;
   gap: 20px;
   flex-direction: column;

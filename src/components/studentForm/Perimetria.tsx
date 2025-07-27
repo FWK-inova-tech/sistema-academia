@@ -39,20 +39,22 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
   }
 
 
-
   return (
-    <div className='perimetria'>
-      <span className='perimetria-date'>
-        <label htmlFor="perimetria-date">Data</label>
+    <div className='perimetria flex flex-col'>
+      <span className='perimetria-date flex flex-col items-start'>
+        <label htmlFor="perimetria-date">
+          Data:
+        </label>
         <input
+          className='bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl w-[12em] mb-2'
           type='date'
           id="perimetria-date"
           value={date}
           onChange={(e) => handleDateInputChange(e.target.value)} />
       </span>
-      <span className='perimetria-list'>
+      <span className='perimetria-list grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-2'>
         {editingPerimetria.medidas.map(item =>
-          <span key={item.nome}>
+          <span key={item.nome} className="bg-[var(--primaryColor)] text-white py-2 px-3 flex flex-row justify-between rounded-[10px]">
             <PerimetriaItem
               item={item}
               handleUpdateMedida={handleUpdatePerimetriaMedidas} />

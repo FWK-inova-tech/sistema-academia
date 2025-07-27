@@ -38,11 +38,13 @@ body {
   min-height: 100vh;
 }
 
+label {
+  font-weight: 500;
+}
 
 .btn {
   border-radius: 2em;
   border: 1px solid transparent;
-  padding: 0.4rem 2em;
   font-family: inherit;
   cursor: pointer;
 }

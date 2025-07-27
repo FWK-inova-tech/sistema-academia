@@ -38,13 +38,15 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   } = useStudentForm(studentInitialValue)
 
   const SectionButton = ({ name }: buttonProps) => {
-    return <button onClick={() =>
-      setActiveSections((prev) =>
-        prev.includes(name)
-          ? prev.filter((s) => s !== name)
-          : [...prev, name]
-      )
-    }>
+    return <button
+      className="btn btn-green px-6 py-[2px]"
+      onClick={() =>
+        setActiveSections((prev) =>
+          prev.includes(name)
+            ? prev.filter((s) => s !== name)
+            : [...prev, name]
+        )
+      }>
       {activeSections.includes(name) ? 'Fechar' : 'Abrir'}
     </button>
   }
@@ -195,14 +197,18 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   ]
 
   return (
-    <form onSubmit={handleSubmit} className="form-student">
+    <form onSubmit={handleSubmit} className="form-student bg-white">
       <h1 className='text-3xl text-[var(--primaryColor)] font-medium'>
         {currentStudentSheet ? 'Editando ' : 'Cadastrando '} aluno
       </h1>
       {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
       {sectionElements.map(section => <>
-        <span className={`form-item`}>
-          <h3>{section.title}</h3>
+        <span className={`
+        form-item border py-2 w-[40em] px-3 gap-2
+        ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
+          <h3 className="font-medium text-[var(--primaryColor)]">
+            {section.title}
+          </h3>
           {activeSections.includes(section.name as sectionType) && (
             <> {section.element} </>
           )}

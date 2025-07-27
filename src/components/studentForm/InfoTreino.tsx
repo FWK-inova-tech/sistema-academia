@@ -57,11 +57,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       })
     }
   }
+  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl'
+  const spanContainerClassname = 'flex flex-col items-start'
 
   return (
-    <div className='info-treino'>
-      <span>
-        <label htmlFor='level'>Nível</label>
+    <div className='info-treino flex flex-col'>
+      <span >
+        <label htmlFor='level' className='mr-2'>Nível:</label>
         <select id='level'
           required
           value={editingInfoTreino.nivel}
@@ -72,39 +74,46 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
         </select>
       </span>
 
-      <span>
-        <label htmlFor="teacher">Professor(a)</label>
-        <input
-          id="teacher"
-          type="text"
-          maxLength={150}
-          minLength={10}
-          value={teacher}
-          placeholder="Nome do professor(a)"
-          onChange={(e) => handleInputChange('professor', e.target.value)} />
+      <span className='flex flex-col md: flex-row'>
+        <span className={spanContainerClassname}>
+          <label htmlFor="teacher">Professor(a):</label>
+          <input
+            className={inputClassname}
+            id="teacher"
+            type="text"
+            maxLength={150}
+            minLength={10}
+            value={teacher}
+            placeholder="Nome do professor(a)"
+            onChange={(e) => handleInputChange('professor', e.target.value)} />
+        </span>
+
+        <span className={spanContainerClassname}>
+          <label htmlFor="start-date">Data de início</label>
+          <input
+            className={inputClassname}
+            id="start-date"
+            type="date"
+            value={startDate}
+            onChange={handleStartDateChange} />
+        </span>
+
+        <span className={spanContainerClassname}>
+          <label htmlFor="review-date">Data de revisão</label>
+          <input
+            className={inputClassname}
+            id="review-date"
+            type="date"
+            value={reviewDate}
+            onChange={handleReviewDateChange} />
+        </span>
+
       </span>
 
-      <span>
-        <label htmlFor="start-date">Data de início</label>
-        <input
-          id="start-date"
-          type="date"
-          value={startDate}
-          onChange={handleStartDateChange} />
-      </span>
-
-      <span>
-        <label htmlFor="review-date">Data de revisão</label>
-        <input
-          id="review-date"
-          type="date"
-          value={reviewDate}
-          onChange={handleReviewDateChange} />
-      </span>
-
-      <span>
+      <span className={spanContainerClassname}>
         <label htmlFor="goal">Objetivo</label>
         <input
+          className={inputClassname + ' w-[30em]'}
           id="goal"
           type="text"
           maxLength={500}
@@ -114,9 +123,10 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
           onChange={(e) => handleInputChange('objetivo', e.target.value)} />
       </span>
 
-      <span>
+      <span className={spanContainerClassname}>
         <label htmlFor="anaminese">Anaminese</label>
         <textarea
+          className={inputClassname}
           id="anaminese"
           maxLength={500}
           minLength={20}

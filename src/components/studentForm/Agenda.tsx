@@ -26,7 +26,7 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
   }
 
   return (
-    <div className='agenda'>
+    <div className='agenda flex flex-row gap-1'>
       {days.map((day) => (
         <label key={day} className="checklist-circle">
           <input
