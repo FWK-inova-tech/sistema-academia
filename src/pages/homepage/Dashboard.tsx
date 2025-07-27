@@ -111,7 +111,7 @@ export const Dashboard = () => {
                   <SearchStudent
                     handleSearch={handleSearch} />
                   <button
-                    className='btn btn-green'
+                    className='btn btn-green px-3'
                     type="button"
                     onClick={handleOpenRegister}>
                     Cadastrar aluno

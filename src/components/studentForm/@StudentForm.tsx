@@ -183,9 +183,9 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   },
   {
     title: 'Treino',
-    name: 'perimetria',
+    name: 'treino',
     element:
-      <div className='treino'>
+      <div className='treino flex flex-col items-center justify-center gap-3 w-full'>
         {treinosOpcoes.map(categoria => <ItemTreino
           item={categoria}
           studentList={treino.find(item => item.categoria === categoria.categoria)?.exercicios ?? []}
@@ -203,7 +203,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </h1>
       {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
       {sectionElements.map(section => <>
-        <span className={`
+        <span key={section.name} className={`
         form-item border py-2 w-[40em] px-3 gap-2
         ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
           <h3 className="font-medium text-[var(--primaryColor)]">
@@ -216,8 +216,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
         </span>
       </>)}
 
-      <button type="submit">Salvar</button>
-      <button type="button" onClick={closeForm}>
+      <button type="submit" className='btn btn-blue px-3'>Salvar</button>
+      <button type="button" className='btn btn-red px-3' onClick={closeForm}>
         Cancelar
       </button>
     </form >

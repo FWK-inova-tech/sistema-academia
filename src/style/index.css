@@ -68,6 +68,19 @@ label {
 
 .btn-green {
   background: var(--primaryColor);
+}
+
+.btn-blue {
+  background: #33427B;
+}
+
+.btn-red {
+  background: #8E282A;
+}
+
+.btn-blue,
+.btn-red,
+.btn-green {
   color: white;
 }
 

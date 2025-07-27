@@ -70,10 +70,12 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet }: st
                 currentStudentSheet={{ student: currentStudentSheet, updateCurrentStudentSheet: setCurrentStudentSheet }}
                 closeForm={handleCloseEdit} />
               : <>
-                <button type="button"
-                  onClick={handleCloseStudentSheet}>
-                  Voltar para a lista de alunos
-                </button>
+                <span className='w-full flex justify-start'>
+                  <button type="button"
+                    onClick={handleCloseStudentSheet}>
+                    Voltar para a lista de alunos
+                  </button>
+                </span>
                 <StudentSheet
                   closeStudentSheet={handleCloseStudentSheet}
                   currentStudentSheet={currentStudentSheet}
@@ -102,7 +104,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet }: st
                           <td>{student.nome}</td>
                           <td className="student-actions">
                             <button
-                              className='btn btn-green'
+                              className='btn btn-green px-3'
                               type='button'
                               onClick={() => {
                                 handleOpenStudentSheet(student._id)
