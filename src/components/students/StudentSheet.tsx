@@ -161,7 +161,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
 
           <section className={sectionClassName}>
             <h3 className={h3ClassName}>Treino</h3>
-            <div className='w-full flex justify-center'>
+            <div className='w-full flex flex-col items-center justify-center gap-3'>
               {currentStudentSheet.treino.length === 0 && <p>O aluno ainda não tem nenhum treino registrado</p>}
               {currentStudentSheet.treino.map(categoria => <ItemTreino
                 key={categoria.categoria}

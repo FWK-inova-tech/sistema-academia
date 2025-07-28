@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../stores/appStore"
+import { useAppDispatch } from "../../stores/appStore"
 import { setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../utils/fetchAPI"
 import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
 import { StudentForm } from "../studentForm/@StudentForm";
-import { Loading } from "../Loading";
 
 interface studentsProps {
   currentStudentsList: Pick<AlunoType, '_id' | 'nome'>[];
@@ -18,8 +17,6 @@ interface studentsProps {
 }
 export const Students = ({ currentStudentsList, setError, handleOpensheet, controlOpenSheet }: studentsProps) => {
   const [openEdit, setOpenEdit] = useState(false)
-
-  const loading = useAppSelector((state) => state.students.loading)
 
   // currentStudentSheet == false => nenhuma ficha de aluno aberta, mostrar lista normalmente
   // currentStudentSheet == null => tentou abrir a ficha mas nenhum aluno com aquele id foi retornado 
@@ -63,67 +60,62 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
 
   return (
     <>
-      {loading ?
-        <Loading loadingMessage={loading} />
-        : <>
-          {currentStudentSheet ? <>
-            {openEdit ?
-              <StudentForm
-                currentStudentSheet={{ student: currentStudentSheet, updateCurrentStudentSheet: setCurrentStudentSheet }}
-                closeForm={handleCloseEdit} />
-              : <>
-                <span className='w-full flex justify-start'>
-                  <button type="button"
-                    className='btn btn-green shadow px-3 py-1 mt-4 ml-4'
-                    onClick={handleCloseStudentSheet}>
-                    Voltar para a lista de alunos
-                  </button>
-                </span>
-                <StudentSheet
-                  closeStudentSheet={handleCloseStudentSheet}
-                  currentStudentSheet={currentStudentSheet}
-                  openEdit={handleOpenEdit} />
-              </>}
-          </>
-            : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p>
-              :
-              <div className="content students-list">
-                <h1 className='text-3xl mb-2'>Alunos</h1>
-                {currentStudentsList.length > 0 ?
-                  <table className="students-list">
-                    <thead>
-                      <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Ações</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentStudentsList.map(student => (
-                        <tr key={student._id}>
-                          <td className={'id'} title={student._id}>
-                            #{student._id.slice(0, 7)}...
-                          </td>
-                          <td>{student.nome}</td>
-                          <td className="student-actions">
-                            <button
-                              className='btn btn-green px-3'
-                              type='button'
-                              onClick={() => {
-                                handleOpenStudentSheet(student._id)
-                                controlOpenSheet('open')
-                              }}>
-                              Abrir ficha
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  : <p>Não há nenhum aluno registrado</p>}
-              </div>
-          }
-        </>
+      {currentStudentSheet ? <>
+        {openEdit ?
+          <StudentForm
+            currentStudentSheet={{ student: currentStudentSheet, updateCurrentStudentSheet: setCurrentStudentSheet }}
+            closeForm={handleCloseEdit} />
+          : <>
+            <span className='w-full flex justify-start'>
+              <button type="button"
+                className='btn btn-green shadow px-3 py-1 mt-4 ml-4'
+                onClick={handleCloseStudentSheet}>
+                Voltar para a lista de alunos
+              </button>
+            </span>
+            <StudentSheet
+              closeStudentSheet={handleCloseStudentSheet}
+              currentStudentSheet={currentStudentSheet}
+              openEdit={handleOpenEdit} />
+          </>}
+      </>
+        : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p>
+          :
+          <div className="content students-list">
+            <h1 className='text-3xl mb-2'>Alunos</h1>
+            {currentStudentsList.length > 0 ?
+              <table className="students-list">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentStudentsList.map(student => (
+                    <tr key={student._id}>
+                      <td className={'id'} title={student._id}>
+                        #{student._id.slice(0, 7)}...
+                      </td>
+                      <td>{student.nome}</td>
+                      <td className="student-actions">
+                        <button
+                          className='btn btn-green px-3'
+                          type='button'
+                          onClick={() => {
+                            handleOpenStudentSheet(student._id)
+                            controlOpenSheet('open')
+                          }}>
+                          Abrir ficha
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              : <p>Não há nenhum aluno registrado</p>}
+          </div>
       }
     </>
   )
