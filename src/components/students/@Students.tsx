@@ -74,6 +74,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
               : <>
                 <span className='w-full flex justify-start'>
                   <button type="button"
+                    className='btn btn-green shadow px-3 py-1 mt-4 ml-4'
                     onClick={handleCloseStudentSheet}>
                     Voltar para a lista de alunos
                   </button>
