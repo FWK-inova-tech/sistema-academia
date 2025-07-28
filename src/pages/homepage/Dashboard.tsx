@@ -1,33 +1,26 @@
-import { useEffect, useState } from "react"
-import { Sidebar } from "../../components/Sidebar"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
-import { Students } from "../../components/students/@Students"
-import { Settings } from "../../components/Settings"
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../utils/fetchAPI"
-import { SearchStudent } from "../../components/students/SearchStudent"
-import type { AlunoType } from "../../types/AlunoType"
-import { StudentForm } from "../../components/studentForm/@StudentForm"
-import { ToastContainer } from "react-toastify"
 import '../../style/dashboard.css'
 import '../../style/studentsList.css'
 import axios from "axios"
 import { logout } from "../../stores/authStore";
+import { useDashboard } from "../../hooks/useDashboard";
+import { ToastContainer } from "react-toastify";
+import { Sidebar } from "../../components/Sidebar";
+import { SearchStudent } from "../../components/students/SearchStudent";
+import { StudentForm } from "../../components/studentForm/@StudentForm";
+import { Students } from "../../components/students/@Students";
+import { Settings } from "../../components/Settings";
 
 export const Dashboard = () => {
   const navigate = useNavigate()
-  const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
-  type apiErrorType = {
-    message: string;
-    callback: () => Promise<void> | void;
-  }
-  const [apiError, setApiError] = useState<false | apiErrorType>(false)
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
-  const [currentStudentsList, setCurrentStudentsList] = useState<Pick<AlunoType, '_id' | 'nome'>[]>(students)
-  const [openRegister, setOpenRegister] = useState(false)
-
+  const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useDashboard({ students })
+  const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch } = handlers
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
@@ -50,35 +43,6 @@ export const Dashboard = () => {
 
       }
       setApiError({ message: errorMessage, callback: fetchData })
-    }
-  }
-
-  function handleSearch(name: string) {
-    if (name.trim() === "") {
-      setCurrentStudentsList(students)
-    } else {
-      const filtered = students.filter(aluno =>
-        aluno.nome.toLowerCase().includes(name.toLowerCase())
-      )
-      setCurrentStudentsList(filtered)
-    }
-  }
-
-  function handleOpenRegister() {
-    setOpenRegister(true)
-    setCurrent('register/edit/sheet')
-  }
-
-  function handleCloseRegister() {
-    setOpenRegister(false)
-    setCurrent('students')
-  }
-
-  function handleCloseOpenEdit(action: 'close' | 'open') {
-    if (action === 'open') {
-      setCurrent('register/edit/sheet')
-    } else {
-      setCurrent('students')
     }
   }
 
