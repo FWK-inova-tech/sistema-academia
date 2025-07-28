@@ -42,7 +42,13 @@ export const useDashboard = ({ students }: useDashboardParams) => {
       setCurrent('students')
     }
   }
-  const handlers = { handleOpenRegister, handleCloseRegister, handleCloseOpenEdit, handleSearch }
+
+  function handleOpenStudentsheet() {
+    // ao abrir um aluno da lista, caso a lista esteja filtrada, ela deve ser 'zerada' pra quando 
+    // o usuário fechar o studentsheet a lista esteja correta
+    setCurrentStudentsList(students)
+  }
+  const handlers = { handleOpenRegister, handleCloseRegister, handleCloseOpenEdit, handleSearch, handleOpenStudentsheet }
 
   return {
     current, apiError, currentStudentsList, openRegister, handlers,

@@ -13,9 +13,10 @@ interface studentsProps {
     message: string;
     callback: () => Promise<void> | void;
   }) => void;
+  handleOpensheet: () => void;
   controlOpenSheet: (action: 'close' | 'open') => void;
 }
-export const Students = ({ setError, currentStudentsList, controlOpenSheet }: studentsProps) => {
+export const Students = ({ currentStudentsList, setError, handleOpensheet, controlOpenSheet }: studentsProps) => {
   const [openEdit, setOpenEdit] = useState(false)
 
   const loading = useAppSelector((state) => state.students.loading)
@@ -26,6 +27,7 @@ export const Students = ({ setError, currentStudentsList, controlOpenSheet }: st
   const dispatch = useAppDispatch()
 
   async function handleOpenStudentSheet(id: string) {
+    handleOpensheet()
     dispatch(setLoading("Buscando dados do aluno"))
     try {
       const req = await getAluno(id)

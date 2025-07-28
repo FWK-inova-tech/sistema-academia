@@ -20,7 +20,7 @@ export const Dashboard = () => {
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
   const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useDashboard({ students })
-  const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch } = handlers
+  const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
@@ -89,6 +89,7 @@ export const Dashboard = () => {
                 </>
                 :
                 <Students
+                  handleOpensheet={handleOpenStudentsheet}
                   controlOpenSheet={handleCloseOpenEdit}
                   currentStudentsList={currentStudentsList}
                   setError={setApiError} />
