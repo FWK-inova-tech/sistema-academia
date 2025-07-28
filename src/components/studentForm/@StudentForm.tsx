@@ -33,19 +33,21 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
     currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
 
   const {
-    infoPessoais, agenda, infosTreino, perimetria, treino, section, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setSection, setSectionErrors
+    infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors
   } = useStudentForm(studentInitialValue)
 
   const SectionButton = ({ name }: buttonProps) => {
-    return <button onClick={() =>
-      setSection((prev) =>
-        prev.includes(name)
-          ? prev.filter((s) => s !== name)
-          : [...prev, name]
-      )
-    }>
-      {section.includes(name) ? 'Fechar' : 'Abrir'}
+    return <button
+      className="btn btn-green px-6 py-[2px]"
+      onClick={() =>
+        setActiveSections((prev) =>
+          prev.includes(name)
+            ? prev.filter((s) => s !== name)
+            : [...prev, name]
+        )
+      }>
+      {activeSections.includes(name) ? 'Fechar' : 'Abrir'}
     </button>
   }
 
@@ -138,82 +140,86 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
 
   }
 
+  const sectionElements = [{
+    title: 'Informações Pessoais',
+    name: 'pessoais',
+    element: <InformacoesPessoais
+      editingStudent={infoPessoais}
+      resetError={() => setSectionErrors(prev => ({ ...prev, pessoais: undefined }))}
+      handleUpdateInformacoes={setInfoPessoais}
+      erroMsg={sectionErrors.pessoais} />
+  },
+  {
+    title: 'Agenda',
+    name: 'agenda',
+    element:
+      <Agenda
+        resetError={() => setSectionErrors(prev => ({ ...prev, agenda: undefined }))}
+        editingAgenda={agenda}
+        setAgenda={setAgenda}
+        erroMsg={sectionErrors.agenda} />
+  },
+  {
+    title: 'Informações para treino',
+    name: 'infoTreino',
+    element:
+      <InfoTreino
+        editingInfoTreino={infosTreino}
+        updateInfo={(newInfo) => {
+          setInfosTreino(newInfo)
+          setSectionErrors(prev => ({ ...prev, infoTreino: undefined }))
+        }}
+        erroMsg={sectionErrors.infoTreino} />
+  },
+  {
+    title: 'Perimetria',
+    name: 'perimetria',
+    element:
+      <Perimetria
+        editingPerimetria={perimetria}
+        resetError={() => setSectionErrors(prev => ({ ...prev, perimetria: undefined }))}
+        setPerimetria={setPerimetria}
+        erroMsg={sectionErrors.perimetria} />
+  },
+  {
+    title: 'Treino',
+    name: 'treino',
+    element:
+      <div className='treino flex flex-col items-center justify-center gap-3 w-full'>
+        {treinosOpcoes.map(categoria => <ItemTreino
+          item={categoria}
+          studentList={treino.find(item => item.categoria === categoria.categoria)?.exercicios ?? []}
+          key={categoria.categoria}
+          editing={{ handleTreinoChecklist }} />
+        )}
+      </div>
+  }
+  ]
+
   return (
-    <form onSubmit={handleSubmit} className="form-student">
-      <span className={`form-item ${sectionErrors.pessoais && 'error-section'}`}>
-        Informações pessoais
-        {section.includes('pessoais') && (
-          <InformacoesPessoais
-            editingStudent={infoPessoais}
-            resetError={() => setSectionErrors(prev => ({ ...prev, pessoais: undefined }))}
-            handleUpdateInformacoes={setInfoPessoais}
-            erroMsg={sectionErrors.pessoais}
-          />
-        )}
-        <SectionButton name="pessoais" />
-      </span>
+    <form onSubmit={handleSubmit} className="form-student bg-white">
+      <h1 className='text-3xl text-[var(--primaryColor)] font-medium'>
+        {currentStudentSheet ? 'Editando ' : 'Cadastrando '} aluno
+      </h1>
+      {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
+      {sectionElements.map(section => <>
+        <span key={section.name} className={`
+        form-item border py-2 w-[40em] px-3 gap-2
+        ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
+          <h3 className="font-medium text-[var(--primaryColor)]">
+            {section.title}
+          </h3>
+          {activeSections.includes(section.name as sectionType) && (
+            <> {section.element} </>
+          )}
+          <SectionButton name={section.name as sectionType} />
+        </span>
+      </>)}
 
-      <span className={`form-item ${sectionErrors.agenda && 'error-section'}`}>
-        Agenda
-        {section.includes('agenda') && (
-          <Agenda
-            resetError={() => setSectionErrors(prev => ({ ...prev, agenda: undefined }))}
-            editingAgenda={agenda}
-            setAgenda={setAgenda}
-            erroMsg={sectionErrors.agenda}
-          />
-        )}
-        <SectionButton name='agenda' />
-      </span>
-
-      <span className={`form-item ${sectionErrors.infoTreino && 'error-section'}`}>
-        Informações para treino
-        {section.includes('infoTreino') && (
-          <InfoTreino
-            editingInfoTreino={infosTreino}
-            updateInfo={(newInfo) => {
-              setInfosTreino(newInfo)
-              setSectionErrors(prev => ({ ...prev, infoTreino: undefined }))
-            }}
-            erroMsg={sectionErrors.infoTreino} />
-
-        )}
-        <SectionButton name='infoTreino' />
-      </span>
-
-      <span className={`form-item ${sectionErrors.perimetria && 'error-section'}`}>
-        Perimetria
-        {section.includes('perimetria') && (
-          <Perimetria
-            editingPerimetria={perimetria}
-            resetError={() => setSectionErrors(prev => ({ ...prev, perimetria: undefined }))}
-            setPerimetria={setPerimetria}
-            erroMsg={sectionErrors.perimetria} />
-
-        )}
-        <SectionButton name='perimetria' />
-      </span>
-
-      <span className={`form-item ${sectionErrors.treino && 'error-section'}`}>
-        Treino
-        {section.includes('treino') && (
-          <div>
-            {treinosOpcoes.map(categoria => <ItemTreino
-              item={categoria}
-              studentList={treino.find(item => item.categoria === categoria.categoria)?.exercicios ?? []}
-              key={categoria.categoria}
-              editing={{ handleTreinoChecklist }} />
-            )}
-          </div>
-        )}
-        <SectionButton
-          name='treino' />
-      </span>
-
-      <button type="submit">Salvar</button>
-      <button type="button" onClick={closeForm}>
+      <button type="submit" className='btn btn-blue px-3'>Salvar</button>
+      <button type="button" className='btn btn-red px-3' onClick={closeForm}>
         Cancelar
       </button>
-    </form>
+    </form >
   )
 }

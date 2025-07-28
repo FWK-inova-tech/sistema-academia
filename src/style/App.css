@@ -13,13 +13,8 @@
 
 .form-item {
   display: flex;
-  width: 300px;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   border-radius: 8px;
-  border: 1px solid #fff;
-}
-
-.form-item.error-section{
-  border: 1px solid red;
-  
 }
