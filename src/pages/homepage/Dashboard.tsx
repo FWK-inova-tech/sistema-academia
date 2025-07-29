@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
-import { getAlunos } from "../../utils/fetchAPI"
+import { getAlunos } from "../../service/fetchAPI"
 import '../../style/dashboard.css'
 import '../../style/studentsList.css'
 import axios from "axios"

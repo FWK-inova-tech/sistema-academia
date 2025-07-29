@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useAppDispatch } from "../../stores/appStore";
 import { removeAluno, setLoading } from "../../stores/studentsStore";
-import { deleteAluno } from "../../utils/fetchAPI";
+import { deleteAluno } from "../../service/fetchAPI";
 
 interface modalDeleteStudentProps {
   student: { name: string, _id: string };

@@ -3,7 +3,7 @@ import { useAppDispatch } from "../stores/appStore"
 import { setLoading } from "../stores/studentsStore"
 import { toast } from "react-toastify"
 import { logout } from "../stores/authStore"
-import { changePassword } from "../utils/fetchAPI"
+import { changePassword } from "../service/fetchAPI"
 import { useState } from "react"
 
 export const useSettings = () => {

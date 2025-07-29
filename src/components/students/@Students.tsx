@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../stores/appStore"
 import { setLoading } from "../../stores/studentsStore"
-import { getAluno } from "../../utils/fetchAPI"
+import { getAluno } from "../../service/fetchAPI"
 import type { AlunoType } from "../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
 import { StudentForm } from "../studentForm/@StudentForm";
