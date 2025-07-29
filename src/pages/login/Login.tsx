@@ -28,7 +28,7 @@ export const Login = () => {
 
   return (
     <main id='login'>
-      <h1>Login</h1>
+      <h1 className='text-4xl bg-[var(--secondaryColor)] text-[var(--primaryColor)] text-center px-20 py-2 rounded-4xl mt-2'>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
