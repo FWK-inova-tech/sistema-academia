@@ -3,7 +3,6 @@ import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
 import { Agenda } from "./Agenda";
-import { validadeFormSubmit } from "./formHooks";
 import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
 import { toast } from "react-toastify";
@@ -34,7 +33,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
 
   const {
     infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors, validateFormSubmit
   } = useStudentForm(studentInitialValue)
 
   const SectionButton = ({ name }: buttonProps) => {
@@ -80,7 +79,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    let validatedData: Omit<AlunoType, '_id'> | AlunoType | undefined = validadeFormSubmit({
+    let validatedData: Omit<AlunoType, '_id'> | AlunoType | undefined = validateFormSubmit({
       data: { infoPessoais, agenda, infosTreino, perimetria, treino },
       setSectionErrors: setSectionErrors
     })
