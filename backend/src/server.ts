@@ -14,9 +14,8 @@ const corsOptions = {
   origin: process.env.APP_URL,
   credentials: true,
 }
-
-app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.json());
 
 //Rotas
 app.use('/api/alunos', alunoRoutes);

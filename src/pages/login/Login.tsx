@@ -48,7 +48,7 @@ export const Login = () => {
             required
           />
         </div>
-        <button className='btn-green'
+        <button className='btn btn-green px-3'
           type="submit" disabled={status === "loading"}>
           {status === "loading" ? "Entrando..." : "Entrar"}
         </button>
