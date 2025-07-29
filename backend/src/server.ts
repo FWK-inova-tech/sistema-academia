@@ -10,13 +10,17 @@ dotenv.config();
 const app: Application = express();
 
 connectDB();
+const corsOptions = {
+  origin: process.env.APP_URL,
+  credentials: true,
+}
 
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 //Rotas
 app.use('/api/alunos', alunoRoutes);
-app.use('/api/auth', authRoutes); 
+app.use('/api/auth', authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
