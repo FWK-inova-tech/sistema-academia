@@ -1,50 +1,10 @@
-import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../stores/appStore"
+import { useAppSelector } from "../stores/appStore"
 import { Loading } from "./Loading"
-import { setLoading } from "../stores/studentsStore"
-import { changePassword } from "../utils/fetchAPI"
-import { toast } from "react-toastify"
-import { logout } from "../stores/authStore"
-import { useNavigate } from "react-router-dom"
+import { useSettings } from "../hooks/useSettings"
 
 export const Settings = () => {
   const isAuthLoading = useAppSelector((state) => state.auth.loading)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-
-  const [onChangePassword, setOnChangePassword] = useState(false)
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState<string | false>(false)
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [currentPassword, setCurrentPassword] = useState('')
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      setErrorMessage('Você digitou duas senhas diferentes. Tente novamente.')
-      return
-    }
-    dispatch(setLoading('Salvando nova senha, por favor aguarde'))
-
-    await changePassword(password, currentPassword)
-      .then(() => {
-        toast.success('Senha alterada com sucesso')
-      })
-      .catch((error: any) => {
-        const errorMessage = error.response.data.message ? `Erro ao tentar registrar ficha: ${error.response.data.message}` : 'Erro ao tentar registrar ficha'
-        toast.error(errorMessage)
-        setOnChangePassword(false)
-      })
-      .finally(() => {
-        dispatch(setLoading(false))
-      })
-
-  }
-
-  function handleLogout() {
-    dispatch(logout())
-    navigate('/login')
-  }
+  const { confirmPassword, currentPassword, errorMessage, handleLogout, handleSubmit, onChangePassword, password, setConfirmPassword, setCurrentPassword, setErrorMessage, setOnChangePassword, setPassword } = useSettings()
 
   const inputClassname = 'flex pl-1 w-6 min-w-fit border border-[var(--primaryColor)] rounded-3xl bg-none'
   const spanInputHolder = 'flex flex-col items-start'
