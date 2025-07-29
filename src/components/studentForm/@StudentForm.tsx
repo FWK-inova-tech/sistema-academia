@@ -7,7 +7,7 @@ import { validadeFormSubmit } from "./formHooks";
 import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
 import { toast } from "react-toastify";
-import { registerAluno, updateAluno } from "../../utils/fetchAPI";
+import { registerAluno, updateAluno } from "../../service/fetchAPI";
 import { useAppDispatch } from "../../stores/appStore";
 import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
 import { newStudentInitialValue } from "../../constants/newStudentInitialValue";

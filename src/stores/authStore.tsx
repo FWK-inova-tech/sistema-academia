@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { login } from "../utils/fetchAPI";
+import { login } from "../service/fetchAPI";
 
 const userToken = localStorage.getItem('userToken') ?? null as string | null
 interface ICredentials {
