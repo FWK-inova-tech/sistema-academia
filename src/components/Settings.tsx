@@ -15,7 +15,8 @@ export const Settings = () => {
   const [onChangePassword, setOnChangePassword] = useState(false)
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | false>(false)
-  const [confirmPassword, setConfirmPassowrd] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [currentPassword, setCurrentPassword] = useState('')
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -25,18 +26,17 @@ export const Settings = () => {
     }
     dispatch(setLoading('Salvando nova senha, por favor aguarde'))
 
-    await changePassword(password)
+    await changePassword(password, currentPassword)
       .then(() => {
-        setLoading(false)
         toast.success('Senha alterada com sucesso')
       })
-      .catch(error => {
-        const errorMessage = error instanceof Error ? `Erro ao tentar registrar ficha: ${error.message}` : 'Erro ao tentar registrar ficha'
+      .catch((error: any) => {
+        const errorMessage = error.response.data.message ? `Erro ao tentar registrar ficha: ${error.response.data.message}` : 'Erro ao tentar registrar ficha'
         toast.error(errorMessage)
         setOnChangePassword(false)
       })
       .finally(() => {
-        setLoading(false)
+        dispatch(setLoading(false))
       })
 
   }
@@ -61,6 +61,18 @@ export const Settings = () => {
             className="change-password flex flex-col justify-center items-center"
             onSubmit={handleSubmit}>
             <span className={spanInputHolder}>
+              <label htmlFor="currentPassword">Senha atual:</label>
+              <input
+                className={inputClassname}
+                id="currentPassword"
+                type="password"
+                minLength={10}
+                maxLength={30}
+                value={currentPassword}
+                onChange={(e) => { setCurrentPassword(e.target.value); setErrorMessage(false) }} />
+            </span>
+
+            <span className={spanInputHolder}>
               <label htmlFor="newPassword">Nova senha:</label>
               <input
                 className={inputClassname}
@@ -80,8 +92,9 @@ export const Settings = () => {
                 minLength={10}
                 maxLength={30}
                 value={confirmPassword}
-                onChange={(e) => { setConfirmPassowrd(e.target.value); setErrorMessage(false) }} />
+                onChange={(e) => { setConfirmPassword(e.target.value); setErrorMessage(false) }} />
             </span>
+
             {errorMessage && <p className='error-message'>{errorMessage}</p>}
             <span className='actions flex flex-col items-center gap-2 mt-2'>
               <button className='btn btn-blue px-3' type="submit">Salvar</button>
