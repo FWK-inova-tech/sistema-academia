@@ -8,7 +8,6 @@ interface ICredentials {
 }
 
 const initialState = {
-  // true durante o desenvolvimento
   authenticated: userToken ? true : false,
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
@@ -38,7 +37,7 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.authenticated = false
       state.token = null
-      localStorage.removeItem('token')
+      localStorage.removeItem('userToken')
     },
   },
   extraReducers: (builder) => {
