@@ -113,16 +113,13 @@ export const deleteAluno = async (id: string) => {
 
 }
 
-export const changePassword = async (newPassword: string) => {
-  // const { data } = await axios.post<{message: string; updatedStatus: number}>(`${backendUrl}/change-password`, {password: newPassword} ,{
-  //   headers: {
-  //     Authorization: `Bearer ${getToken()}`,
-  //   }
-  // })
+export const changePassword = async (newPassword: string, oldPassword: string) => {
+  const { data } = await axios.put<{ message: string; updatedStatus: number }>(`${backendUrl}/auth/change-password`, { newPassword, oldPassword }, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    }
+  })
+  console.log('data:', data)
+  return data.updatedStatus
 
-  // return data.updatedStatus
-
-  const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-  await delay(10000)
-  return 200
 }
