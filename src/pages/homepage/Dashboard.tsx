@@ -14,13 +14,11 @@ import { SearchStudent } from "../../components/students/SearchStudent";
 import { StudentForm } from "../../components/studentForm/@StudentForm";
 import { Students } from "../../components/students/@Students";
 import { Settings } from "../../components/Settings";
-import { Loading } from "../../components/Loading";
 
 export const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
-  const loading = useAppSelector((state) => state.students.loading)
   const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useDashboard({ students })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
@@ -71,36 +69,32 @@ export const Dashboard = () => {
         </div>
           :
           <>
-            {loading ?
-              <Loading loadingMessage={loading} />
-              :
-              <>
-                {current !== 'settings' && <>
-                  {current === 'students' &&
-                    <div className="top-bar flex flex-row justify-between w-full px-2 py-4 bg-white">
-                      <SearchStudent
-                        handleSearch={handleSearch} />
-                      <button
-                        className='btn btn-green px-3'
-                        type="button"
-                        onClick={handleOpenRegister}>
-                        Cadastrar aluno
-                      </button>
-                    </div>}
-                  {openRegister ?
-                    <>
-                      <StudentForm
-                        closeForm={handleCloseRegister} />
-                    </>
-                    :
-                    <Students
-                      handleOpensheet={handleOpenStudentsheet}
-                      controlOpenSheet={handleCloseOpenEdit}
-                      currentStudentsList={currentStudentsList}
-                      setError={setApiError} />}
-                </>}
-                {current === 'settings' && <Settings />}
-              </>}
+            {current !== 'settings' && <>
+              {current === 'students' &&
+                <div className="top-bar flex flex-row justify-between w-full px-2 py-4 bg-white">
+                  <SearchStudent
+                    handleSearch={handleSearch} />
+                  <button
+                    className='btn btn-green px-3'
+                    type="button"
+                    onClick={handleOpenRegister}>
+                    Cadastrar aluno
+                  </button>
+                </div>}
+              {openRegister ?
+                <>
+                  <StudentForm
+                    closeForm={handleCloseRegister} />
+                </>
+                :
+                <Students
+                  handleOpensheet={handleOpenStudentsheet}
+                  controlOpenSheet={handleCloseOpenEdit}
+                  currentStudentsList={currentStudentsList}
+                  setError={setApiError} />}
+            </>}
+            {current === 'settings' && <Settings />}
+
           </>}
       </main>
     </div>)

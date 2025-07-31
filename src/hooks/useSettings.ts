@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../stores/appStore"
-import { setLoading } from "../stores/studentsStore"
 import { toast } from "react-toastify"
-import { logout } from "../stores/authStore"
+import { logout, setLoading } from "../stores/authStore"
 import { changePassword } from "../service/fetchAPI"
 import { useState } from "react"
 

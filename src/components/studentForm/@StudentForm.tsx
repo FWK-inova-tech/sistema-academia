@@ -5,10 +5,6 @@ import { InfoTreino } from "./InfoTreino";
 import { Agenda } from "./Agenda";
 import { ItemTreino } from "../treino/@ItemTreino";
 import { treinosOpcoes } from "../../constants/treinosOpcoes";
-import { toast } from "react-toastify";
-import { registerAluno, updateAluno } from "../../service/fetchAPI";
-import { useAppDispatch } from "../../stores/appStore";
-import { addAluno, setLoading, updateStudentNameOnList } from "../../stores/studentsStore";
 import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
 import { useStudentForm } from "../../hooks/useStudentForm";
 import type { sectionType } from "../../types/SectionTypes";
@@ -17,24 +13,19 @@ interface buttonProps {
   name: sectionType;
 }
 
-
 interface studentFormProps {
-  currentStudentSheet?: {
-    student: AlunoType;
-    updateCurrentStudentSheet: (data: AlunoType) => void
-  };
+  currentStudentSheet?: { student: AlunoType; updateCurrentStudentSheet: (data: AlunoType) => void };
   closeForm: () => void;
 }
 export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps) => {
-  const dispatch = useAppDispatch()
 
   const studentInitialValue: Omit<AlunoType, '_id'> | AlunoType =
     currentStudentSheet ? currentStudentSheet.student : newStudentInitialValue
 
   const {
     infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, handleTreinoChecklist, setActiveSections, setSectionErrors, validateFormSubmit
-  } = useStudentForm(studentInitialValue)
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, handleTreinoChecklist, setActiveSections, setSectionErrors, submitForm
+  } = useStudentForm({ student: studentInitialValue, closeForm })
 
   const SectionButton = ({ name }: buttonProps) => {
     return <button
@@ -50,67 +41,12 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
     </button>
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    let validatedData: Omit<AlunoType, '_id'> | AlunoType | undefined = validateFormSubmit({
-      data: { infoPessoais, agenda, infosTreino, perimetria, treino },
-      setSectionErrors: setSectionErrors
-    })
-
-    async function handleRegister() {
-      closeForm()
-      await registerAluno(validatedData as Omit<AlunoType, '_id'>)
-        .then((data) => {
-          // atualiza a lista de alunos da store com o novo aluno agora com o _id retornado pelo backend
-          dispatch(addAluno({ _id: data, nome: validatedData!.nome }))
-        })
-        .catch(error => {
-          const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
-          throw new Error(errorMessage)
-        })
-    }
-
-    async function handleUpdate() {
-      const oldData = currentStudentSheet?.student
-      dispatch(setLoading("Atualizando ficha do aluno"))
-
-      await updateAluno(validatedData as AlunoType)
-        .then(() => {
-          if (oldData && validatedData && oldData.nome !== validatedData.nome) {
-            // atualiza o nome do aluno na lista de alunos
-            dispatch(updateStudentNameOnList({ _id: oldData._id, nome: validatedData.nome }))
-          }
-          // atualiza as informações de studentSheet
-          if (currentStudentSheet) currentStudentSheet.updateCurrentStudentSheet(validatedData as AlunoType)
-
-        })
-        .catch((error) => {
-          const errorMessage = error instanceof Error ? `Erro ao tentar registrar ficha: ${error.message}` : 'Erro ao tentar registrar ficha'
-          toast.error(errorMessage)
-        })
-        .finally(() => {
-          closeForm()
-          dispatch(setLoading(false))
-        })
-    }
-
-    if (validatedData) {
-      if ('_id' in studentInitialValue) {
-        validatedData = { ...validatedData, _id: studentInitialValue._id }
-      }
-
-      if ('_id' in validatedData) {
-        handleUpdate()
-      } else {
-        toast.promise(handleRegister, {
-          pending: 'Registrando ficha do aluno',
-          error: 'Erro ao tentar salvar ficha',
-          success: 'Ficha registrada com sucesso'
-        })
-      }
-    }
-
+    submitForm(currentStudentSheet)
   }
+
+
 
   const sectionElements = [{
     title: 'Informações Pessoais',

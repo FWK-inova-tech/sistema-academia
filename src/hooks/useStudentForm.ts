@@ -3,10 +3,21 @@ import type { AlunoType } from "../types/AlunoType";
 import type { PerimetriaType } from "../types/PerimetriaType";
 import type { TreinoType } from "../types/TreinoType";
 import type { SectionErrorType, sectionType } from "../types/SectionTypes";
+import { useAppDispatch } from "../stores/appStore";
+import { registerAluno, updateAluno } from "../service/fetchAPI";
+import { addAluno, setLoading, updateStudentNameOnList } from "../stores/studentsStore";
+import { toast } from "react-toastify";
 
-export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
+interface useStudentFormParams {
+  student: Omit<AlunoType, '_id'> | AlunoType;
+  closeForm: () => void;
+}
+
+export function useStudentForm({ student, closeForm }: useStudentFormParams) {
   const [activeSections, setActiveSections] = useState<sectionType[]>([])
   const [sectionErrors, setSectionErrors] = useState<SectionErrorType>({})
+  const dispatch = useAppDispatch()
+
 
   const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
     contato: student.contato,
@@ -60,18 +71,7 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
     })
   }
 
-  interface validadeFormSubmitParams {
-    data: {
-      infoPessoais: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>;
-      agenda: string[];
-      infosTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>;
-      perimetria: PerimetriaType;
-      treino: TreinoType[];
-    },
-    setSectionErrors: (error: SectionErrorType) => void;
-  }
-  function validateFormSubmit(param: validadeFormSubmitParams) {
-    const { infoPessoais, agenda, infosTreino, perimetria, treino } = param.data
+  function validateFormSubmit() {
     const newErrors: SectionErrorType = {}
 
     // pessoais
@@ -112,8 +112,8 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
       newErrors.treino = 'A lista de treino do aluno está vazia'
     }
 
-    param.setSectionErrors(newErrors)
-
+    setSectionErrors(newErrors)
+    // se existir algum erro, retonar undefined
     if (Object.keys(newErrors).length > 0) {
       return
     }
@@ -135,8 +135,72 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
     return saveStudent
   }
 
+
+  interface submitFormParams {
+    student: AlunoType;
+    updateCurrentStudentSheet: (data: AlunoType) => void
+  }
+  function submitForm(currentStudentSheet?: submitFormParams) {
+    let validatedData: Omit<AlunoType, '_id'> | AlunoType | undefined = validateFormSubmit()
+
+    async function handleRegister() {
+      closeForm()
+      await registerAluno(validatedData as Omit<AlunoType, '_id'>)
+        .then((data) => {
+          // atualiza a lista de alunos da store com o novo aluno agora com o _id retornado pelo backend
+          dispatch(addAluno({ _id: data, nome: validatedData!.nome }))
+        })
+        .catch(error => {
+          const errorMessage = error instanceof Error ? error.message : 'Erro ao tentar registrar ficha'
+          throw new Error(errorMessage)
+        })
+    }
+
+    async function handleUpdate() {
+      const oldData = currentStudentSheet?.student
+      dispatch(setLoading("Atualizando ficha do aluno"))
+
+      await updateAluno(validatedData as AlunoType)
+        .then(() => {
+          if (oldData && validatedData && oldData.nome !== validatedData.nome) {
+            // atualiza o nome do aluno na lista de alunos
+            dispatch(updateStudentNameOnList({ _id: oldData._id, nome: validatedData.nome }))
+          }
+          // atualiza as informações de studentSheet
+          if (currentStudentSheet) currentStudentSheet.updateCurrentStudentSheet(validatedData as AlunoType)
+
+        })
+        .catch((error) => {
+          const errorMessage = error instanceof Error ? `Erro ao tentar registrar ficha: ${error.message}` : 'Erro ao tentar registrar ficha'
+          toast.error(errorMessage)
+        })
+        .finally(() => {
+          closeForm()
+          dispatch(setLoading(false))
+        })
+    }
+
+    if (validatedData) {
+      // form data validado, agora se existe um _id em student === atualizar aluno existe, se não é um registro
+      if ('_id' in student) {
+        validatedData = { ...validatedData, _id: student._id }
+      }
+
+      if ('_id' in validatedData) {
+        handleUpdate()
+      } else {
+        toast.promise(handleRegister, {
+          pending: 'Registrando ficha do aluno',
+          error: 'Erro ao tentar salvar ficha',
+          success: 'Ficha registrada com sucesso'
+        })
+      }
+    }
+
+  }
+
   return {
     infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setActiveSections, setSectionErrors, handleTreinoChecklist, validateFormSubmit
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setActiveSections, setSectionErrors, handleTreinoChecklist, submitForm
   }
 }
