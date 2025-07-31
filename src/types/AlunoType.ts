@@ -17,4 +17,4 @@ export interface AlunoType {
   perimetria: PerimetriaType;
 }
 
-export type NovoAluno = Omit<AlunoType, 'id'>
+export type NovoAluno = Omit<AlunoType, '_id'>

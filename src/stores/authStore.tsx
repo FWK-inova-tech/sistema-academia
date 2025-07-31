@@ -39,6 +39,9 @@ export const authSlice = createSlice({
       state.token = null
       localStorage.removeItem('userToken')
     },
+    setLoading: (state, action: PayloadAction<false | string>) => {
+      state.loading = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -56,5 +59,5 @@ export const authSlice = createSlice({
   }
 })
 
-export const { logout } = authSlice.actions
+export const { logout, setLoading } = authSlice.actions
 
