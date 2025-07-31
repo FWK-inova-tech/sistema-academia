@@ -33,16 +33,43 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
 
   const [treino, setTreino] = useState<TreinoType[]>(student.treino)
 
+  function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
+    const { value, checked } = e.target
+
+    setTreino(prev => {
+      const existing = prev.find(item => item.categoria === categoria)
+      if (checked) {
+        if (existing) {
+          return prev.map(item =>
+            item.categoria === categoria
+              ? { ...item, exercicios: [...item.exercicios, value] }
+              : item
+          )
+        } else {
+          return [...prev, { categoria, exercicios: [value] }]
+        }
+      } else {
+        return prev
+          .map(item =>
+            item.categoria === categoria
+              ? { ...item, exercicios: item.exercicios.filter(ex => ex !== value) }
+              : item
+          )
+          .filter(item => item.exercicios.length > 0)
+      }
+    })
+  }
+
   interface validadeFormSubmitParams {
-  data: {
-    infoPessoais: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>;
-    agenda: string[];
-    infosTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>;
-    perimetria: PerimetriaType;
-    treino: TreinoType[];
-  },
-  setSectionErrors: (error: SectionErrorType) => void;
-}
+    data: {
+      infoPessoais: Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>;
+      agenda: string[];
+      infosTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>;
+      perimetria: PerimetriaType;
+      treino: TreinoType[];
+    },
+    setSectionErrors: (error: SectionErrorType) => void;
+  }
   function validateFormSubmit(param: validadeFormSubmitParams) {
     const { infoPessoais, agenda, infosTreino, perimetria, treino } = param.data
     const newErrors: SectionErrorType = {}
@@ -110,6 +137,6 @@ export function useStudentForm(student: Omit<AlunoType, '_id'> | AlunoType) {
 
   return {
     infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors, validateFormSubmit
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setActiveSections, setSectionErrors, handleTreinoChecklist, validateFormSubmit
   }
 }

@@ -33,7 +33,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
 
   const {
     infoPessoais, agenda, infosTreino, perimetria, treino, activeSections, sectionErrors,
-    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, setTreino, setActiveSections, setSectionErrors, validateFormSubmit
+    setInfoPessoais, setAgenda, setInfosTreino, setPerimetria, handleTreinoChecklist, setActiveSections, setSectionErrors, validateFormSubmit
   } = useStudentForm(studentInitialValue)
 
   const SectionButton = ({ name }: buttonProps) => {
@@ -48,33 +48,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       }>
       {activeSections.includes(name) ? 'Fechar' : 'Abrir'}
     </button>
-  }
-
-  function handleTreinoChecklist(e: React.ChangeEvent<HTMLInputElement>, categoria: string) {
-    const { value, checked } = e.target
-
-    setTreino(prev => {
-      const existing = prev.find(item => item.categoria === categoria)
-      if (checked) {
-        if (existing) {
-          return prev.map(item =>
-            item.categoria === categoria
-              ? { ...item, exercicios: [...item.exercicios, value] }
-              : item
-          )
-        } else {
-          return [...prev, { categoria, exercicios: [value] }]
-        }
-      } else {
-        return prev
-          .map(item =>
-            item.categoria === categoria
-              ? { ...item, exercicios: item.exercicios.filter(ex => ex !== value) }
-              : item
-          )
-          .filter(item => item.exercicios.length > 0)
-      }
-    })
   }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
