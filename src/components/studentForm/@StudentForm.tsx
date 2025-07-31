@@ -111,7 +111,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       </h1>
       {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
       {sectionElements.map(section => <>
-        <span key={section.name} className={`
+        <section key={section.name} className={`
         form-item border py-2 w-[40em] px-3 gap-2
         ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
           <h3 className="font-medium text-[var(--primaryColor)]">
@@ -121,7 +121,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
             <> {section.element} </>
           )}
           <SectionButton name={section.name as sectionType} />
-        </span>
+        </section>
       </>)}
 
       <button type="submit" className='btn btn-blue px-3'>Salvar</button>
