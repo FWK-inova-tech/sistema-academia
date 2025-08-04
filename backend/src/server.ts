@@ -10,10 +10,24 @@ dotenv.config();
 const app: Application = express();
 
 connectDB();
-const corsOptions = {
-  origin: process.env.APP_URL,
-  credentials: true,
+
+const allowedOrigins = [
+  'http://localhost:5173', // Vite dev server
+  'https://sistema-academia.vercel.app', // Se fizer deploy no Vercel
+  'https://sistema-academia.netlify.app', // Se fizer deploy no Netlify
+];
+
+if (process.env.APP_URL) {
+  allowedOrigins.push(process.env.APP_URL);
 }
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
