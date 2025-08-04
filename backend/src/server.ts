@@ -23,7 +23,7 @@ if (process.env.APP_URL) {
 }
 
 const corsOptions = {
-  origin: function (origin, callback) {
+  origin: function(origin: any, callback: any) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
