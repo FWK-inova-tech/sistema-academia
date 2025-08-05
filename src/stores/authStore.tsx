@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { login } from "../service/fetchAPI";
+import { toast } from "react-toastify";
 
 const userToken = localStorage.getItem('userToken') ?? null as string | null
 interface ICredentials {
@@ -23,8 +24,9 @@ export const loginUser = createAsyncThunk<string, ICredentials, { rejectValue: s
       localStorage.setItem('userToken', token)
       return token
 
-    } catch (error) {
+    } catch (error: any) {
       const message = error as Error
+      toast.error(error.status == 400 ? "Credenciais erradas" : "Erro ao tentar fazer login")
       return thunkAPI.rejectWithValue(message.message || "Erro ao tentar fazer a requisição do login")
     }
   }
