@@ -12,7 +12,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
 
   return (
     <aside
-      className='sidebar flex flex-row gap-3 md:flex-col bg-[var(--primaryColor)] md:w-[200px] w-full px-2 py-2 pt-2 items-center justify-center md:justify-start'>
+      className='sidebar flex flex-row gap-3 md:flex-col bg-[var(--primaryColor)] md:w-[200px] w-screen px-2 py-2 pt-2 items-center justify-center md:justify-start'>
       <button
         id='botao-abrir-alunos'
         type="button"

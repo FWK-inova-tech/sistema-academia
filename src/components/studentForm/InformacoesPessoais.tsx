@@ -42,8 +42,8 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
     mask.resolve(defaultString)
     return mask.value
   }
-  const spanContainerClassname = 'flex flex-row items-center gap-2'
-  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl'
+  const spanContainerClassname = 'flex flex-col md:flex-row items-center gap-2'
+  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl max-w-[90%]'
 
 
   return (

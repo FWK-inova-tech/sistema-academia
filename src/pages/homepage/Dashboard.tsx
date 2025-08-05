@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../service/fetchAPI"
 import '../../style/dashboard.css'
-import '../../style/studentsList.css'
 import axios from "axios"
 import { logout } from "../../stores/authStore";
 import { useDashboard } from "../../hooks/useDashboard";
@@ -54,7 +53,7 @@ export const Dashboard = () => {
   }, [])
 
   return (
-    <div className='flex flex-col w-screen md:flex-row'>
+    <div className='flex flex-col w-screen md:flex-row min-h-screen'>
       <ToastContainer />
       <Sidebar
         current={current}
@@ -71,11 +70,11 @@ export const Dashboard = () => {
           <>
             {current !== 'settings' && <>
               {current === 'students' &&
-                <div className="top-bar flex flex-row justify-between w-full px-2 py-4 bg-white">
+                <div className="top-bar flex flex-col md:flex-row gap-2 items-center justify-start w-full px-2 py-4 bg-white">
                   <SearchStudent
                     handleSearch={handleSearch} />
                   <button
-                    className='btn btn-green px-3'
+                    className='btn btn-green px-3 w-fit'
                     type="button"
                     onClick={handleOpenRegister}>
                     Cadastrar aluno

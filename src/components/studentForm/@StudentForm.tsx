@@ -112,7 +112,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
       {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
       {sectionElements.map(section => <>
         <section key={section.name} className={`
-        form-item border py-2 w-[40em] px-3 gap-2
+        form-item border py-2 w-[90%] md:w-[70%] px-1 md:px-3 gap-2
         ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
           <h3 className="font-medium text-[var(--primaryColor)]">
             {section.title}

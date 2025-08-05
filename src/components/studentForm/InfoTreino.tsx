@@ -57,11 +57,11 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       })
     }
   }
-  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl'
+  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl max-w-[90%]'
   const spanContainerClassname = 'flex flex-col items-start'
 
   return (
-    <div className='info-treino flex flex-col'>
+    <div className='info-treino flex flex-col w-full'>
       <span >
         <label htmlFor='level' className='mr-2'>Nível:</label>
         <select id='level'
@@ -74,7 +74,7 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
         </select>
       </span>
 
-      <span className='flex flex-col md: flex-row'>
+      <span className='flex flex-col md:flex-row'>
         <span className={spanContainerClassname}>
           <label htmlFor="teacher">Professor(a):</label>
           <input

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setLoading } from "../../stores/studentsStore"
 import { getAluno } from "../../service/fetchAPI"
@@ -24,9 +24,6 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
   const [currentStudentSheet, setCurrentStudentSheet] = useState<false | AlunoType | null>(false)
   const dispatch = useAppDispatch()
   const loading = useAppSelector((state) => state.students.loading)
-  useEffect(() => {
-    console.log(currentStudentSheet)
-  }, [currentStudentSheet])
 
   async function handleOpenStudentSheet(id: string) {
     dispatch(setLoading("Buscando dados do aluno"))
@@ -63,6 +60,8 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
     setOpenEdit(false)
   }
 
+  const tdBodyClasses = "border-b-2 border-[var(--secondaryColor)]"
+
 
   return (
     <>
@@ -90,27 +89,28 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
           </>
             : currentStudentSheet !== false ? <p>Não foi encontrado nenhum aluno com o id informado</p>
               :
-              <div className="content students-list">
-                <h1 className='text-3xl mb-2'>Alunos</h1>
+              <div className="content students-list w-full md:py-8 md:px-8 px-0 flex flex-col justify-center">
+                <h1 className='text-3xl mb-2 font-medium text-[var(--primaryColor)]'>Alunos</h1>
                 {currentStudentsList.length > 0 ?
-                  <table className="students-list">
+                  <table className="students-list bg-white">
                     <thead>
                       <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>Ações</th>
+                        <th className="p-2.5 border-b-2 border-[var(--secondaryColor)]">Id</th>
+                        <th className="p-2.5 border-b-2 border-[var(--secondaryColor)]">Nome</th>
+                        <th className="p-2.5 border-b-2 border-[var(--secondaryColor)]">Ações</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {currentStudentsList.map(student => (
+                      {currentStudentsList.map((student, index) => (
                         <tr key={student._id}>
-                          <td className={'id'} title={student._id}>
+                          <td className={`id text-gray-500 max-w-20
+m-auto md:p-5 p-2 text-[0.85rem] break-words px-0 md:px-2 ${index !== currentStudentsList.length - 1 && tdBodyClasses}`} title={student._id}>
                             #{student._id.slice(0, 7)}...
                           </td>
-                          <td>{student.nome}</td>
-                          <td className="student-actions">
+                          <td className={`id max-w-32 md:max-w-max m-auto md:p-5 p-2 ${index !== currentStudentsList.length - 1 && tdBodyClasses}`}>{student.nome}</td>
+                          <td className={`student-actions m-auto md:p-5 p-2 ${index !== currentStudentsList.length - 1 && tdBodyClasses}`}>
                             <button
-                              className='btn btn-green px-3'
+                              className='btn btn-green px-1 md:px-3 text-[0.85rem] rounded-none md:rounded-3xl'
                               type='button'
                               onClick={() => {
                                 handleOpenStudentSheet(student._id)
