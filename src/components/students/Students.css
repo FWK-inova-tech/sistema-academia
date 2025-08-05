@@ -1,0 +1,116 @@
+/* Students Component Styles */
+.students-content {
+  padding: 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.students-header {
+  margin-bottom: 2rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.students-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.students-subtitle {
+  font-size: 1.125rem;
+  color: #64748b;
+  margin: 0;
+  font-weight: 500;
+}
+
+.students-table {
+  width: 100%;
+  background: white;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.student-id {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  color: #4CAF50;
+  background: #f0fdf4;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  border: 1px solid #bbf7d0;
+  display: inline-block;
+}
+
+/* Student Sheet Container */
+.student-sheet-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.student-sheet-header {
+  padding: 1.5rem 2rem;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Error Message */
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-8);
+  text-align: center;
+}
+
+.error-message p {
+  color: var(--color-error-600);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  .students-content {
+    padding: var(--spacing-4);
+  }
+
+  .students-title {
+    font-size: var(--font-size-2xl);
+  }
+
+  .student-sheet-header {
+    padding: var(--spacing-3) var(--spacing-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .students-content {
+    padding: var(--spacing-3);
+  }
+
+  .students-title {
+    font-size: var(--font-size-xl);
+  }
+
+  .students-subtitle {
+    font-size: var(--font-size-sm);
+  }
+}

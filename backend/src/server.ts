@@ -12,7 +12,10 @@ const app: Application = express();
 connectDB();
 
 const allowedOrigins = [
-  'http://localhost:5173', // Vite dev server
+  'http://localhost:5173', // Vite dev server porta padrão
+  'http://localhost:5174', // Vite dev server porta alternativa
+  'http://localhost:5175', // Vite dev server porta alternativa
+  'http://localhost:5176', // Vite dev server porta alternativa
   'https://sistema-academia.vercel.app', // Se fizer deploy no Vercel
   'https://sistema-academia-snowy.vercel.app', // URL atual do Vercel
   'https://sistema-academia.netlify.app', // Se fizer deploy no Netlify

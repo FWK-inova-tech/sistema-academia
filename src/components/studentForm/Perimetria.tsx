@@ -40,28 +40,40 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
 
 
   return (
-    <div className='perimetria flex flex-col'>
-      <span className='perimetria-date flex flex-col items-start'>
-        <label htmlFor="perimetria-date">
-          Data:
+    <div className='perimetria bg-white p-8 rounded-lg shadow-lg border-2 border-gray-200'>
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
+          📏 Medidas Corporais
+        </h3>
+      </div>
+
+      <div className='perimetria-date mb-6'>
+        <label htmlFor="perimetria-date" className="block text-sm font-semibold text-gray-700 mb-2">
+          📅 Data da Avaliação
         </label>
         <input
-          className='bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl w-[12em] mb-2'
+          className='w-full max-w-xs px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#4CAF50] focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-20 transition-all duration-200 bg-white outline-none'
           type='date'
           id="perimetria-date"
           value={date}
           onChange={(e) => handleDateInputChange(e.target.value)} />
-      </span>
-      <span className='perimetria-list grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-2'>
+      </div>
+
+      <div className='perimetria-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
         {editingPerimetria.medidas.map(item =>
-          <span key={item.nome} className="bg-[var(--primaryColor)] text-white py-2 px-3 flex flex-row justify-between rounded-[10px]">
+          <div key={item.nome} className="bg-gray-50 border-2 border-gray-200 rounded-lg p-4 hover:border-[#4CAF50] hover:shadow-md transition-all duration-200">
             <PerimetriaItem
               item={item}
               handleUpdateMedida={handleUpdatePerimetriaMedidas} />
-          </span>
+          </div>
         )}
-      </span>
-      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
+      </div>
+      
+      {erroMsg && (
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className='text-red-700 text-sm font-medium'>{erroMsg}</p>
+        </div>
+      )}
     </div>
   )
 }

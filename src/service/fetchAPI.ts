@@ -5,6 +5,7 @@ import type { ReplaceDateWithString } from "../types/replaceDate";
 import type { PerimetriaType } from "../types/PerimetriaType";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
+
 const getToken = () => {
   const token = localStorage.getItem('userToken')
   if (!token) {
@@ -15,6 +16,10 @@ const getToken = () => {
 }
 
 export const login = async (credentials: Adm): Promise<string> => {
+  if (!backendUrl) {
+    throw new Error("Backend URL não configurada. Verifique o arquivo .env")
+  }
+  
   const { data } = await axios.post<{ message: string, token: string }>(`${backendUrl}/auth/login`, {
     email: credentials.email,
     password: credentials.password

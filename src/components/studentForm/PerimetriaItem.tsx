@@ -19,15 +19,30 @@ export const PerimetriaItem = ({ item, handleUpdateMedida }: perimetriaItemProps
     }
   }
 
-  return (<>
-    <label htmlFor={formatNameForId(item.nome)}>{item.nome}</label>
-    <input
-      className='w-[5em] bg-white text-black px-2 rounded-[4px]'
-      type="number"
-      step="any"
-      id={formatNameForId(item.nome)}
-      placeholder={'0.00'}
-      value={value}
-      onChange={(e) => handleInputChange(e.target.value)} />
-  </>)
+  return (
+    <div className="flex flex-col space-y-2">
+      <label 
+        htmlFor={formatNameForId(item.nome)} 
+        className="text-sm font-semibold text-gray-700 flex items-center gap-2"
+      >
+        <span className="text-green-600">📐</span>
+        {item.nome}
+      </label>
+      <div className="relative">
+        <input
+          className='w-full px-3 py-2 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 text-center font-medium'
+          type="number"
+          step="0.1"
+          min="0"
+          id={formatNameForId(item.nome)}
+          placeholder='0.0'
+          value={value}
+          onChange={(e) => handleInputChange(e.target.value)} 
+        />
+        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 font-medium">
+          cm
+        </span>
+      </div>
+    </div>
+  )
 }
