@@ -3,6 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore";
 import { loginUser } from "../../stores/authStore";
 import './../../style/login.css'
+import { ToastContainer } from "react-toastify";
 export const Login = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -27,8 +28,9 @@ export const Login = () => {
   }
 
   return (
-    <main id='login'>
-      <h1 className='text-4xl bg-[var(--secondaryColor)] text-[var(--primaryColor)] text-center px-20 py-2 rounded-4xl mt-2'>Login</h1>
+    <main id='login' className='h-ful min-h-screen min-w-screen'>
+      <ToastContainer />
+      <h1 className='text-3xl md:text-4xl bg-[var(--secondaryColor)] text-[var(--primaryColor)] text-center px-20 py-2 rounded-4xl mt-2'>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email</label>
