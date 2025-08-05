@@ -34,7 +34,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
   const h3ClassName = 'text-[1.5rem] text-[var(--primaryColor)] font-normal'
   const labelClassName = 'font-bold'
   const infoSpanClassName = 'flex flex-row gap-1'
-  const sectionClassName = 'flex flex-col items-center'
+  const sectionClassName = 'flex flex-col items-center w-full'
   const spanInfoTreino = 'flex flex-col items-start'
   const infoTreinoClassName = 'bg-[var(--secondaryColor)] rounded-[10px] border border-[var(--primaryColor)] flex flex-row justify-left pl-2 w-fit pr-4'
 
@@ -80,7 +80,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
 
           <section className={sectionClassName}>
             <h3 className={h3ClassName}>Agenda</h3>
-            <div className='flex flex-row gap-2'>
+            <div className='flex flex-wrap gap-2 justify-center items-center'>
               {getDaysChecklist(currentStudentSheet.agenda).map(day => (
                 <label className="checklist-circle"
                   key={day.day}
@@ -99,7 +99,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
 
           <section className={sectionClassName}>
             <h3 className={h3ClassName}>Informações de treino</h3>
-            <div className='levels flex flex-row gap-2'>
+            <div className='levels flex flex-wrap gap-2 justify-center mb-3'>
               {getLevels().map(level => (
                 <label
                   htmlFor={level.level}
@@ -116,7 +116,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
               ))}
             </div>
             <div className='w-full flex flex-col items-start'>
-              <span className='flex flex-row gap-5 wrap-normal mt-2'>
+              <span className='flex flex-col md:flex-row md:mb-2 gap-5 wrap-normal mt-2'>
                 <span className={spanInfoTreino}>
                   <p className={labelClassName}>Professor:</p>
                   <p className={infoTreinoClassName}>{currentStudentSheet.professor}</p>
