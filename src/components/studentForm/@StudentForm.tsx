@@ -8,6 +8,9 @@ import { treinosOpcoes } from "../../constants/treinosOpcoes";
 import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
 import { useStudentForm } from "../../hooks/useStudentForm";
 import type { sectionType } from "../../types/SectionTypes";
+import { Button } from "../ui/Button/Button";
+import { Card } from "../ui/Card/Card";
+import "./StudentForm.css";
 
 interface buttonProps {
   name: sectionType;
@@ -28,8 +31,9 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   } = useStudentForm({ student: studentInitialValue, closeForm })
 
   const SectionButton = ({ name }: buttonProps) => {
-    return <button
-      className="btn btn-green px-6 py-[2px]"
+    return <Button
+      variant="secondary"
+      size="sm"
       onClick={() =>
         setActiveSections((prev) =>
           prev.includes(name)
@@ -38,7 +42,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
         )
       }>
       {activeSections.includes(name) ? 'Fechar' : 'Abrir'}
-    </button>
+    </Button>
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -105,29 +109,59 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   ]
 
   return (
-    <form onSubmit={handleSubmit} className="form-student bg-white">
-      <h1 className='text-3xl text-[var(--primaryColor)] font-medium'>
-        {currentStudentSheet ? 'Editando ' : 'Cadastrando '} aluno
-      </h1>
-      {currentStudentSheet && <h2>{currentStudentSheet.student.nome}</h2>}
-      {sectionElements.map(section => <>
-        <section key={section.name} className={`
-        form-item border py-2 w-[90%] md:w-[70%] px-1 md:px-3 gap-2
-        ${sectionErrors[section.name as sectionType] ? 'border-red-600' : 'border-[var(--primaryColor)]'}`}>
-          <h3 className="font-medium text-[var(--primaryColor)]">
-            {section.title}
-          </h3>
-          {activeSections.includes(section.name as sectionType) && (
-            <> {section.element} </>
-          )}
-          <SectionButton name={section.name as sectionType} />
-        </section>
-      </>)}
+    <div className="student-form-container bg-gray-50 min-h-screen p-6">
+      <Card className="max-w-4xl mx-auto">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="text-center">
+            <h1 className='text-3xl font-semibold text-gray-900 mb-2'>
+              {currentStudentSheet ? 'Editando ' : 'Cadastrando '} aluno
+            </h1>
+            {currentStudentSheet && (
+              <h2 className="text-lg text-gray-600">{currentStudentSheet.student.nome}</h2>
+            )}
+          </div>
+          
+          <div className="space-y-4">
+            {sectionElements.map(section => (
+              <Card 
+                key={section.name} 
+                className={`border-2 ${
+                  sectionErrors[section.name as sectionType] 
+                    ? 'border-red-500' 
+                    : 'border-gray-200'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">
+                    {section.title}
+                  </h3>
+                  <SectionButton name={section.name as sectionType} />
+                </div>
+                
+                {activeSections.includes(section.name as sectionType) && (
+                  <div className="pt-4 border-t border-gray-200">
+                    {section.element}
+                  </div>
+                )}
+              </Card>
+            ))}
+          </div>
 
-      <button type="submit" className='btn btn-blue px-3'>Salvar</button>
-      <button type="button" className='btn btn-red px-3' onClick={closeForm}>
-        Cancelar
-      </button>
-    </form >
+          <div className="flex justify-center gap-4 pt-6">
+            <Button type="submit" variant="primary" size="lg">
+              Salvar
+            </Button>
+            <Button 
+              type="button" 
+              variant="secondary" 
+              size="lg" 
+              onClick={closeForm}
+            >
+              Cancelar
+            </Button>
+          </div>
+        </form>
+      </Card>
+    </div>
   )
 }

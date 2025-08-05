@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore";
 import { loginUser } from "../../stores/authStore";
+import { Button, Input, Card } from "../../components/ui";
 import './../../style/login.css'
 import { ToastContainer } from "react-toastify";
+
 export const Login = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   const status = useAppSelector((state) => state.auth.status)
   const error = useAppSelector((state) => state.auth.error)
@@ -27,35 +30,91 @@ export const Login = () => {
     }
   }
 
+  const EyeIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+      <circle cx="12" cy="12" r="3"></circle>
+    </svg>
+  )
+
+  const EyeOffIcon = () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+      <line x1="1" y1="1" x2="23" y2="23"></line>
+    </svg>
+  )
+
   return (
-    <main id='login' className='h-ful min-h-screen min-w-screen'>
+    <main className='login-page'>
       <ToastContainer />
-      <h1 className='text-3xl md:text-4xl bg-[var(--secondaryColor)] text-[var(--primaryColor)] text-center px-20 py-2 rounded-4xl mt-2'>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      
+      <div className="login-container">
+        <div className="login-header">
+          <div className="login-logo">
+            <h1 className="logo-text">ProFitness</h1>
+          </div>
+          <p className="login-subtitle">Sistema de gestão de academia</p>
         </div>
-        <div>
-          <label>Senha</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button className='btn btn-green px-3'
-          type="submit" disabled={status === "loading"}>
-          {status === "loading" ? "Entrando..." : "Entrar"}
-        </button>
-      </form>
-      {status === "failed" && <p>{error}</p>}
+
+        <Card variant="elevated" padding="xl" className="login-card">
+          <div className="login-card-header">
+            <h2 className="login-title">Bem-vindo de volta!</h2>
+            <p className="login-description">Faça login para acessar sua conta</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="login-form">
+            <Input
+              type="email"
+              label="Email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              variant="filled"
+              size="lg"
+              fullWidth
+              required
+            />
+
+            <div className="password-field-wrapper">
+              <Input
+                type={showPassword ? "text" : "password"}
+                label="Senha"
+                placeholder="Digite sua senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                variant="filled"
+                size="lg"
+                fullWidth
+                required
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              >
+                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+              </button>
+            </div>
+
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              isLoading={status === "loading"}
+              fullWidth
+            >
+              {status === "loading" ? "Entrando..." : "Entrar"}
+            </Button>
+
+            {status === "failed" && (
+              <div className="login-error">
+                <p>{error}</p>
+              </div>
+            )}
+          </form>
+        </Card>
+      </div>
     </main>
   );
 }

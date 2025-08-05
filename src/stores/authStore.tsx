@@ -3,13 +3,14 @@ import { login } from "../service/fetchAPI";
 import { toast } from "react-toastify";
 
 const userToken = localStorage.getItem('userToken') ?? null as string | null
+
 interface ICredentials {
   email: string;
   password: string;
 }
 
 const initialState = {
-  authenticated: userToken ? true : false,
+  authenticated: false, // Sempre começar como false até validar o token
   token: userToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
   error: null as string | null,
@@ -43,6 +44,16 @@ export const authSlice = createSlice({
     },
     setLoading: (state, action: PayloadAction<false | string>) => {
       state.loading = action.payload
+    },
+    checkExistingToken: (state) => {
+      const token = localStorage.getItem('userToken')
+      if (token) {
+        state.authenticated = true
+        state.token = token
+      } else {
+        state.authenticated = false
+        state.token = null
+      }
     }
   },
   extraReducers: (builder) => {
@@ -61,5 +72,5 @@ export const authSlice = createSlice({
   }
 })
 
-export const { logout, setLoading } = authSlice.actions
+export const { logout, setLoading, checkExistingToken } = authSlice.actions
 

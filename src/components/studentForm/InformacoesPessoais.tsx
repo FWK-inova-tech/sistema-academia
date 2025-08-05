@@ -42,47 +42,67 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
     mask.resolve(defaultString)
     return mask.value
   }
-  const spanContainerClassname = 'flex flex-col md:flex-row items-center gap-2'
-  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl max-w-[90%]'
+  const spanContainerClassname = 'flex flex-col gap-2 w-full'
+  const labelClassname = 'text-sm font-semibold text-gray-700'
+  const inputClassname = 'w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white text-gray-900 focus:border-[#4CAF50] focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-20 transition-all duration-200 outline-none'
 
 
   return (
-    <div className="info-pessoais flex flex-col items-center gap-3">
-      <span className={spanContainerClassname}>
-        <label htmlFor="student-name" className="border-none bg-none">Nome:</label>
-        <input id="student-name" name="student-name"
-          className={inputClassname}
-          value={name}
-          maxLength={150}
-          minLength={10}
-          type="text"
-          placeholder="Nome do aluno"
-          onChange={(e) => handleInputChange('nome', e.target.value)} />
-      </span>
+    <div className="info-pessoais bg-white p-8 rounded-lg shadow-lg border-2 border-gray-200">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
+          📋 Informações Pessoais
+        </h3>
+      </div>
+      
+      <div className="space-y-6">
+        <div className={spanContainerClassname}>
+          <label htmlFor="student-name" className={labelClassname}>Nome completo</label>
+          <input 
+            id="student-name" 
+            name="student-name"
+            className={inputClassname}
+            value={name}
+            maxLength={150}
+            minLength={10}
+            type="text"
+            placeholder="Digite o nome completo do aluno"
+            onChange={(e) => handleInputChange('nome', e.target.value)} 
+          />
+        </div>
 
-      <span className={spanContainerClassname}>
-        <label htmlFor="birth-date">Data de nascimento:</label>
-        <input id="birth-date" name="birth-date"
-          className={inputClassname}
-          value={date}
-          type="date"
-          placeholder="Data de nascimento"
-          onChange={(e) => handleDateInput(e.target.value)} />
-      </span>
+        <div className={spanContainerClassname}>
+          <label htmlFor="birth-date" className={labelClassname}>Data de nascimento</label>
+          <input 
+            id="birth-date" 
+            name="birth-date"
+            className={inputClassname}
+            value={date}
+            type="date"
+            onChange={(e) => handleDateInput(e.target.value)} 
+          />
+        </div>
 
-      <span className={spanContainerClassname}>
-        <label htmlFor="contact">Contato:</label>
-        <IMaskInput
-          className={inputClassname}
-          mask="(00) 0 0000-0000"
-          placeholder="(00) 0 0000-0000"
-          id="contact"
-          unmask="typed"
-          name="contact"
-          value={getFormatedMaskContact(contact)}
-          onAccept={(value) => handleInputChange('contato', value)} />
-      </span>
-      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
+        <div className={spanContainerClassname}>
+          <label htmlFor="contact" className={labelClassname}>Telefone para contato</label>
+          <IMaskInput
+            className={inputClassname}
+            mask="(00) 0 0000-0000"
+            placeholder="(00) 0 0000-0000"
+            id="contact"
+            unmask="typed"
+            name="contact"
+            value={getFormatedMaskContact(contact)}
+            onAccept={(value) => handleInputChange('contato', value)} 
+          />
+        </div>
+      </div>
+      
+      {erroMsg && (
+        <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-red-700 text-sm font-medium">{erroMsg}</p>
+        </div>
+      )}
     </div>
   )
 }

@@ -57,85 +57,131 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       })
     }
   }
-  const inputClassname = 'bg-[var(--secondaryColor)] border border-[var(--primaryColor)] px-3 rounded-3xl max-w-[90%]'
-  const spanContainerClassname = 'flex flex-col items-start'
-
   return (
-    <div className='info-treino flex flex-col w-full'>
-      <span >
-        <label htmlFor='level' className='mr-2'>Nível:</label>
-        <select id='level'
+    <div className="space-y-6 p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200">
+      {/* Header */}
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
+          <span className="text-green-600">🏋️</span>
+          Informações do Treino
+        </h2>
+        <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-green-600 mx-auto mt-2 rounded-full"></div>
+      </div>
+
+      {/* Nível Selection */}
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <label htmlFor='level' className='block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2'>
+          <span className="text-green-600">⭐</span>
+          Nível de Treinamento
+        </label>
+        <select 
+          id='level'
           required
           value={editingInfoTreino.nivel}
-          onChange={handleLevelChange}>
-          <option value='Iniciante'>Iniciante</option>
-          <option value='Intermediário'>Intermediário</option>
-          <option value='Avançado'>Avançado</option>
+          onChange={handleLevelChange}
+          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 font-medium"
+        >
+          <option value='Iniciante'>🌱 Iniciante</option>
+          <option value='Intermediário'>💪 Intermediário</option>
+          <option value='Avançado'>🔥 Avançado</option>
         </select>
-      </span>
+      </div>
 
-      <span className='flex flex-col md:flex-row'>
-        <span className={spanContainerClassname}>
-          <label htmlFor="teacher">Professor(a):</label>
+      {/* Datas e Professor */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <label htmlFor="teacher" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <span className="text-green-600">👨‍🏫</span>
+            Professor(a)
+          </label>
           <input
-            className={inputClassname}
+            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
             id="teacher"
             type="text"
             maxLength={150}
             minLength={10}
             value={teacher}
             placeholder="Nome do professor(a)"
-            onChange={(e) => handleInputChange('professor', e.target.value)} />
-        </span>
+            onChange={(e) => handleInputChange('professor', e.target.value)} 
+          />
+        </div>
 
-        <span className={spanContainerClassname}>
-          <label htmlFor="start-date">Data de início</label>
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <span className="text-green-600">📅</span>
+            Data de Início
+          </label>
           <input
-            className={inputClassname}
+            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
             id="start-date"
             type="date"
             value={startDate}
-            onChange={handleStartDateChange} />
-        </span>
+            onChange={handleStartDateChange} 
+          />
+        </div>
 
-        <span className={spanContainerClassname}>
-          <label htmlFor="review-date">Data de revisão</label>
+        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+          <label htmlFor="review-date" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+            <span className="text-green-600">🔄</span>
+            Data de Revisão
+          </label>
           <input
-            className={inputClassname}
+            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
             id="review-date"
             type="date"
             value={reviewDate}
-            onChange={handleReviewDateChange} />
-        </span>
+            onChange={handleReviewDateChange} 
+          />
+        </div>
+      </div>
 
-      </span>
-
-      <span className={spanContainerClassname}>
-        <label htmlFor="goal">Objetivo</label>
+      {/* Objetivo */}
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <label htmlFor="goal" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <span className="text-green-600">🎯</span>
+          Objetivo do Treino
+        </label>
         <input
-          className={inputClassname + ' w-[30em]'}
+          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
           id="goal"
           type="text"
           maxLength={500}
           minLength={20}
           value={goal}
-          placeholder="Objetivo do aluno"
-          onChange={(e) => handleInputChange('objetivo', e.target.value)} />
-      </span>
+          placeholder="Ex: Perda de peso, ganho de massa muscular, condicionamento físico..."
+          onChange={(e) => handleInputChange('objetivo', e.target.value)} 
+        />
+      </div>
 
-      <span className={spanContainerClassname}>
-        <label htmlFor="anaminese">Anaminese</label>
+      {/* Anamnese */}
+      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+        <label htmlFor="anaminese" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <span className="text-green-600">📋</span>
+          Anamnese
+        </label>
         <textarea
-          className={inputClassname}
+          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 resize-none"
           id="anaminese"
+          rows={4}
           maxLength={500}
           minLength={20}
           value={anaminese}
-          placeholder="Anaminese"
-          onChange={(e) => handleInputChange('anaminese', e.target.value)} />
-      </span>
+          placeholder="Informações médicas relevantes, lesões, limitações, medicamentos..."
+          onChange={(e) => handleInputChange('anaminese', e.target.value)} 
+        />
+        <div className="text-right text-xs text-gray-500 mt-1">
+          {anaminese.length}/500 caracteres
+        </div>
+      </div>
 
-      {erroMsg && <p className='form-error-text'>{erroMsg}</p>}
+      {erroMsg && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+          <div className="flex items-center">
+            <span className="text-red-400 mr-2">⚠️</span>
+            <p className="text-red-700 font-medium">{erroMsg}</p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
