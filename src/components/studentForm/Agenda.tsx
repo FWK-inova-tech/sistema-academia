@@ -26,9 +26,9 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
   }
 
   return (
-    <div className='agenda flex flex-row gap-1'>
+    <div className='agenda flex flex-wrap items-center justify-center gap-1'>
       {days.map((day) => (
-        <label key={day} className="checklist-circle">
+        <label key={day} className="checklist-circle bg-[var(--secondaryColor)] px-1">
           <input
             type="checkbox"
             value={day}

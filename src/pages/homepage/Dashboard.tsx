@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../service/fetchAPI"
 import '../../style/dashboard.css'
-import '../../style/studentsList.css'
 import axios from "axios"
 import { logout } from "../../stores/authStore";
 import { useDashboard } from "../../hooks/useDashboard";
