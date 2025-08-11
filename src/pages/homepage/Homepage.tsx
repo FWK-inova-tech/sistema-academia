@@ -85,10 +85,6 @@ export const Homepage = () => {
                 <div className="bg-white border-b border-gray-200 p-6 shadow-sm">
                   <Card className="border-0 shadow-md">
                     <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                      <div>
-                        <h1 className="text-2xl font-bold text-gray-800 mb-1">Gestão de Alunos</h1>
-                        <p className="text-gray-600">Gerencie todos os alunos da academia</p>
-                      </div>
                       <div className="flex gap-3">
                         <SearchStudent handleSearch={handleSearch} />
                         <Button
