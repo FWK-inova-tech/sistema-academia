@@ -1,5 +1,6 @@
 import { useAppSelector } from "../stores/appStore"
 import './Sidebar.css'
+import Logo from "../assets/logo.png"
 
 interface sidebarProps {
   current: 'students' | 'settings' | 'register/edit/sheet'
@@ -31,8 +32,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
     <aside className='sidebar'>
       <div className="sidebar-header">
         <div className="sidebar-logo">
-          <span className="sidebar-logo-icon">💪</span>
-          <span className="sidebar-logo-text">ProFitness</span>
+          <img className="sidebar-logo-icon" src={Logo}/>
         </div>
       </div>
 
