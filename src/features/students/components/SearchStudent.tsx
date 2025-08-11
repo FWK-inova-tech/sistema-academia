@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../../stores/appStore";
+import { setIsOnSearching } from "../../../stores/studentsStore";
 
 interface searchStudentProps {
   handleSearch: (name: string) => void;
@@ -6,10 +8,28 @@ interface searchStudentProps {
 
 export const SearchStudent = ({ handleSearch }: searchStudentProps) => {
   const [searchTerm, setSearchTerm] = useState("")
+  const dispatch = useAppDispatch()
+  const isOnSearching = useAppSelector((state) => state.students.isOnSearching)
+  
 
   function handleInputChange(name: string) {
     setSearchTerm(name)
     handleSearch(name)
+    if(searchTerm.trim() === "" && isOnSearching) {
+      dispatch(setIsOnSearching(false))
+      return
+    }
+
+    if(searchTerm.trim() !== "" && !isOnSearching){
+      dispatch(setIsOnSearching(true))
+    }
+
+  }
+
+  function cleanSearch() {
+    setSearchTerm("")
+    handleSearch("")
+    dispatch(setIsOnSearching(false))
   }
 
   const SearchIcon = () => (
@@ -34,7 +54,7 @@ export const SearchStudent = ({ handleSearch }: searchStudentProps) => {
         />
         {searchTerm && (
           <button
-            onClick={() => handleInputChange("")}
+            onClick={cleanSearch}
             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

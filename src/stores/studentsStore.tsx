@@ -4,12 +4,16 @@ import type { AlunoType } from "../types/AlunoType";
 const initialState = {
   studentsList: [] as Pick<AlunoType, '_id' | 'nome'>[],
   loading: false as false | string,
+  isOnSearching: false as boolean,
 }
 
 export const studentsSlice = createSlice({
   name: 'students',
   initialState,
   reducers: {
+    setIsOnSearching: (state, action: PayloadAction<boolean>) => {
+      state.isOnSearching = action.payload 
+    },
     setAlunos: (state, action: PayloadAction<Pick<AlunoType, '_id' | 'nome'>[]>) => {
       state.studentsList = action.payload
     },
@@ -34,4 +38,4 @@ export const studentsSlice = createSlice({
   }
 })
 
-export const { addAluno, removeAluno, setAlunos, setLoading, updateStudentNameOnList } = studentsSlice.actions
+export const { addAluno, removeAluno, setAlunos, setLoading, updateStudentNameOnList, setIsOnSearching } = studentsSlice.actions
