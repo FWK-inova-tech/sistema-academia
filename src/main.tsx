@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux';
 import './style/index.css'
-import './styles/design-tokens.css'
+import './style/design-tokens.css'
 import './components/ui/Button/Button.css'
 import './components/ui/Input/Input.css'
 import './components/ui/Card/Card.css'

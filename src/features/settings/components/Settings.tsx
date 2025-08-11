@@ -1,9 +1,9 @@
-import { useAppSelector } from "../stores/appStore"
-import { Loading } from "./Loading"
+import { useAppSelector } from "../../../stores/appStore"
+import { Loading } from "../../../components/Loading"
+import { Button } from "../../../components/ui/Button/Button"
+import { Input } from "../../../components/ui/Input/Input"
+import { Card } from "../../../components/ui/Card/Card"
 import { useSettings } from "../hooks/useSettings"
-import { Button } from "./ui/Button/Button"
-import { Input } from "./ui/Input/Input"
-import { Card } from "./ui/Card/Card"
 
 export const Settings = () => {
   const isAuthLoading = useAppSelector((state) => state.auth.loading)

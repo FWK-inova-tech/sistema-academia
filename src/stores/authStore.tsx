@@ -25,6 +25,7 @@ export const loginUser = createAsyncThunk<string, ICredentials, { rejectValue: s
       localStorage.setItem('userToken', token)
       return token
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const message = error as Error
       toast.error(error.status == 400 ? "Credenciais erradas" : "Erro ao tentar fazer login")

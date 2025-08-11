@@ -1,14 +1,14 @@
 import { useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../stores/appStore"
-import { setLoading } from "../../stores/studentsStore"
-import { getAluno } from "../../service/fetchAPI"
-import type { AlunoType } from "../../types/AlunoType";
+import { useAppDispatch, useAppSelector } from "../../../stores/appStore"
+import { setLoading } from "../../../stores/studentsStore"
+import { getAluno } from "../../../service/fetchAPI"
+import type { AlunoType } from "../../../types/AlunoType";
 import { StudentSheet } from "./StudentSheet";
-import { StudentForm } from "../studentForm/@StudentForm";
-import { Loading } from "../../components/Loading";
-import { Table, Button } from "../ui";
-import type { TableColumn, TableAction } from "../ui/Table/Table";
-import './Students.css';
+import { StudentForm } from "../../studentForm/components/@StudentForm";
+import { Loading } from "../../../components/Loading";
+import { Table, Button } from "../../../components/ui";
+import type { TableColumn, TableAction } from "../../../components/ui/Table/Table";
+import '../style/Students.css';
 
 interface studentsProps {
   currentStudentsList: Pick<AlunoType, '_id' | 'nome'>[];

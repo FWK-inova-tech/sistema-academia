@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TreinoType } from "../../types/TreinoType"
+import type { TreinoType } from "../../../types/TreinoType"
 
 interface itemTreinoProps {
   item: TreinoType;

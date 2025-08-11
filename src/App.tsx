@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import './style/App.css'
 import './style/styledCheckbox.css'
 import { PrivateRoute } from "./pages/homepage/PrivateRoute";
-import { Dashboard } from "./pages/homepage/Dashboard";
+import {  Homepage } from "./pages/homepage/Homepage";
 import { Login } from "./pages/login/Login";
 import { useAppDispatch } from "./stores/appStore";
 import { checkExistingToken } from "./stores/authStore";
@@ -20,7 +20,7 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login/>}/>
       <Route path="/" element={<PrivateRoute />}>
-        <Route index element={<Dashboard />} />
+        <Route index element={<Homepage />} />
       </Route>
     </Routes>
   )

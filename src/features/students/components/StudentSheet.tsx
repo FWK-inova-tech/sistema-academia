@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { AlunoType } from "../../types/AlunoType"
+import type { AlunoType } from "../../../types/AlunoType"
 import { ModalDeleteStudent } from "./ModalDeleteStudent";
-import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../../hooks/useStudentSheet";
+import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../hooks/useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;

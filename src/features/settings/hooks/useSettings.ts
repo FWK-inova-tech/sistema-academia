@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom"
-import { useAppDispatch } from "../stores/appStore"
 import { toast } from "react-toastify"
-import { logout, setLoading } from "../stores/authStore"
-import { changePassword } from "../service/fetchAPI"
 import { useState } from "react"
+import { logout, setLoading } from "../../../stores/authStore"
+import { changePassword } from "../../../service/fetchAPI"
+import { useAppDispatch } from "../../../stores/appStore"
 
 export const useSettings = () => {
   const dispatch = useAppDispatch()
@@ -27,6 +27,7 @@ export const useSettings = () => {
       .then(() => {
         toast.success('Senha alterada com sucesso')
       })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .catch((error: any) => {
         const errorMessage = error.response.data.message ? `Erro ao tentar registrar ficha: ${error.response.data.message}` : 'Erro ao tentar registrar ficha'
         toast.error(errorMessage)

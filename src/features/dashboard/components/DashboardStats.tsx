@@ -1,5 +1,5 @@
-import { StatCard } from "../ui/StatCard/StatCard";
-import { Card } from "../ui/Card/Card";
+import { StatCard } from "../../../components/ui/StatCard/StatCard";
+import { Card } from "../../../components/ui/Card/Card";
 
 interface DashboardStatsProps {
   totalStudents: number;

@@ -1,5 +1,5 @@
 import { useAppSelector } from "../stores/appStore"
-import './Sidebar.css'
+import '../style/Sidebar.css'
 import Logo from "../assets/logo.png"
 
 interface sidebarProps {

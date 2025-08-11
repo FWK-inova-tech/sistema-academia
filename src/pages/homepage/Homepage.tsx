@@ -3,25 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../service/fetchAPI"
-import '../../style/dashboard.css'
+import '../../style/homepage.css'
 import axios from "axios"
 import { logout } from "../../stores/authStore";
-import { useDashboard } from "../../hooks/useDashboard";
+import { useHomepage } from "../../hooks/useHomepage";
 import { ToastContainer } from "react-toastify";
 import { Sidebar } from "../../components/Sidebar";
-import { SearchStudent } from "../../components/students/SearchStudent";
-import { StudentForm } from "../../components/studentForm/@StudentForm";
-import { Students } from "../../components/students/@Students";
-import { Settings } from "../../components/Settings";
+import { SearchStudent } from "../../features/students/components/SearchStudent";
+import { StudentForm } from "../../features/studentForm/components/@StudentForm";
+import { Students } from "../../features/students/components/@Students";
+import { Settings } from "../../features/settings/components/Settings";
 import { Button } from "../../components/ui/Button/Button";
 import { Card } from "../../components/ui/Card/Card";
-import { DashboardStats } from "../../components/dashboard/DashboardStats";
+import { DashboardStats } from "../../features/dashboard/components/DashboardStats";
 
-export const Dashboard = () => {
+export const Homepage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
-  const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useDashboard({ students })
+  const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   useEffect(() => {
