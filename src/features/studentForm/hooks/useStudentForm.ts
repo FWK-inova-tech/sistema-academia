@@ -1,11 +1,11 @@
 import { useState } from "react";
-import type { AlunoType } from "../types/AlunoType";
-import type { PerimetriaType } from "../types/PerimetriaType";
-import type { TreinoType } from "../types/TreinoType";
-import type { SectionErrorType, sectionType } from "../types/SectionTypes";
-import { useAppDispatch } from "../stores/appStore";
-import { registerAluno, updateAluno } from "../service/fetchAPI";
-import { addAluno, setLoading, updateStudentNameOnList } from "../stores/studentsStore";
+import type { AlunoType } from "../../../types/AlunoType";
+import type { PerimetriaType } from "../../../types/PerimetriaType";
+import type { TreinoType } from "../../../types/TreinoType";
+import type { SectionErrorType, sectionType } from "../../../types/SectionTypes";
+import { useAppDispatch } from "../../../stores/appStore";
+import { registerAluno, updateAluno } from "../../../service/fetchAPI";
+import { addAluno, setLoading, updateStudentNameOnList } from "../../../stores/studentsStore";
 import { toast } from "react-toastify";
 
 interface useStudentFormParams {

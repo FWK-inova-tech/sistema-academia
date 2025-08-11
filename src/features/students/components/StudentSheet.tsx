@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { AlunoType } from "../../types/AlunoType"
+import type { AlunoType } from "../../../types/AlunoType"
 import { ModalDeleteStudent } from "./ModalDeleteStudent";
-import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../../hooks/useStudentSheet";
+import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../hooks/useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;
@@ -46,12 +46,6 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
             {/* Header Superior */}
             <div className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] text-white p-6 flex justify-between items-center">
               <div className="flex items-center gap-5">
-                <button
-                  onClick={closeStudentSheet}
-                  className="text-white hover:bg-[#3d8b40] px-5 py-3 rounded-md transition-colors font-medium"
-                >
-                  ← Voltar
-                </button>
                 <h1 className="text-2xl font-bold tracking-wide">FICHA DO ALUNO</h1>
               </div>
               <div className="flex gap-4">

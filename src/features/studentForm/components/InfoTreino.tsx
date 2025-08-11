@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { AlunoType } from "../../types/AlunoType"
-import { getLocalDate } from "../../utils/getLocalDate";
+import type { AlunoType } from "../../../types/AlunoType"
+import { getLocalDate } from "../../../utils/getLocalDate";
 
 interface infoTreinoProps {
   editingInfoTreino: Pick<AlunoType, 'nivel' | 'professor' | 'dataInicio' | 'dataRevisao' | 'objetivo' | 'anaminese'>;

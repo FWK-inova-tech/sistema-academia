@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { AlunoType } from "../../types/AlunoType";
+import type { AlunoType } from "../../../types/AlunoType";
 import { IMask, IMaskInput } from "react-imask";
-import { getLocalDate } from "../../utils/getLocalDate";
+import { getLocalDate } from "../../../utils/getLocalDate";
 
 
 interface informacoesPessoaisProps {

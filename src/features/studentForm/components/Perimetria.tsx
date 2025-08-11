@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { PerimetriaType } from "../../types/PerimetriaType"
+import type { PerimetriaType } from "../../../types/PerimetriaType"
 import { PerimetriaItem } from "./PerimetriaItem";
-import { getLocalDate } from "../../utils/getLocalDate";
+import { getLocalDate } from "../../../utils/getLocalDate";
 
 interface perimetriaProps {
   editingPerimetria: PerimetriaType;

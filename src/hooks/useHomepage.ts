@@ -4,7 +4,7 @@ import type { AlunoType } from "../types/AlunoType";
 interface useDashboardParams {
   students: Pick<AlunoType, '_id' | 'nome'>[];
 }
-export const useDashboard = ({ students }: useDashboardParams) => {
+export const useHomepage = ({ students }: useDashboardParams) => {
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
   type apiErrorType = {
     message: string;

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import type { PerimetriaMedidaType } from "../../types/PerimetriaType"
+import type { PerimetriaMedidaType } from "../../../types/PerimetriaType"
 
 interface perimetriaItemProps {
   item: PerimetriaMedidaType;

@@ -1,16 +1,16 @@
-import type { AlunoType } from "../../types/AlunoType"
+import type { AlunoType } from "../../../types/AlunoType"
 import { Perimetria } from "./Perimetria";
 import { InformacoesPessoais } from "./InformacoesPessoais";
 import { InfoTreino } from "./InfoTreino";
 import { Agenda } from "./Agenda";
-import { ItemTreino } from "../treino/@ItemTreino";
-import { treinosOpcoes } from "../../constants/treinosOpcoes";
-import { newStudentInitialValue } from "../../constants/newStudentInitialValue";
-import { useStudentForm } from "../../hooks/useStudentForm";
-import type { sectionType } from "../../types/SectionTypes";
-import { Button } from "../ui/Button/Button";
-import { Card } from "../ui/Card/Card";
-import "./StudentForm.css";
+import { ItemTreino } from "./ItemTreino";
+import { treinosOpcoes } from "../../../constants/treinosOpcoes";
+import { newStudentInitialValue } from "../../../constants/newStudentInitialValue";
+import { useStudentForm } from "../hooks/useStudentForm";
+import type { sectionType } from "../../../types/SectionTypes";
+import { Button } from "../../../components/ui/Button/Button";
+import { Card } from "../../../components/ui/Card/Card";
+import "../style/StudentForm.css";
 
 interface buttonProps {
   name: sectionType;
