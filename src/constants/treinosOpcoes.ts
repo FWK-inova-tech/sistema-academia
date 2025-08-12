@@ -38,4 +38,63 @@ export const treinosOpcoes: TreinoType[] = [
       'Livre'
     ]
   },
+  {
+    categoria: 'Abdominais',
+    exercicios: [
+      'ABD.Supra',
+      'ABD.Infra',
+      'ABD.Reto',
+      'Esteira',
+      'Bicicleta',
+      'Elíptico',
+    ]
+  },
+  {
+    categoria: 'Costa e Peitoral',
+    exercicios: [
+      'Peck Deck',
+      'Puxada Alta',
+      'Remada Baixa',
+      'Remada Cavalinho',
+      'Remada Unilateral',
+      'Pull Down',
+      'Pull Over',
+      'Cross Over',
+      'Crucifixo',
+      'Supino Reto',
+      'Supino 45°',
+      'Supino Vertical',
+    ]
+  },
+  {
+    categoria: 'Ombors e Trapézio',
+    exercicios: [
+      'Desenvolvimento',
+      'ABD. Ombro',
+      'Flex. Ombro',
+      'Remada Alta',
+      'Encolhimento',
+      'Crucifixo Inverso',
+    ]
+  },
+  {
+    categoria: 'Bíceps',
+    exercicios: [
+      'Rosca Concentrada',
+      'Rosca Direta',
+      'Rosca Alternada',
+      'Rosca Martelo',
+      'Rosca Scott',
+    ]
+  },
+  {
+    categoria: 'Tríceps',
+    exercicios: [
+      'Tric. Mergulho',
+      'Tric. Polia',
+      'Tric. Testa',
+      'Tric. Francês',
+      'Tric. Corda',
+    ]
+  },
 ]
