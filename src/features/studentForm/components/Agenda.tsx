@@ -26,7 +26,7 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
   }
 
   return (
-    <div className="agenda bg-white p-8 rounded-lg shadow-lg border-2 border-gray-200">
+    <div className="agenda bg-white p-3 md:p-8 rounded-lg shadow-lg border-2 border-gray-200">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
           📅 Agenda Semanal
@@ -34,7 +34,7 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
         <p className="text-gray-600 mt-2">Selecione os dias da semana para treino</p>
       </div>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-1 md:grid-cols-3 md:gap-4">
         {days.map((day) => (
           <label 
             key={day} 

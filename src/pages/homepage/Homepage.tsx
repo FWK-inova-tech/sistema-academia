@@ -85,14 +85,14 @@ export const Homepage = () => {
                 <div className="bg-white border-b border-gray-200 p-6 shadow-sm">
                   <Card className="border-0 shadow-md">
                     <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                      <div className="flex gap-3">
+                      <div className="flex flex-col md:flex-row gap-3">
                         <SearchStudent handleSearch={handleSearch} />
                         <Button
                           variant="primary"
                           onClick={handleOpenRegister}
-                          className="bg-green-600 hover:bg-green-700 text-white shadow-md"
+                          className="bg-green-600 hover:bg-green-700 text-white shadow-md py-3"
                         >
-                          + Cadastrar aluno
+                          Cadastrar aluno
                         </Button>
                       </div>
                     </div>
