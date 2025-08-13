@@ -39,12 +39,12 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
           success: handleSuccessDelete
         }}
         student={{ _id: currentStudentSheet._id, name: currentStudentSheet.nome }} />
-        : <div className='max-w-5xl mx-auto px-8'>
+        : <div className='md:max-w-5xl mx-auto px-1 md:px-8'>
           
           {/* Cabeçalho da Ficha */}
           <div className="bg-white border-2 border-gray-300 mb-8 shadow-lg">
             {/* Header Superior */}
-            <div className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] text-white p-6 flex justify-between items-center">
+            <div className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] text-white p-6 flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center gap-5">
                 <h1 className="text-2xl font-bold tracking-wide">FICHA DO ALUNO</h1>
               </div>
@@ -70,7 +70,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
             </div>
 
             {/* Corpo da Ficha */}
-            <div className="p-8">
+            <div className="p-2 md:p-8">
               
               {/* SEÇÃO 1: DADOS PESSOAIS */}
               <div className="mb-16">
@@ -79,26 +79,14 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
                     📋 DADOS PESSOAIS
                   </h3>
                   <div className="p-8">
-                    <div className="grid grid-cols-2 gap-12">
-                      <div className="space-y-6">
-                        <div className="flex">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Contato:</span>
-                          <span className="text-gray-900 font-medium">{formatPhoneNumber(currentStudentSheet.contato)}</span>
-                        </div>
-                        <div className="flex">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nascimento:</span>
-                          <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataNascimento)}</span>
-                        </div>
+                    <div className="flex flex-col md:flex-row items-center justify-center">
+                      <div className="flex flex-col md:flex-row items-center justify-center w-full">
+                        <span className="font-bold text-gray-800 w-40 flex-shrink-0">Contato:</span>
+                        <span className="text-gray-900 font-medium">{formatPhoneNumber(currentStudentSheet.contato)}</span>
+                      <div className="flex flex-col md:flex-row items-center">
+                        <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nascimento:</span>
+                        <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataNascimento)}</span>
                       </div>
-                      <div className="space-y-6">
-                        <div className="flex">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Professor:</span>
-                          <span className="text-gray-900 font-medium">{currentStudentSheet.professor}</span>
-                        </div>
-                        <div className="flex">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nível:</span>
-                          <span className="text-gray-900 font-bold">{currentStudentSheet.nivel}</span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -111,12 +99,12 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
                   <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
                     📅 AGENDA SEMANAL
                   </h3>
-                  <div className="p-8">
-                    <div className="grid grid-cols-7 gap-4">
+                  <div className="p-4 md:p-8">
+                    <div className="flex flex-wrap gap-6 justify-evenly">
                       {getDaysChecklist(currentStudentSheet.agenda).map(day => (
                         <div key={day.day} className="text-center border-2 border-gray-300 p-5 bg-white shadow-sm rounded-md">
                           <div className="font-bold text-gray-800 text-sm mb-4">{day.day}</div>
-                          <div className={`w-8 h-8 mx-auto rounded-full border-2 flex items-center justify-center transition-colors ${
+                          <div className={`w-4 h-4 md:w-8 md:h-8 mx-auto rounded-full border-2 flex items-center justify-center transition-colors ${
                             day.checked 
                               ? 'bg-[#4CAF50] border-[#4CAF50] text-white shadow-md' 
                               : 'border-gray-400 bg-white hover:border-gray-500'
@@ -136,20 +124,20 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
                   <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
                     🏋️ INFORMAÇÕES DE TREINO
                   </h3>
-                  <div className="p-8">
-                    <div className="grid grid-cols-2 gap-12 mb-8">
-                      <div className="space-y-6">
-                        <div className="flex">
+                  <div className="p-4 md:p-8">
+                    <div className="flex flex-wrap items-start justify-center gap-2">
+                      <div className="space-y-6 flex flex-col md:flex-row">
+                        <div className="flex flex-col md:flex-row items-center">
                           <span className="font-bold text-gray-800 w-40 flex-shrink-0">Data de Início:</span>
                           <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataInicio)}</span>
                         </div>
-                        <div className="flex">
+                        <div className="flex flex-col md:flex-row items-center">
                           <span className="font-bold text-gray-800 w-40 flex-shrink-0">Data de Revisão:</span>
                           <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataRevisao)}</span>
                         </div>
                       </div>
                       <div className="space-y-6">
-                        <div className="flex">
+                        <div className="flex flex-col md:flex-row items-center">
                           <span className="font-bold text-gray-800 w-40 flex-shrink-0">Professor:</span>
                           <span className="text-gray-900 font-medium">{currentStudentSheet.professor}</span>
                         </div>
@@ -157,10 +145,10 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
                     </div>
                     
                     {/* Nível em linha separada */}
-                    <div className="mb-8">
-                      <div className="flex items-center gap-6">
+                    <div className="mb-8 mt-4">
+                      <div className="flex flex-col md:flex-row items-center gap-1 md:gap-6">
                         <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nível:</span>
-                        <div className="flex gap-4 flex-wrap">
+                        <div className="flex gap-4 flex-wrap items-center justify-center">
                           {getLevels().map(level => (
                             <span
                               key={level.level}
@@ -229,7 +217,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
                   <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
                     💪 PROGRAMA DE TREINO
                   </h3>
-                  <div className="p-8">
+                  <div className="p-4 md:p-8">
                     {currentStudentSheet.treino.length === 0 ? (
                       <div className="text-center py-16 border-2 border-dashed border-gray-400 bg-gray-50 rounded-md">
                         <span className="text-gray-600 font-medium text-lg">Nenhum treino cadastrado</span>

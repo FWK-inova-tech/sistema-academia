@@ -47,6 +47,11 @@
   margin-bottom: var(--spacing-2);
 }
 
+.login-logo-img{
+  height: 8rem;
+  width: auto;
+}
+
 .logo-icon {
   background: linear-gradient(135deg, var(--color-white) 0%, rgba(255, 255, 255, 0.9) 100%);
   width: 4rem;
@@ -275,6 +280,9 @@
   
   .login-subtitle {
     font-size: var(--font-size-base);
+  }
+  .input-container > inpu{
+    max-width: 95%;
   }
 }
 

@@ -5,6 +5,7 @@ import { loginUser } from "../../stores/authStore";
 import { Button, Input, Card } from "../../components/ui";
 import './../../style/login.css'
 import { ToastContainer } from "react-toastify";
+import Logo from './../../assets/logo.png'
 
 export const Login = () => {
   const navigate = useNavigate()
@@ -51,15 +52,13 @@ export const Login = () => {
       <div className="login-container">
         <div className="login-header">
           <div className="login-logo">
-            <h1 className="logo-text">ProFitness</h1>
+            <img src={Logo} alt="Logo da academia ProFitness" className="login-logo-img"/>
           </div>
-          <p className="login-subtitle">Sistema de gestão de academia</p>
         </div>
 
         <Card variant="elevated" padding="xl" className="login-card">
           <div className="login-card-header">
-            <h2 className="login-title">Bem-vindo de volta!</h2>
-            <p className="login-description">Faça login para acessar sua conta</p>
+            <h1 className="login-title">Bem-vindo de volta!</h1>
           </div>
 
           <form onSubmit={handleSubmit} className="login-form">
