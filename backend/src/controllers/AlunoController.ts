@@ -16,11 +16,9 @@ export const createAluno = async (req: Request, res: Response): Promise<void> =>
 
 export const getAlunos = async (req: Request, res: Response): Promise<void> => {
     try {
-    const alunos = await Aluno.find().select('nome').lean();
-
-    const listaReduzida = (alunos as any[]).map(a => ({ id: a._id?.toString(), nome: a.nome }));
-
-    res.status(200).json(listaReduzida);
+        const alunosRaw = await Aluno.find({}, { nome: 1 }).lean();
+        const alunos: AlunoListItemType[] = (alunosRaw as any[]).map(a => ({ _id: a._id.toString(), nome: a.nome }));
+        res.status(200).json(alunos);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
@@ -35,7 +33,7 @@ export const getAlunoById = async (req: Request, res: Response): Promise<void> =
         }
         res.status(200).json(aluno);
     } catch (err: any) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message });
     }
 };
 
