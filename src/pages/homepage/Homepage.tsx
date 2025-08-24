@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
@@ -21,6 +21,7 @@ export const Homepage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
+  const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number } | null>(null)
   const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
@@ -34,8 +35,9 @@ export const Homepage = () => {
 
   async function fetchData() {
     try {
-      const req = await getAlunos()
-      dispatch(setAlunos(req))
+      const { alunos, stats } = await getAlunos()
+      dispatch(setAlunos(alunos))
+      setDashboardStats(stats)
       dispatch(setLoading(false))
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
@@ -103,9 +105,9 @@ export const Homepage = () => {
                   {/* Dashboard Stats */}
                   <div className="mb-8">
                     <DashboardStats 
-                      totalStudents={students.length}
-                      activeStudents={Math.max(0, students.length - 2)} // Simulação
-                      newThisMonth={Math.floor(students.length * 0.1)} // Simulação de 10% novos
+                      totalStudents={dashboardStats ? dashboardStats.total : students.length}
+                      activeStudents={Math.max(0, students.length - 2)}
+                      newThisMonth={dashboardStats ? dashboardStats.novosMes : 0}
                     />
                   </div>
                   
