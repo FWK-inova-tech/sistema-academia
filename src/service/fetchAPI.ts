@@ -28,7 +28,7 @@ export const login = async (credentials: Adm): Promise<string> => {
 }
 
 export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | '_id'>[]> => {
-  const { data } = await axios.get<AlunoType[]>(`${backendUrl}/alunos`, {
+  const { data } = await axios.get<Pick<AlunoType, 'nome' | '_id'>[]>(`${backendUrl}/alunos`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }

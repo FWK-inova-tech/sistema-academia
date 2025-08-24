@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from "express";
 import Aluno, { IAluno } from "../models/Aluno";
+import { AlunoListItemType } from "../types/AlunoType";
 
 // Criar um novo aluno
 export const createAluno = async (req: Request, res: Response): Promise<void> => {
@@ -13,17 +14,18 @@ export const createAluno = async (req: Request, res: Response): Promise<void> =>
     }
 };
 
-// Obter todos os alunos
 export const getAlunos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const alunos: IAluno[] = await Aluno.find();
-        res.status(200).json(alunos);
+    const alunos = await Aluno.find().select('nome').lean();
+
+    const listaReduzida = (alunos as any[]).map(a => ({ id: a._id?.toString(), nome: a.nome }));
+
+    res.status(200).json(listaReduzida);
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
 };
 
-// Obter aluno pelo ID
 export const getAlunoById = async (req: Request, res: Response): Promise<void> => {
     try {
         const aluno: IAluno | null = await Aluno.findById(req.params.id);
@@ -37,7 +39,6 @@ export const getAlunoById = async (req: Request, res: Response): Promise<void> =
     }
 };
 
-// Atualizar um aluno por ID
 export const updateAluno = async (req: Request, res: Response): Promise<void> => {
     try {
         const aluno: IAluno | null = await Aluno.findById(req.params.id);
@@ -46,7 +47,6 @@ export const updateAluno = async (req: Request, res: Response): Promise<void> =>
             return;
         }
 
-        // Atualizando apenas os campos que estão no req.body
         Object.assign(aluno, req.body);
 
         await aluno.save();
@@ -56,7 +56,6 @@ export const updateAluno = async (req: Request, res: Response): Promise<void> =>
     }
 };
 
-// Deletar um aluno por ID
 export const deleteAluno = async (req: Request, res: Response): Promise<void> => {
     try {
     const aluno: IAluno | null = await Aluno.findByIdAndDelete(req.params.id);
