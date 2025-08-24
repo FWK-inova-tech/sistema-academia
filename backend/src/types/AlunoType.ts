@@ -27,3 +27,7 @@ export interface AlunoType {
     treino: TreinoType[];
     perimetria: PerimetriaType;
 }
+export interface AlunoListItemType {
+    _id: string;
+    nome: string;
+}
