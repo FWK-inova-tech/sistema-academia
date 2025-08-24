@@ -16,9 +16,26 @@ export const createAluno = async (req: Request, res: Response): Promise<void> =>
 
 export const getAlunos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const alunosRaw = await Aluno.find({}, { nome: 1 }).lean();
-        const alunos: AlunoListItemType[] = (alunosRaw as any[]).map(a => ({ _id: a._id.toString(), nome: a.nome }));
-        res.status(200).json(alunos);
+        const agora = new Date();
+        const inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
+        const fimMes = new Date(agora.getFullYear(), agora.getMonth() + 1, 0, 23, 59, 59, 999);
+
+        const alunosRaw = await Aluno.find({}, { nome: 1, dataInicio: 1 }).lean();
+        let novosMes = 0;
+        const alunos: AlunoListItemType[] = (alunosRaw as any[]).map(a => {
+            const dataInicio = a.dataInicio ? new Date(a.dataInicio) : null;
+            if (dataInicio && dataInicio >= inicioMes && dataInicio <= fimMes) {
+                novosMes += 1;
+            }
+            return { _id: a._id.toString(), nome: a.nome };
+        });
+
+        const stats = {
+            total: alunos.length,
+            novosMes
+        };
+
+        res.status(200).json({ alunos, stats });
     } catch (err: any) {
         res.status(500).json({ message: err.message });
     }
@@ -33,7 +50,7 @@ export const getAlunoById = async (req: Request, res: Response): Promise<void> =
         }
         res.status(200).json(aluno);
     } catch (err: any) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ message: err.message })
     }
 };
 

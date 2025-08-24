@@ -27,14 +27,18 @@ export const login = async (credentials: Adm): Promise<string> => {
   return data.token
 }
 
-export const getAlunos = async (): Promise<Pick<AlunoType, 'nome' | '_id'>[]> => {
-  const { data } = await axios.get<Pick<AlunoType, 'nome' | '_id'>[]>(`${backendUrl}/alunos`, {
+export interface GetAlunosResponse {
+  alunos: Pick<AlunoType, 'nome' | '_id'>[];
+  stats: { total: number; novosMes: number };
+}
+
+export const getAlunos = async (): Promise<GetAlunosResponse> => {
+  const { data } = await axios.get<GetAlunosResponse>(`${backendUrl}/alunos`, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
   })
   return data
-
 }
 
 type RequestAlunoDataType = ReplaceDateWithString<AlunoType>;
