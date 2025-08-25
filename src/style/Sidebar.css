@@ -1,6 +1,6 @@
 /* Sidebar melhorada - Design original com verde da academia */
 .sidebar-original {
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  background: #006043;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
   width: 280px;
   min-width: 280px;
@@ -20,6 +20,9 @@
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-original .sidebar-logo {
@@ -81,6 +84,17 @@
   font-weight: 500;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sidebar-original .sidebar-button span {
+  width: 100%;
+  display: flex;
+  justify-content: left;
 }
 
 .sidebar-original .sidebar-button:hover:not(:disabled) {
@@ -139,10 +153,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(1.2);
