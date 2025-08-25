@@ -15,3 +15,11 @@ export { Table } from './Table/Table';
 
 export { StatCard } from './StatCard/StatCard';
 export type { TableProps, TableColumn, TableAction } from './Table/Table';
+
+export { default as SectionHeader } from './SectionHeader/SectionHeader';
+
+export { Toast } from './Toast/Toast';
+export type { ToastProps, ToastVariant } from './Toast/Toast';
+
+export { Tooltip } from './Tooltip/Tooltip';
+export type { TooltipProps } from './Tooltip/Tooltip';

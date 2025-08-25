@@ -58,14 +58,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
     }
   }
   return (
-    <div className="space-y-6 p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
-          <span className="text-green-600">🏋️</span>
-          Informações do Treino
-        </h2>
-        <div className="w-20 h-1 bg-gradient-to-r from-green-500 to-green-600 mx-auto mt-2 rounded-full"></div>
+    <div className="info-treino bg-white p-6 rounded-lg border border-gray-200">
+      <div className="mb-6">
+        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <span className="text-2xl">💪</span>
+          Informações para Treino
+        </h3>
+        <p className="text-sm text-gray-600 mt-1">Dados técnicos e objetivos do aluno</p>
       </div>
 
       {/* Nível Selection */}

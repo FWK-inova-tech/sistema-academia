@@ -43,16 +43,18 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
     return mask.value
   }
   const spanContainerClassname = 'flex flex-col gap-2 w-full'
-  const labelClassname = 'text-sm font-semibold text-gray-700'
-  const inputClassname = 'w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-white text-gray-900 focus:border-[#4CAF50] focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-20 transition-all duration-200 outline-none'
+  const labelClassname = 'text-sm font-semibold text-gray-800'
+  const inputClassname = 'w-full px-4 py-3 border-2 border-gray-200 rounded-lg bg-white text-gray-900 focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 outline-none placeholder-gray-400'
 
 
   return (
-    <div className="info-pessoais bg-white p-8 rounded-lg shadow-lg border-2 border-gray-200">
+    <div className="info-pessoais bg-white p-6 rounded-lg border border-gray-200">
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
-          📋 Informações Pessoais
+        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <span className="text-2xl">👤</span>
+          Informações Pessoais
         </h3>
+        <p className="text-sm text-gray-600 mt-1">Dados básicos do aluno</p>
       </div>
       
       <div className="space-y-6">
