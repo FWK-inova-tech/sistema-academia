@@ -70,7 +70,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
               {openEdit ? (
                 <StudentForm
                   currentStudentSheet={{ student: currentStudentSheet, updateCurrentStudentSheet: setCurrentStudentSheet }}
-                  closeForm={handleCloseEdit} 
+                  closeForm={handleCloseEdit}
                 />
               ) : (
                 <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
@@ -92,7 +92,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                         >
                           Voltar
                         </Button>
-                        
+
                         {/* Informações Principais do Aluno */}
                         <div className="flex items-center gap-6 flex-1">
                           <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl">
@@ -120,7 +120,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                 </span>
                               )}
                             </div>
-                            
+
                             {/* Badge do Nível e Ações */}
                             <div className="flex items-center gap-4">
                               {(() => {
@@ -131,7 +131,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                   'Avançado': { bg: 'bg-red-100', text: 'text-red-700', border: 'border-red-300', icon: '💪' }
                                 };
                                 const config = nivelConfig[nivel as keyof typeof nivelConfig] || nivelConfig.Iniciante;
-                                
+
                                 return (
                                   <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border-2 ${config.bg} ${config.text} ${config.border}`}>
                                     <span className="text-lg">{config.icon}</span>
@@ -139,7 +139,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                   </span>
                                 );
                               })()}
-                              
+
                               {/* Botões de Ação */}
                               <div className="flex gap-3 ml-auto">
                                 <button
@@ -173,13 +173,13 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Conteúdo da Ficha */}
                   <div className="max-w-7xl mx-auto px-6 py-8">
                     <StudentSheet
                       closeStudentSheet={handleCloseStudentSheet}
                       currentStudentSheet={currentStudentSheet}
-                      openEdit={handleOpenEdit} 
+                      openEdit={handleOpenEdit}
                     />
                   </div>
                 </div>
@@ -200,7 +200,6 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   <div className="col-span-2 text-center">Ações</div>
                 </div>
               </div>
-
               {/* Corpo da Tabela */}
               {currentStudentsList.length === 0 ? (
                 <div className="p-12 text-center">
@@ -218,8 +217,8 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
               ) : (
                 <div className="divide-y divide-gray-100">
                   {currentStudentsList.map((student, index) => (
-                    <div 
-                      key={student._id} 
+                    <div
+                      key={student._id}
                       className="grid grid-cols-12 gap-4 items-center px-6 py-4 hover:bg-gray-50 transition-colors duration-150"
                     >
                       {/* ID */}

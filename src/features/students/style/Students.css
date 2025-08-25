@@ -10,6 +10,10 @@
   padding: 1.5rem;
 }
 
+.section-divider {
+  content: "";
+}
+
 .students-card {
   background: white;
   border-radius: 1.5rem;
@@ -231,19 +235,19 @@
   .students-container {
     padding: 1rem;
   }
-  
+
   .students-header {
     padding: 1.5rem 2rem;
   }
-  
+
   .action-bar {
     padding: 1rem 2rem;
   }
-  
+
   .students-table-container {
     padding: 1.5rem 2rem;
   }
-  
+
   .action-controls {
     flex-direction: column;
     align-items: stretch;
@@ -259,11 +263,11 @@
   .students-header {
     padding: 1.25rem 1.5rem;
   }
-  
+
   .action-bar {
     padding: 1rem 1.5rem;
   }
-  
+
   .students-table-container {
     padding: 1rem 1.5rem;
   }
@@ -300,11 +304,11 @@
   .students-header {
     padding: 1rem 1.25rem;
   }
-  
+
   .action-bar {
     padding: 0.75rem 1.25rem;
   }
-  
+
   .students-table-container {
     padding: 0.75rem 1.25rem;
   }
@@ -320,7 +324,7 @@
   .action-bar-title {
     font-size: 1.125rem;
   }
-  
+
   .students-card {
     border-radius: 1rem;
     margin: 0.5rem;

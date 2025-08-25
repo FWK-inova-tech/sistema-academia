@@ -120,13 +120,16 @@ export const Homepage = () => {
                   </div>
                 </div>
 
+
                 {/* Content */}
-                <div className="p-6 space-y-6">
+                <div className="p-6 space-y-6 bg-[#008058]">
+                  <span className='mb-5 section-divider bg-[#006043] flex w-1/2 m-auto h-[7px] rounded-full'></span>
+
                   {/* Barra de Ações */}
                   <div className="p-0">
-                    <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between p-0">
+                    <div className=" studentsListHeader bg-[#ffffff54] rounded-lg p-2 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
                       <div className="flex-1">
-                        <h2 className="text-xl font-bold text-gray-800 mb-1">Gerenciar Alunos</h2>
+                        <h2 className="text-xl font-bold text-gray-800 mb-1">Lista de Alunos</h2>
                         <p className="text-gray-600 text-sm flex items-center gap-2">
                           {currentStudentsList.length === 0
                             ? (
