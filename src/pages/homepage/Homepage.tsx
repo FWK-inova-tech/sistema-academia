@@ -22,11 +22,20 @@ export const Homepage = () => {
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
   const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number } | null>(null)
+  const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
   const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
+    
+    fetchData()
+    
+    const interval = setInterval(() => {
+      fetchData()
+    }, 30000)
+    
+    return () => clearInterval(interval)
   }, [dispatch])
 
   useEffect(() => {
@@ -38,6 +47,7 @@ export const Homepage = () => {
       const { alunos, stats } = await getAlunos()
       dispatch(setAlunos(alunos))
       setDashboardStats(stats)
+      setLastUpdate(new Date())
       dispatch(setLoading(false))
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
@@ -50,21 +60,15 @@ export const Homepage = () => {
     }
   }
 
-  useEffect(() => {
-    dispatch(setLoading("Buscando lista de alunos"))
-
-    fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   return (
-    <div className='flex flex-col w-screen md:flex-row min-h-screen bg-white'>
+    <div className='flex min-h-screen bg-gray-50'>
       <ToastContainer />
       <Sidebar
         current={current}
         openAlunos={() => setCurrent('students')}
         openConfig={() => setCurrent('settings')} />
-      <main className='flex-1 bg-gray-50'>
+      
+      <main className='main-content flex-1'>
         {apiError ? (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">
@@ -83,34 +87,91 @@ export const Homepage = () => {
         ) : (
           <>
             {current === 'students' && (
-              <>
-                <div className="bg-white border-b border-gray-200 p-6 shadow-sm">
-                  <Card className="border-0 shadow-md">
-                    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                      <div className="flex flex-col md:flex-row gap-3">
-                        <SearchStudent handleSearch={handleSearch} />
-                        <Button
-                          variant="primary"
-                          onClick={handleOpenRegister}
-                          className="bg-green-600 hover:bg-green-700 text-white shadow-md py-3"
-                        >
-                          Cadastrar aluno
-                        </Button>
+              <div className="min-h-screen">
+                  <div className="bg-white p-6 relative overflow-hidden">
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    <div className="absolute top-8 right-12 w-1 h-1 bg-white rounded-full animate-ping"></div>
+                    <div className="absolute bottom-6 left-16 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-75"></div>
+                    <div className="absolute bottom-4 right-6 w-2 h-2 bg-white rounded-full animate-ping delay-150"></div>
+                    <div className="absolute top-12 left-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-300"></div>
+                    <div className="absolute bottom-8 right-1/4 w-1.5 h-1.5 bg-white rounded-full animate-ping delay-500"></div>
+                  </div>
+                  
+                  <div className="max-w-none relative z-10">
+                    <div className="mb-6">
+                      <div className="flex justify-between items-center mb-2">
+                        <div className="text-gray-500 text-sm flex items-center gap-2">
+                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
+                          <span>Atualização automática</span>
+                          {lastUpdate && (
+                            <span className="text-xs opacity-75">
+                              {lastUpdate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </Card>
-                </div>
-                
-                <div className="p-6">
-                  {/* Dashboard Stats */}
-                  <div className="mb-8">
+                    
                     <DashboardStats 
                       totalStudents={dashboardStats ? dashboardStats.total : students.length}
-                      activeStudents={Math.max(0, students.length - 2)}
                       newThisMonth={dashboardStats ? dashboardStats.novosMes : 0}
                     />
                   </div>
-                  
+                </div>
+                
+                {/* Content */}
+                <div className="p-6 space-y-6">
+                  {/* Barra de Ações */}
+                  <div className="p-0">
+                      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between p-0">
+                      <div className="flex-1">
+                        <h2 className="text-xl font-bold text-gray-800 mb-1">Gerenciar Alunos</h2>
+                        <p className="text-gray-600 text-sm flex items-center gap-2">
+                          {currentStudentsList.length === 0 
+                            ? (
+                              <span className="flex items-center gap-1">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
+                                  <circle cx="12" cy="12" r="10"></circle>
+                                  <path d="M8 12h8M12 8v8"></path>
+                                </svg>
+                                Nenhum aluno cadastrado ainda
+                              </span>
+                            )
+                            : (
+                              <span className="flex items-center gap-1">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500">
+                                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                  <circle cx="9" cy="7" r="4"></circle>
+                                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                                <span className="font-medium text-gray-800">{currentStudentsList.length}</span>
+                                aluno{currentStudentsList.length !== 1 ? 's' : ''} cadastrado{currentStudentsList.length !== 1 ? 's' : ''}
+                              </span>
+                            )
+                          }
+                        </p>
+                      </div>
+                      
+                      <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                        <div className="flex-1 lg:flex-none lg:min-w-[300px]">
+                          <SearchStudent handleSearch={handleSearch} />
+                        </div>
+                        <button
+                          onClick={handleOpenRegister}
+                          className="group relative bg-gray-800 text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
+                        >
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M19 8l5 5m0 0l-5 5m5-5H14"></path>
+                          </svg>
+                          <span>Novo Aluno</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                   {openRegister ? (
                     <StudentForm closeForm={handleCloseRegister} />
                   ) : (
@@ -122,7 +183,7 @@ export const Homepage = () => {
                     />
                   )}
                 </div>
-              </>
+              </div>
             )}
             
             {current !== 'settings' && current !== 'students' && (

@@ -26,22 +26,23 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
   }
 
   return (
-    <div className="agenda bg-white p-3 md:p-8 rounded-lg shadow-lg border-2 border-gray-200">
+    <div className="agenda bg-white p-6 rounded-lg border border-gray-200">
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
-          📅 Agenda Semanal
+        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+          <span className="text-2xl">📅</span>
+          Agenda Semanal
         </h3>
-        <p className="text-gray-600 mt-2">Selecione os dias da semana para treino</p>
+        <p className="text-sm text-gray-600 mt-1">Selecione os dias da semana para treino</p>
       </div>
       
-      <div className="grid grid-cols-2 gap-1 md:grid-cols-3 md:gap-4">
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {days.map((day) => (
           <label 
             key={day} 
-            className={`cursor-pointer p-4 rounded-lg border-2 transition-all duration-200 flex items-center gap-3 ${
+            className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-2 text-sm font-medium ${
               checkValue(day) 
-                ? 'bg-[#4CAF50] border-[#4CAF50] text-white shadow-md' 
-                : 'bg-white border-gray-300 text-gray-700 hover:border-[#4CAF50] hover:bg-green-50'
+                ? 'bg-green-500 border-green-500 text-white shadow-sm' 
+                : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-green-300 hover:bg-green-50'
             }`}
           >
             <input

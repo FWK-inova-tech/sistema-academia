@@ -40,22 +40,22 @@ export const SearchStudent = ({ handleSearch }: searchStudentProps) => {
   )
 
   return (
-    <div className="search-student w-full max-w-md">
+    <div className="search-student w-full">
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
           <SearchIcon />
         </div>
         <input
           type="text"
-          placeholder="🔍 Buscar aluno pelo nome..."
+          placeholder="Buscar aluno pelo nome..."
           value={searchTerm}
           onChange={(e) => handleInputChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-4 focus:ring-green-100 transition-all duration-200 text-gray-700 placeholder-gray-400 shadow-sm hover:shadow-md bg-white"
+          className="w-full h-12 pl-12 pr-10 border-2 border-gray-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 text-gray-700 placeholder-gray-400 bg-white shadow-sm hover:border-gray-300 outline-none"
         />
         {searchTerm && (
           <button
             onClick={cleanSearch}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>

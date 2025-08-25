@@ -66,7 +66,7 @@
 }
 
 .card--hoverable.card--outlined:hover {
-  border-color: var(--color-primary-300);
+  border-color: #4CAF50;
   box-shadow: var(--shadow-lg);
 }
 
@@ -85,7 +85,7 @@
 }
 
 .card--clickable:focus-visible {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid #4CAF50;
   outline-offset: 2px;
 }
 
@@ -189,12 +189,12 @@
 
 /* Primary Card */
 .card--primary {
-  border-color: var(--color-primary-200);
-  background: linear-gradient(to bottom right, var(--color-primary-50), var(--color-white));
+  border-color: rgba(76, 175, 80, 0.3);
+  background: linear-gradient(to bottom right, rgba(76, 175, 80, 0.05), var(--color-white));
 }
 
 .card--primary .card__title {
-  color: var(--color-primary-700);
+  color: #45a049;
 }
 
 /* === RESPONSIVIDADE === */
