@@ -28,13 +28,13 @@ export const Homepage = () => {
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
-    
+
     fetchData()
-    
+
     const interval = setInterval(() => {
       fetchData()
     }, 30000)
-    
+
     return () => clearInterval(interval)
   }, [dispatch])
 
@@ -67,7 +67,7 @@ export const Homepage = () => {
         current={current}
         openAlunos={() => setCurrent('students')}
         openConfig={() => setCurrent('settings')} />
-      
+
       <main className='main-content flex-1'>
         {apiError ? (
           <div className="p-6">
@@ -75,8 +75,8 @@ export const Homepage = () => {
               <h2 className="text-xl font-semibold text-red-600 mb-2">Erro</h2>
               <p className="text-gray-700 mb-2">{apiError.message}</p>
               <p className="text-gray-600 mb-4">Tente novamente em alguns minutos</p>
-              <Button 
-                variant="primary" 
+              <Button
+                variant="primary"
                 onClick={apiError.callback}
                 className="bg-green-600 hover:bg-green-700 text-white"
               >
@@ -88,7 +88,7 @@ export const Homepage = () => {
           <>
             {current === 'students' && (
               <div className="min-h-screen">
-                  <div className="bg-white p-6 relative overflow-hidden">
+                <div className="bg-[#008058] p-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     <div className="absolute top-8 right-12 w-1 h-1 bg-white rounded-full animate-ping"></div>
@@ -97,12 +97,12 @@ export const Homepage = () => {
                     <div className="absolute top-12 left-1/3 w-1 h-1 bg-white rounded-full animate-pulse delay-300"></div>
                     <div className="absolute bottom-8 right-1/4 w-1.5 h-1.5 bg-white rounded-full animate-ping delay-500"></div>
                   </div>
-                  
+
                   <div className="max-w-none relative z-10">
                     <div className="mb-6">
                       <div className="flex justify-between items-center mb-2">
-                        <div className="text-gray-500 text-sm flex items-center gap-2">
-                          <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
+                        <div className="text-white text-sm font-normal flex items-center gap-2">
+                          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                           <span>Atualização automática</span>
                           {lastUpdate && (
                             <span className="text-xs opacity-75">
@@ -112,23 +112,23 @@ export const Homepage = () => {
                         </div>
                       </div>
                     </div>
-                    
-                    <DashboardStats 
+
+                    <DashboardStats
                       totalStudents={dashboardStats ? dashboardStats.total : students.length}
                       newThisMonth={dashboardStats ? dashboardStats.novosMes : 0}
                     />
                   </div>
                 </div>
-                
+
                 {/* Content */}
                 <div className="p-6 space-y-6">
                   {/* Barra de Ações */}
                   <div className="p-0">
-                      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between p-0">
+                    <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between p-0">
                       <div className="flex-1">
                         <h2 className="text-xl font-bold text-gray-800 mb-1">Gerenciar Alunos</h2>
                         <p className="text-gray-600 text-sm flex items-center gap-2">
-                          {currentStudentsList.length === 0 
+                          {currentStudentsList.length === 0
                             ? (
                               <span className="flex items-center gap-1">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
@@ -153,7 +153,7 @@ export const Homepage = () => {
                           }
                         </p>
                       </div>
-                      
+
                       <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
                         <div className="flex-1 lg:flex-none lg:min-w-[300px]">
                           <SearchStudent handleSearch={handleSearch} />
@@ -179,13 +179,13 @@ export const Homepage = () => {
                       handleOpensheet={handleOpenStudentsheet}
                       controlOpenSheet={handleCloseOpenEdit}
                       currentStudentsList={currentStudentsList}
-                      setError={setApiError} 
+                      setError={setApiError}
                     />
                   )}
                 </div>
               </div>
             )}
-            
+
             {current !== 'settings' && current !== 'students' && (
               <div className="p-6">
                 {openRegister ? (
@@ -195,12 +195,12 @@ export const Homepage = () => {
                     handleOpensheet={handleOpenStudentsheet}
                     controlOpenSheet={handleCloseOpenEdit}
                     currentStudentsList={currentStudentsList}
-                    setError={setApiError} 
+                    setError={setApiError}
                   />
                 )}
               </div>
             )}
-            
+
             {current === 'settings' && <Settings />}
           </>
         )}

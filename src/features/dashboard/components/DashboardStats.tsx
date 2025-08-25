@@ -21,20 +21,20 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
     const duration = 2000;
     const steps = 60;
     const stepDuration = duration / steps;
-    
+
     let currentStep = 0;
-    
+
     const interval = setInterval(() => {
       currentStep++;
       const progress = currentStep / steps;
       const easeOut = 1 - Math.pow(1 - progress, 4);
-      
+
       setAnimatedValues({
         total: Math.round(safeTotal * easeOut),
         active: Math.round(activeStudents * easeOut),
         newMonth: Math.round(safeNewMonth * easeOut)
       });
-      
+
       if (currentStep >= steps) {
         clearInterval(interval);
         setAnimatedValues({
@@ -44,19 +44,21 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
         });
       }
     }, stepDuration);
-    
+
     return () => clearInterval(interval);
   }, [safeTotal, activeStudents, safeNewMonth]);
 
   const activePercentage = safeTotal > 0 ? Math.round((activeStudents / safeTotal) * 100) : 0;
   const growthRate = safeTotal > 0 ? Math.round((safeNewMonth / safeTotal) * 100) : 0;
 
+  const dashboardStatsCardsClassses = "bg-[#ffffff54] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
+
   return (
     <div className="dashboard-stats space-y-6">
       {/* Cards Principais */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total de Alunos */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className={dashboardStatsCardsClassses}>
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-blue-50 rounded-lg">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
@@ -72,7 +74,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
         </div>
 
         {/* Alunos Ativos */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className={dashboardStatsCardsClassses}>
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-green-50 rounded-lg">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-600">
@@ -88,7 +90,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
         </div>
 
         {/* Novos Este Mês */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className={dashboardStatsCardsClassses}>
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-purple-50 rounded-lg">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-purple-600">
@@ -107,7 +109,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
         </div>
 
         {/* Taxa de Retenção */}
-        <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className={dashboardStatsCardsClassses}>
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 bg-orange-50 rounded-lg">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-orange-600">
@@ -130,7 +132,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
             <span className="text-xl font-bold text-green-600">{activePercentage}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
-            <div 
+            <div
               className="h-2 bg-green-500 rounded-full transition-all duration-1000"
               style={{ width: `${Math.min(100, activePercentage)}%` }}
             ></div>
