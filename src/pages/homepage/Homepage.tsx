@@ -23,7 +23,7 @@ export const Homepage = () => {
   const students = useAppSelector((state) => state.students.studentsList)
   const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number } | null>(null)
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
-  const { handlers, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
+  const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   useEffect(() => {
@@ -141,18 +141,18 @@ export const Homepage = () => {
                                 Nenhum aluno cadastrado ainda
                               </span>
                             )
-                            : (
+                            : (<> {onSearch &&
                               <span className="flex items-center gap-1">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-green-500">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#006043" strokeWidth="2" className="text-green-500">
                                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                   <circle cx="9" cy="7" r="4"></circle>
                                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                                 </svg>
                                 <span className="font-medium text-gray-800">{currentStudentsList.length}</span>
-                                aluno{currentStudentsList.length !== 1 ? 's' : ''} cadastrado{currentStudentsList.length !== 1 ? 's' : ''}
-                              </span>
-                            )
+                                aluno{currentStudentsList.length !== 1 ? 's' : ''} encontrado{currentStudentsList.length !== 1 ? 's' : ''}
+                              </span>}
+                            </>)
                           }
                         </p>
                       </div>
@@ -163,7 +163,7 @@ export const Homepage = () => {
                         </div>
                         <button
                           onClick={handleOpenRegister}
-                          className="group relative bg-gray-800 text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
+                          className="group relative bg-[#006043] text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
                         >
                           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
