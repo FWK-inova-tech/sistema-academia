@@ -5,11 +5,10 @@ import { formatDateToString, getDaysChecklist } from "../hooks/useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;
-  openEdit: () => void;
   closeStudentSheet: () => void;
 }
 
-export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet }: studentSheetProps) => {
+export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: studentSheetProps) => {
   const [modalDelete, setModalDelete] = useState(false)
 
   function handleSuccessDelete() {
@@ -30,7 +29,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
           cancel: () => setModalDelete(false),
           success: handleSuccessDelete
         }}
-        student={{ _id: currentStudentSheet._id, name: currentStudentSheet.nome }} 
+        student={{ _id: currentStudentSheet._id, name: currentStudentSheet.nome }}
       />
     );
   }
@@ -93,11 +92,10 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
             {getDaysChecklist(currentStudentSheet.agenda).map(day => (
               <div key={day.day} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <div className="font-semibold text-gray-800 mb-3 text-sm">{day.day}</div>
-                <div className={`w-10 h-10 mx-auto rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
-                  day.checked 
-                    ? 'bg-blue-500 border-blue-500 text-white' 
+                <div className={`w-10 h-10 mx-auto rounded-full border-2 flex items-center justify-center transition-all duration-200 ${day.checked
+                    ? 'bg-blue-500 border-blue-500 text-white'
                     : 'border-gray-300 bg-white'
-                }`}>
+                  }`}>
                   {day.checked && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20,6 9,17 4,12"></polyline>
@@ -196,7 +194,7 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
             </div>
           ) : (
             <div className="space-y-6">
-              {currentStudentSheet.treino.map(categoria => 
+              {currentStudentSheet.treino.map(categoria =>
                 <div key={categoria.categoria} className="border border-gray-200 rounded-xl overflow-hidden">
                   <div className="bg-gray-100 p-4 border-b border-gray-200">
                     <h4 className="font-semibold text-gray-800 text-lg flex items-center gap-2">

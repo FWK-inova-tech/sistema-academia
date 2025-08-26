@@ -179,7 +179,6 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                     <StudentSheet
                       closeStudentSheet={handleCloseStudentSheet}
                       currentStudentSheet={currentStudentSheet}
-                      openEdit={handleOpenEdit}
                     />
                   </div>
                 </div>
