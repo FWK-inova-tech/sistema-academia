@@ -12,20 +12,6 @@ interface studentSheetProps {
 export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet }: studentSheetProps) => {
   const [modalDelete, setModalDelete] = useState(false)
 
-  // function getLevels() {
-  //   const getStudentInfoValue = (toCheck: string) => {
-  //     return currentStudentSheet.nivel === toCheck
-  //   }
-  //
-  //   const levels = [
-  //     { level: 'Iniciante', checked: getStudentInfoValue('Iniciante') },
-  //     { level: 'Intermediário', checked: getStudentInfoValue('Intermediário') },
-  //     { level: 'Avançado', checked: getStudentInfoValue('Avançado') },
-  //   ]
-  //
-  //   return levels
-  // }
-
   function handleSuccessDelete() {
     setModalDelete(false)
     closeStudentSheet()
@@ -123,8 +109,8 @@ export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet 
               <div key={day.day} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors">
                 <div className="font-semibold text-gray-800 mb-3 text-sm">{day.day}</div>
                 <div className={`w-10 h-10 mx-auto rounded-full border-2 flex items-center justify-center transition-all duration-200 ${day.checked
-                    ? 'bg-green-500 border-green-500 text-white shadow-lg scale-110'
-                    : 'border-gray-300 bg-white hover:border-gray-400'
+                  ? 'bg-green-500 border-green-500 text-white shadow-lg scale-110'
+                  : 'border-gray-300 bg-white hover:border-gray-400'
                   }`}>
                   {day.checked && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
