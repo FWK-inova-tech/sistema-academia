@@ -14,7 +14,7 @@ interface StatCardProps {
 export const StatCard = ({ title, value, icon, trend, color = 'blue' }: StatCardProps) => {
   const colorClasses = {
     blue: 'bg-blue-500 text-white',
-    green: 'bg-green-500 text-white',
+    green: 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg',
     purple: 'bg-purple-500 text-white',
     orange: 'bg-orange-500 text-white'
   };

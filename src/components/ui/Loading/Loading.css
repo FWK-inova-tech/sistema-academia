@@ -28,7 +28,7 @@
 
 .loading__spinner {
   animation: loading-rotate 1s linear infinite;
-  color: var(--color-primary-500);
+  color: #4CAF50;
 }
 
 .loading--sm .loading__spinner {
@@ -92,7 +92,7 @@
 }
 
 .loading__dot {
-  background-color: var(--color-primary-500);
+  background-color: #4CAF50;
   border-radius: 50%;
   animation: loading-bounce 1.4s ease-in-out infinite both;
 }
@@ -146,7 +146,7 @@
 }
 
 .loading__pulse {
-  background-color: var(--color-primary-500);
+  background-color: #4CAF50;
   border-radius: 50%;
   animation: loading-pulse 1.5s ease-in-out infinite;
 }

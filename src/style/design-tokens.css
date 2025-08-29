@@ -1,11 +1,13 @@
 /* Design Tokens - Sistema Academia */
 :root {
   /* === CORES PRINCIPAIS === */
-  --color-primary-50: #f0fdf4;
-  --color-primary-200: #d4dab6;
-  --color-primary-500: #4CAF50; /* Verde da sidebar */
-  --color-primary-600: #45a049;
-  --color-primary-700: #15803d;
+  --color-primary-50: rgba(76, 175, 80, 0.05);
+  --color-primary-100: rgba(76, 175, 80, 0.1);
+  --color-primary-200: rgba(76, 175, 80, 0.2);
+  --color-primary-300: rgba(76, 175, 80, 0.3);
+  --color-primary-500: #4CAF50; /* Verde principal da academia */
+  --color-primary-600: #45a049; /* Verde hover */
+  --color-primary-700: #3d8b40; /* Verde mais escuro */
 
   /* === CORES SEMÂNTICAS === */
   --color-success-500: #22c55e;

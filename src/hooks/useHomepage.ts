@@ -5,6 +5,7 @@ interface useDashboardParams {
   students: Pick<AlunoType, '_id' | 'nome'>[];
 }
 export const useHomepage = ({ students }: useDashboardParams) => {
+  const [onSearch, setOnSearch] = useState(false);
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
   type apiErrorType = {
     message: string;
@@ -17,11 +18,13 @@ export const useHomepage = ({ students }: useDashboardParams) => {
   function handleSearch(name: string) {
     if (name.trim() === "") {
       setCurrentStudentsList(students)
+      setOnSearch(false);
     } else {
       const filtered = students.filter(aluno =>
         aluno.nome.toLowerCase().includes(name.toLowerCase())
       )
       setCurrentStudentsList(filtered)
+      setOnSearch(true)
     }
   }
 
@@ -51,7 +54,7 @@ export const useHomepage = ({ students }: useDashboardParams) => {
   const handlers = { handleOpenRegister, handleCloseRegister, handleCloseOpenEdit, handleSearch, handleOpenStudentsheet }
 
   return {
-    current, apiError, currentStudentsList, openRegister, handlers,
+    current, apiError, currentStudentsList, openRegister, handlers, onSearch,
     setCurrent, setApiError, setCurrentStudentsList
   }
 }

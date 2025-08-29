@@ -1,258 +1,227 @@
 import { useState } from "react";
 import type { AlunoType } from "../../../types/AlunoType"
 import { ModalDeleteStudent } from "./ModalDeleteStudent";
-import { formatDateToString, formatPhoneNumber, getDaysChecklist } from "../hooks/useStudentSheet";
+import { formatDateToString, getDaysChecklist } from "../hooks/useStudentSheet";
 
 interface studentSheetProps {
   currentStudentSheet: AlunoType;
-  openEdit: () => void;
   closeStudentSheet: () => void;
 }
 
-export const StudentSheet = ({ closeStudentSheet, openEdit, currentStudentSheet }: studentSheetProps) => {
+export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: studentSheetProps) => {
   const [modalDelete, setModalDelete] = useState(false)
-
-  function getLevels() {
-    const getStudentInfoValue = (toCheck: string) => {
-      return currentStudentSheet.nivel === toCheck
-    }
-
-    const levels = [
-      { level: 'Iniciante', checked: getStudentInfoValue('Iniciante') },
-      { level: 'Intermediário', checked: getStudentInfoValue('Intermediário') },
-      { level: 'Avançado', checked: getStudentInfoValue('Avançado') },
-    ]
-
-    return levels
-  }
 
   function handleSuccessDelete() {
     setModalDelete(false)
     closeStudentSheet()
   }
 
-  return (<>
-    <div className="student-sheet bg-gray-100 min-h-screen py-8">
-      {modalDelete ? <ModalDeleteStudent
+  useState(() => {
+    const handleOpenDeleteModal = () => setModalDelete(true);
+    window.addEventListener('openDeleteModal', handleOpenDeleteModal);
+    return () => window.removeEventListener('openDeleteModal', handleOpenDeleteModal);
+  });
+
+  if (modalDelete) {
+    return (
+      <ModalDeleteStudent
         actions={{
           cancel: () => setModalDelete(false),
           success: handleSuccessDelete
         }}
-        student={{ _id: currentStudentSheet._id, name: currentStudentSheet.nome }} />
-        : <div className='md:max-w-5xl mx-auto px-1 md:px-8'>
-          
-          {/* Cabeçalho da Ficha */}
-          <div className="bg-white border-2 border-gray-300 mb-8 shadow-lg">
-            {/* Header Superior */}
-            <div className="bg-gradient-to-r from-[#4CAF50] to-[#45a049] text-white p-6 flex flex-col md:flex-row justify-between items-center">
-              <div className="flex items-center gap-5">
-                <h1 className="text-2xl font-bold tracking-wide">FICHA DO ALUNO</h1>
-              </div>
-              <div className="flex gap-4">
-                <button
-                  className='bg-white text-[#4CAF50] px-6 py-3 rounded-md font-semibold hover:bg-gray-50 transition-colors shadow-sm'
-                  type="button"
-                  onClick={openEdit}>
-                  ✏️ Editar
-                </button>
-                <button
-                  type="button"
-                  className='bg-red-600 text-white px-6 py-3 rounded-md font-semibold hover:bg-red-700 transition-colors shadow-sm'
-                  onClick={() => setModalDelete(true)}>
-                  🗑️ Deletar
-                </button>
-              </div>
-            </div>
+        student={{ _id: currentStudentSheet._id, name: currentStudentSheet.nome }}
+      />
+    );
+  }
 
-            {/* Nome do Aluno */}
-            <div className="bg-gray-50 border-b-2 border-gray-300 p-6">
-              <h2 className="text-3xl font-bold text-gray-900 text-center tracking-wide">{currentStudentSheet.nome}</h2>
+  // Render principal
+  return (
+    <div className="space-y-6">
+      {/* Dados Pessoais */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Dados Pessoais
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <span className="font-semibold text-gray-600 text-sm">Contato:</span>
+              <p className="text-gray-900 text-lg">{currentStudentSheet.contato || 'Não informado'}</p>
             </div>
+            <div className="space-y-2">
+              <span className="font-semibold text-gray-600 text-sm">Data de Nascimento:</span>
+              <p className="text-gray-900 text-lg">{formatDateToString(currentStudentSheet.dataNascimento)}</p>
+            </div>
+            <div className="space-y-2">
+              <span className="font-semibold text-gray-600 text-sm">Professor Responsável:</span>
+              <p className="text-gray-900 text-lg">{currentStudentSheet.professor || 'Não atribuído'}</p>
+            </div>
+            <div className="space-y-2">
+              <span className="font-semibold text-gray-600 text-sm">Data de Início:</span>
+              <p className="text-gray-900 text-lg">{formatDateToString(currentStudentSheet.dataInicio)}</p>
+            </div>
+            <div className="space-y-2 md:col-span-2">
+              <span className="font-semibold text-gray-600 text-sm">Data de Revisão:</span>
+              <p className="text-gray-900 text-lg">{formatDateToString(currentStudentSheet.dataRevisao)}</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            {/* Corpo da Ficha */}
-            <div className="p-2 md:p-8">
-              
-              {/* SEÇÃO 1: DADOS PESSOAIS */}
-              <div className="mb-16">
-                <div className="bg-white border-2 border-[#4CAF50] rounded-lg shadow-lg mb-8 overflow-hidden">
-                  <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
-                    📋 DADOS PESSOAIS
-                  </h3>
-                  <div className="p-8">
-                    <div className="flex flex-col md:flex-row items-center justify-center">
-                      <div className="flex flex-col md:flex-row items-center justify-center w-full">
-                        <span className="font-bold text-gray-800 w-40 flex-shrink-0">Contato:</span>
-                        <span className="text-gray-900 font-medium">{formatPhoneNumber(currentStudentSheet.contato)}</span>
-                      <div className="flex flex-col md:flex-row items-center">
-                        <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nascimento:</span>
-                        <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataNascimento)}</span>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Agenda Semanal */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Agenda Semanal
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+            {getDaysChecklist(currentStudentSheet.agenda).map(day => (
+              <div key={day.day} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+                <div className="font-semibold text-gray-800 mb-3 text-sm">{day.day}</div>
+                <div className={`w-10 h-10 mx-auto rounded-full border-2 flex items-center justify-center transition-all duration-200 ${day.checked
+                    ? 'bg-blue-500 border-blue-500 text-white'
+                    : 'border-gray-300 bg-white'
+                  }`}>
+                  {day.checked && (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="20,6 9,17 4,12"></polyline>
+                    </svg>
+                  )}
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
-              {/* SEÇÃO 2: AGENDA SEMANAL */}
-              <div className="mb-16">
-                <div className="bg-white border-2 border-[#4CAF50] rounded-lg shadow-lg mb-8 overflow-hidden">
-                  <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
-                    📅 AGENDA SEMANAL
-                  </h3>
-                  <div className="p-4 md:p-8">
-                    <div className="flex flex-wrap gap-6 justify-evenly">
-                      {getDaysChecklist(currentStudentSheet.agenda).map(day => (
-                        <div key={day.day} className="text-center border-2 border-gray-300 p-5 bg-white shadow-sm rounded-md">
-                          <div className="font-bold text-gray-800 text-sm mb-4">{day.day}</div>
-                          <div className={`w-4 h-4 md:w-8 md:h-8 mx-auto rounded-full border-2 flex items-center justify-center transition-colors ${
-                            day.checked 
-                              ? 'bg-[#4CAF50] border-[#4CAF50] text-white shadow-md' 
-                              : 'border-gray-400 bg-white hover:border-gray-500'
-                          }`}>
-                            {day.checked && <span className="text-sm font-bold">✓</span>}
-                          </div>
+      {/* Anamnese */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14,2 14,8 20,8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10,9 9,9 8,9"></polyline>
+            </svg>
+            Anamnese
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
+            <p className="text-gray-800 leading-relaxed">
+              {currentStudentSheet.anaminese || 'Nenhuma anamnese registrada.'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Perimetria */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Medidas Corporais
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b border-gray-200">
+                  <th className="text-left font-semibold text-gray-700 p-3">Região Corporal</th>
+                  <th className="text-center font-semibold text-gray-700 p-3">Medida (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentStudentSheet.perimetria.medidas.map((item, index) => (
+                  <tr key={item.nome} className={`border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                    <td className="p-3 text-gray-800">{item.nome}</td>
+                    <td className="p-3 text-center font-semibold text-gray-900">
+                      {item.valor} cm
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* Programa de Treino */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="bg-gray-50 border-b border-gray-200 p-4">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+              <path d="M6 2v20l4-4h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"></path>
+              <path d="M10 8h4"></path>
+              <path d="M10 12h4"></path>
+              <path d="M10 16h2"></path>
+            </svg>
+            Programa de Treino
+          </h3>
+        </div>
+        <div className="p-6">
+          {currentStudentSheet.treino.length === 0 ? (
+            <div className="text-center py-12 border-2 border-dashed border-gray-300 bg-gray-50 rounded-xl">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-full flex items-center justify-center">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gray-400">
+                  <path d="M6 2v20l4-4h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H6z"></path>
+                </svg>
+              </div>
+              <span className="text-gray-600 text-lg font-medium">Nenhum treino cadastrado</span>
+              <p className="text-gray-500 text-sm mt-2">Edite este aluno para adicionar exercícios</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {currentStudentSheet.treino.map(categoria =>
+                <div key={categoria.categoria} className="border border-gray-200 rounded-xl overflow-hidden">
+                  <div className="bg-gray-100 p-4 border-b border-gray-200">
+                    <h4 className="font-semibold text-gray-800 text-lg flex items-center gap-2">
+                      <span className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                        {categoria.categoria.charAt(0)}
+                      </span>
+                      {categoria.categoria}
+                    </h4>
+                  </div>
+                  <div className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {categoria.exercicios.map((exercicio, index) => (
+                        <div key={exercicio} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg bg-gray-50">
+                          <span className="w-6 h-6 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                            {index + 1}
+                          </span>
+                          <span className="text-gray-800">{exercicio}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-              </div>
-
-              {/* SEÇÃO 3: INFORMAÇÕES DE TREINO */}
-              <div className="mb-16">
-                <div className="bg-white border-2 border-[#4CAF50] rounded-lg shadow-lg mb-8 overflow-hidden">
-                  <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
-                    🏋️ INFORMAÇÕES DE TREINO
-                  </h3>
-                  <div className="p-4 md:p-8">
-                    <div className="flex flex-wrap items-start justify-center gap-2">
-                      <div className="space-y-6 flex flex-col md:flex-row">
-                        <div className="flex flex-col md:flex-row items-center">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Data de Início:</span>
-                          <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataInicio)}</span>
-                        </div>
-                        <div className="flex flex-col md:flex-row items-center">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Data de Revisão:</span>
-                          <span className="text-gray-900 font-medium">{formatDateToString(currentStudentSheet.dataRevisao)}</span>
-                        </div>
-                      </div>
-                      <div className="space-y-6">
-                        <div className="flex flex-col md:flex-row items-center">
-                          <span className="font-bold text-gray-800 w-40 flex-shrink-0">Professor:</span>
-                          <span className="text-gray-900 font-medium">{currentStudentSheet.professor}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Nível em linha separada */}
-                    <div className="mb-8 mt-4">
-                      <div className="flex flex-col md:flex-row items-center gap-1 md:gap-6">
-                        <span className="font-bold text-gray-800 w-40 flex-shrink-0">Nível:</span>
-                        <div className="flex gap-4 flex-wrap items-center justify-center">
-                          {getLevels().map(level => (
-                            <span
-                              key={level.level}
-                              className={`px-5 py-3 text-sm font-semibold border-2 rounded-md transition-colors ${
-                                level.checked 
-                                  ? 'bg-[#4CAF50] text-white border-[#4CAF50] shadow-md' 
-                                  : 'bg-gray-50 text-gray-600 border-gray-300 hover:border-gray-400'
-                              }`}>
-                              {level.level}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-8">
-                      <div>
-                        <span className="font-bold text-gray-800 block mb-4 text-lg">Objetivo:</span>
-                        <div className="bg-gray-50 border-2 border-gray-300 p-5 text-gray-900 font-medium rounded-md shadow-sm">
-                          {currentStudentSheet.objetivo}
-                        </div>
-                      </div>
-                      <div>
-                        <span className="font-bold text-gray-800 block mb-4 text-lg">Anamnese:</span>
-                        <div className="bg-gray-50 border-2 border-gray-300 p-5 text-gray-900 font-medium rounded-md shadow-sm">
-                          {currentStudentSheet.anaminese}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* SEÇÃO 4: PERIMETRIA */}
-              <div className="mb-16">
-                <div className="bg-white border-2 border-[#4CAF50] rounded-lg shadow-lg mb-8 overflow-hidden">
-                  <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
-                    📐 PERIMETRIA - {formatDateToString(currentStudentSheet.perimetria.data)}
-                  </h3>
-                  <div className="overflow-hidden">
-                    <table className="w-full">
-                      <thead>
-                        <tr className="bg-gradient-to-r from-slate-200 to-slate-300">
-                          <th className="text-left font-bold text-gray-900 p-5 border-b-2 border-slate-400">Região Corporal</th>
-                          <th className="text-center font-bold text-gray-900 p-5 border-b-2 border-slate-400">Medida (cm)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentStudentSheet.perimetria.medidas.map((item, index) => (
-                          <tr key={item.nome} className={index % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-gray-50 hover:bg-gray-100'}>
-                            <td className="p-5 text-gray-900 font-medium border-b border-gray-200">{item.nome}</td>
-                            <td className="p-5 text-center font-bold text-gray-900 border-b border-gray-200">
-                              {item.valor}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-              {/* SEÇÃO 5: PROGRAMA DE TREINO */}
-              <div className="mb-16">
-                <div className="bg-white border-2 border-[#4CAF50] rounded-lg shadow-lg mb-8 overflow-hidden">
-                  <h3 className="text-xl font-bold text-white bg-gradient-to-r from-[#4CAF50] to-[#45a049] px-8 py-6 border-b-2 border-[#4CAF50]">
-                    💪 PROGRAMA DE TREINO
-                  </h3>
-                  <div className="p-4 md:p-8">
-                    {currentStudentSheet.treino.length === 0 ? (
-                      <div className="text-center py-16 border-2 border-dashed border-gray-400 bg-gray-50 rounded-md">
-                        <span className="text-gray-600 font-medium text-lg">Nenhum treino cadastrado</span>
-                      </div>
-                    ) : (
-                      <div className="space-y-6">
-                        {currentStudentSheet.treino.map(categoria => 
-                          <div key={categoria.categoria} className="border-2 border-gray-300 rounded-md shadow-sm overflow-hidden">
-                            <div className="bg-gradient-to-r from-gray-200 to-gray-300 p-5 border-b-2 border-gray-400">
-                              <h4 className="font-bold text-gray-900 text-lg">{categoria.categoria}</h4>
-                            </div>
-                            <div className="p-6 bg-white">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {categoria.exercicios.map((exercicio, index) => (
-                                  <div key={exercicio} className="flex items-center gap-4 p-4 border-b border-gray-200 hover:bg-gray-50">
-                                    <span className="w-8 h-8 bg-[#4CAF50] text-white text-sm rounded-full flex items-center justify-center font-bold shadow-sm">
-                                      {index + 1}
-                                    </span>
-                                    <span className="text-gray-900 font-medium">{exercicio}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
+              )}
             </div>
-          </div>
-        </div>}
+          )}
+        </div>
+      </div>
     </div>
-  </>
-  )
-}
+  );
+};

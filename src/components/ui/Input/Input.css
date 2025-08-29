@@ -77,8 +77,8 @@
 }
 
 .input-wrapper--default.input-wrapper--focused .input-field {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-50);
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 /* Filled */
@@ -89,8 +89,8 @@
 
 .input-wrapper--filled.input-wrapper--focused .input-field {
   background-color: var(--color-white);
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-50);
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 /* Outline */
@@ -100,8 +100,8 @@
 }
 
 .input-wrapper--outline.input-wrapper--focused .input-field {
-  border-color: var(--color-primary-500);
-  box-shadow: 0 0 0 3px var(--color-primary-50);
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 /* === ESTADOS === */
@@ -208,7 +208,7 @@
 .input-spinner {
   width: 1em;
   height: 1em;
-  color: var(--color-primary-500);
+  color: #4CAF50;
   animation: input-spin 1s linear infinite;
 }
 
