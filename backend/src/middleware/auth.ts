@@ -40,7 +40,7 @@ const auth = (req: Request, res: Response, next: NextFunction) => {
     if (error instanceof jwt.TokenExpiredError) {
       return res.status(401).json({ message: 'Token expirado.' });
     }
-     return res.status(401).json({ message: 'Token inválido, autorização negada.' });
+    return res.status(401).json({ message: 'Token inválido, autorização negada.' });
   }
 };
 
