@@ -124,12 +124,12 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
       </div>
 
       {/* Card de Progresso */}
-      <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Progresso da Academia</h3>
-        <div className="bg-gray-50 rounded-lg p-4">
+      <div className="bg-[#006043] rounded-lg p-6 shadow-sm">
+        <h3 className="text-lg font-semibold text-white">Progresso da Academia</h3>
+        <div className="bg-[#008058] rounded-lg p-4 mt-3">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-gray-700 font-medium">Taxa de Retenção</span>
-            <span className="text-xl font-bold text-green-600">{activePercentage}%</span>
+            <span className="text-white font-medium">Taxa de Retenção</span>
+            <span className="text-xl font-bold text-white">{activePercentage}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
@@ -137,7 +137,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
               style={{ width: `${Math.min(100, activePercentage)}%` }}
             ></div>
           </div>
-          <div className="flex justify-between text-sm text-gray-600 mt-2">
+          <div className="flex justify-between text-sm text-white mt-2">
             <span>{animatedValues.active} ativos</span>
             <span>{inactiveStudents} inativos</span>
           </div>
