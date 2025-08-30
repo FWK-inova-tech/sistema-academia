@@ -6,7 +6,7 @@ import type { PerimetriaType } from "../types/PerimetriaType";
 
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
-const getToken = () => {
+export const getToken = () => {
   const token = localStorage.getItem('userToken')
   if (!token) {
     throw new Error("Token ausente, operação não permitida")
@@ -15,11 +15,23 @@ const getToken = () => {
   }
 }
 
+export const validateToken = async (token: string) => {
+  if (!backendUrl) {
+    throw new Error("Backend URL não configurado. Verifique o arquivo .env")
+  }
+
+  await axios.get<{ message: string }>(`${backendUrl}/auth/check-token`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  })
+}
+
 export const login = async (credentials: Adm): Promise<string> => {
   if (!backendUrl) {
     throw new Error("Backend URL não configurada. Verifique o arquivo .env")
   }
-  
+
   const { data } = await axios.post<{ message: string, token: string }>(`${backendUrl}/auth/login`, {
     email: credentials.email,
     password: credentials.password
