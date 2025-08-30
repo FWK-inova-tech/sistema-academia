@@ -9,7 +9,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL
 export const getToken = () => {
   const token = localStorage.getItem('userToken')
   if (!token) {
-    throw new Error("Token ausente, operação não permitida")
+    throw new Error("Sessão expirada")
   } else {
     return token
   }
@@ -25,6 +25,9 @@ export const validateToken = async (token: string) => {
       Authorization: `Bearer ${token}`,
     }
   })
+    .catch(_err => {
+      throw new Error("Sessão inválida")
+    })
 }
 
 export const login = async (credentials: Adm): Promise<string> => {

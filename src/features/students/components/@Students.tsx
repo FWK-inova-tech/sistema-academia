@@ -95,7 +95,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
 
                         {/* Informações Principais do Aluno */}
                         <div className="flex items-center gap-6 flex-1">
-                          <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl">
+                          <div className="w-20 h-20 bg-emerald-900 opacity-85 rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-xl">
                             {currentStudentSheet.nome?.charAt(0).toUpperCase() || 'A'}
                           </div>
                           <div className="flex-1">
@@ -143,7 +143,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                               {/* Botões de Ação */}
                               <div className="flex gap-3 ml-auto">
                                 <button
-                                  className='bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-2 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
+                                  className='bg-[#006043] text-white px-6 py-2 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
                                   type="button"
                                   onClick={handleOpenEdit}>
                                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -154,7 +154,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                 </button>
                                 <button
                                   type="button"
-                                  className='bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-2 rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
+                                  className='bg-[#BE2528] text-white px-6 py-2 rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
                                   onClick={() => {
                                     // Usar uma função do StudentSheet para abrir o modal delete
                                     const event = new CustomEvent('openDeleteModal');

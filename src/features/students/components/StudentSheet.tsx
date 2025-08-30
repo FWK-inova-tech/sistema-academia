@@ -88,13 +88,13 @@ export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: student
           </h3>
         </div>
         <div className="p-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {getDaysChecklist(currentStudentSheet.agenda).map(day => (
-              <div key={day.day} className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <div key={day.day} className="w-25 text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <div className="font-semibold text-gray-800 mb-3 text-sm">{day.day}</div>
                 <div className={`w-10 h-10 mx-auto rounded-full border-2 flex items-center justify-center transition-all duration-200 ${day.checked
-                    ? 'bg-blue-500 border-blue-500 text-white'
-                    : 'border-gray-300 bg-white'
+                  ? 'bg-blue-500 border-blue-500 text-white'
+                  : 'border-gray-300 bg-white'
                   }`}>
                   {day.checked && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
