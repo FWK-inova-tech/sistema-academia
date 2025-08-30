@@ -129,7 +129,7 @@ export const Homepage = () => {
                   <div className="p-0">
                     <div className=" studentsListHeader bg-[#ffffff54] rounded-lg p-2 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
                       <div className="flex-1">
-                        <h2 className="text-xl font-bold text-gray-800 mb-1">Lista de Alunos</h2>
+                        <h2 className="text-xl font-bold text-gray-900 mb-1 md:pl-3">Alunos</h2>
                         <p className="text-gray-600 text-sm flex items-center gap-2">
                           {currentStudentsList.length === 0
                             ? (
