@@ -202,12 +202,12 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
             >
               <div className="flex items-center justify-between p-6 border-b border-gray-100">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white text-xl shadow-md">
+                  <div className="w-12 h-12 bg-[#008058] rounded-xl flex items-center justify-center text-white text-xl shadow-md">
                     {section.icon}
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-gray-800">
-                      {section.icon} {section.title}
+                      {section.title}
                     </h3>
                     <p className="text-sm text-gray-600 mt-1 font-medium">
                       {section.description}
@@ -226,7 +226,6 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
           ))}
         </div>
 
-        {/* Actions fixas no bottom */}
         <div className="bg-white border-t border-gray-200 sticky bottom-0 py-4 shadow-lg">
           <div className="flex justify-center gap-4">
             <button 
