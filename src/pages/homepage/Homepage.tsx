@@ -123,7 +123,7 @@ export const Homepage = () => {
 
                 {/* Content */}
                 <div className="p-6 space-y-6 bg-[#008058]">
-                  <span className='mb-5 section-divider bg-[#006043] flex w-1/2 m-auto h-[7px] rounded-full'></span>
+                  {/* <span className='mb-5 section-divider bg-[#006043] flex w-1/2 m-auto h-[7px] rounded-full'></span> */}
 
                   {/* Barra de Ações */}
                   <div className="p-0">

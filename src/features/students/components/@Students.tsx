@@ -76,7 +76,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                 <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
                   {/* Header da Ficha do Aluno */}
                   <div className="bg-white shadow-lg border-b border-gray-200">
-                    <div className="max-w-7xl mx-auto px-6 py-6">
+                    <div className="w-full mx-auto px-6 py-6">
                       <div className="flex items-center gap-6">
                         {/* Botão Voltar */}
                         <Button
@@ -156,7 +156,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                   type="button"
                                   className='bg-[#BE2528] text-white px-6 py-2 rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
                                   onClick={() => {
-                                    // Usar uma função do StudentSheet para abrir o modal delete
+                                    
                                     const event = new CustomEvent('openDeleteModal');
                                     window.dispatchEvent(event);
                                   }}>
@@ -175,7 +175,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   </div>
 
                   {/* Conteúdo da Ficha */}
-                  <div className="max-w-7xl mx-auto px-6 py-8">
+                  <div className="w-full mx-auto px-6 py-8">
                     <StudentSheet
                       closeStudentSheet={handleCloseStudentSheet}
                       currentStudentSheet={currentStudentSheet}
@@ -189,7 +189,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
               <p>Não foi encontrado nenhum aluno com o id informado</p>
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200">
               {/* Header da Tabela */}
               <div className="bg-gray-50 border-b border-gray-200 px-6 py-4">
                 <div className="grid grid-cols-12 gap-4 items-center font-semibold text-gray-700 text-sm">
