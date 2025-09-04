@@ -91,7 +91,6 @@ export const Homepage = () => {
               <div className="min-h-screen">
                 <section className="bg-[#008058] p-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full animate-pulse"></div>
                     <div className="absolute top-8 right-12 w-1 h-1 bg-white rounded-full animate-ping"></div>
                     <div className="absolute bottom-6 left-16 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-75"></div>
                     <div className="absolute bottom-4 right-6 w-2 h-2 bg-white rounded-full animate-ping delay-150"></div>
