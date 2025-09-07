@@ -47,3 +47,34 @@ Rodar o backend:
   npm run dev
 ```
 O projeto estará rodando em ```http://localhost:5173/```
+
+# Arquitetura do projeto
+## Frontend
+O frontend utiliza os principios da arquitetura [Bulletproof React](https://github.com/alan2207/bulletproof-react), considerando como uma `feature` o conjunto de componentes que compartilham uma responsabilidade funcional. São elas nesse projeto:
+```
+└── 📁 src/
+    ├── 📁 features/
+    │   ├── 📁 dashboard/
+    │   │   └── 📄 // hooks, components, style...
+    │   ├── 📁 settings/
+    │   │   └── 📄
+    │   ├── 📁 studentForm /
+    │   │   └── 📄
+    │   └── 📁 students /
+    │       └── 📄
+    └── 📄 //global hooks, style, services...
+```
+***
+
+## Backend
+O backend implementa um MVC de forma um pouco mais simplificada, deixando o models lidar somente com o Model do banco de dados e deixando a lógica dentro do próprio controller devido a baixa complexidade.
+```
+└── 📁 src/
+    ├── 📁 config/
+    ├── 📁 controllers/
+    ├── 📁 middleware/
+    ├── 📁 models/
+    ├── 📁 routes/
+    └── 📁 types/
+```
+***
