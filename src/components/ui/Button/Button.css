@@ -6,23 +6,23 @@
   align-items: center;
   justify-content: center;
   gap: var(--spacing-2);
-  
+
   font-family: var(--font-family-sans);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-tight);
   text-decoration: none;
   text-align: center;
-  
+
   border: var(--border-width-1) solid transparent;
   border-radius: var(--border-radius-lg);
-  
+
   cursor: pointer;
   transition: all var(--transition-fast);
-  
+
   /* Remove default button styles */
   background: none;
   outline: none;
-  
+
   /* Prevent text selection */
   user-select: none;
   -webkit-user-select: none;
@@ -60,7 +60,7 @@
 
 /* Primary */
 .btn--primary {
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  background: #006043;
   color: var(--color-white);
   border-color: #4CAF50;
   box-shadow: var(--shadow-sm);
@@ -255,10 +255,12 @@
     stroke-dasharray: 1, 40;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 20, 40;
     stroke-dashoffset: -15;
   }
+
   100% {
     stroke-dasharray: 20, 40;
     stroke-dashoffset: -35;
@@ -277,7 +279,7 @@
     height: 2.75rem;
     font-size: var(--font-size-base);
   }
-  
+
   .btn--xl {
     height: 3rem;
     font-size: var(--font-size-lg);
