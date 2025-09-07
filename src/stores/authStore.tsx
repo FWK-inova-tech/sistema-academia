@@ -14,16 +14,17 @@ const initialState = {
   token: initialToken,
   status: 'none' as 'loading' | 'succeeded' | 'failed' | 'none',
   error: null as string | null,
-  loading: false as false | string
+  loading: false as false | string,
+  email: null as string | null
 }
 
-export const loginUser = createAsyncThunk<string, ICredentials, { rejectValue: string }>("auth/login",
+export const loginUser = createAsyncThunk<{ token: string, email: string }, ICredentials, { rejectValue: string }>("auth/login",
   async (credentials, thunkAPI) => {
     try {
       const res = await login(credentials)
       const token = res
       localStorage.setItem('userToken', token)
-      return token
+      return { token, email: credentials.email }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -76,9 +77,10 @@ export const authSlice = createSlice({
       .addCase(loginUser.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<string>) => {
+      .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ token: string, email: string }>) => {
         state.authenticated = true
-        state.token = action.payload
+        state.token = action.payload.token
+        state.email = action.payload.email
         state.status = 'succeeded'
       })
       .addCase(loginUser.rejected, (state) => {
