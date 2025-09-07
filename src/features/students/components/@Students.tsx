@@ -77,7 +77,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   {/* Header da Ficha do Aluno */}
                   <div className="bg-white shadow-lg border-b border-gray-200">
                     <div className="w-full mx-auto px-6 py-6">
-                      <div className="flex items-center gap-6">
+                      <div className="flex flex-wrap items-center gap-6">
                         {/* Botão Voltar */}
                         <Button
                           variant="secondary"
@@ -102,7 +102,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                             <h1 className="text-3xl font-bold text-gray-900 mb-2">
                               {currentStudentSheet.nome || 'Nome não informado'}
                             </h1>
-                            <div className="flex items-center gap-6 text-sm text-gray-600 mb-3">
+                            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 mb-3">
                               <span className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-lg">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-blue-600">
                                   <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
@@ -122,7 +122,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                             </div>
 
                             {/* Badge do Nível e Ações */}
-                            <div className="flex items-center gap-4">
+                            <div className="flex flex-wrap justify-start items-center gap-4">
                               {(() => {
                                 const nivel = currentStudentSheet.nivel || 'Iniciante';
                                 const nivelConfig = {
@@ -141,7 +141,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                               })()}
 
                               {/* Botões de Ação */}
-                              <div className="flex gap-3 ml-auto">
+                              <div className="flex flex-wrap gap-3 ml-auto">
                                 <button
                                   className='bg-[#006043] text-white px-6 py-2 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
                                   type="button"
@@ -195,7 +195,6 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                 <div className="grid grid-cols-12 gap-4 items-center font-semibold text-gray-700 text-sm">
                   <div className="col-span-2 text-center">ID</div>
                   <div className="col-span-6">Nome do Aluno</div>
-                  <div className="col-span-2 text-center">Nível</div>
                   <div className="col-span-2 text-center">Ações</div>
                 </div>
               </div>
