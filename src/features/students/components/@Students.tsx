@@ -244,13 +244,6 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                         </div>
                       </div>
 
-                      {/* Nível */}
-                      <div className="col-span-2 text-center">
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                          Iniciante
-                        </span>
-                      </div>
-
                       {/* Ações */}
                       <div className="col-span-2 text-center">
                         <button
