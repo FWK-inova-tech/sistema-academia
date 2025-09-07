@@ -131,7 +131,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                   'Avançado': { bg: 'bg-red-100', text: 'text-red-700', border: 'border-red-300', icon: '💪' }
                                 };
                                 const config = nivelConfig[nivel as keyof typeof nivelConfig] || nivelConfig.Iniciante;
-                                const nivelSemEmoji = nivel.replace('🌱','').replace('🔥','').replace('💪','').trim();
+                                const nivelSemEmoji = nivel.replace('🌱', '').replace('🔥', '').replace('💪', '').trim();
                                 return (
                                   <span className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border-2 ${config.bg} ${config.text} ${config.border}`}>
                                     <span className="text-lg">{config.icon}</span>
@@ -156,7 +156,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                                   type="button"
                                   className='bg-[#BE2528] text-white px-6 py-2 rounded-xl font-semibold hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2'
                                   onClick={() => {
-                                    
+
                                     const event = new CustomEvent('openDeleteModal');
                                     window.dispatchEvent(event);
                                   }}>
@@ -214,7 +214,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   <p className="text-gray-500">Clique em "Novo Aluno" para começar a cadastrar seus alunos!</p>
                 </div>
               ) : (
-                <div className="divide-y divide-gray-100">
+                <div className="divide-y divide-gray-100 overflow-x-scroll">
                   {currentStudentsList.map((student, index) => (
                     <div
                       key={student._id}

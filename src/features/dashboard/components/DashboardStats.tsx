@@ -51,7 +51,7 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
   const activePercentage = safeTotal > 0 ? Math.round((activeStudents / safeTotal) * 100) : 0;
   const growthRate = safeTotal > 0 ? Math.round((safeNewMonth / safeTotal) * 100) : 0;
 
-  const dashboardStatsCardsClassses = "bg-[#ffffff54] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
+  const dashboardStatsCardsClassses = "bg-[#ffffff54] hover:bg-[#ffffff91] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
 
   return (
     <div className="dashboard-stats space-y-6">
@@ -124,31 +124,31 @@ export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsPr
       </div>
 
       {/* Card de Progresso - novo visual */}
-  <div className="bg-[#ffffff54] rounded-xl p-7 shadow-md mt-4 backdrop-blur-sm">
-          <div className="flex items-center gap-5 mb-5">
-            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100/60 shadow">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
-                <path d="M9 12l2 2 4-4"></path>
-                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9s4.03-9 9-9c1.51 0 2.93 0.37 4.18 1.03"></path>
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 tracking-tight">Progresso da Academia</h3>
-              <span className="text-xs font-medium text-gray-700">Taxa de Retenção</span>
-            </div>
-            <div className="ml-auto text-xl font-bold text-white drop-shadow-sm">{activePercentage}%</div>
+      <div className="bg-[#ffffff54] rounded-xl p-7 shadow-md mt-4 backdrop-blur-sm">
+        <div className="flex items-center gap-5 mb-5">
+          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100/60 shadow">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
+              <path d="M9 12l2 2 4-4"></path>
+              <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9s4.03-9 9-9c1.51 0 2.93 0.37 4.18 1.03"></path>
+            </svg>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-3 mb-3">
-            <div
-              className="h-3 bg-[#008058] rounded-full transition-all duration-1000 shadow"
-              style={{ width: `${Math.min(100, activePercentage)}%` }}
-            ></div>
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 tracking-tight">Progresso da Academia</h3>
+            <span className="text-xs font-medium text-gray-700">Taxa de Retenção</span>
           </div>
-          <div className="flex justify-between text-sm text-gray-700 font-medium mt-2">
-            <span><span className="font-bold text-[#008058]">{animatedValues.active}</span> ativos</span>
-            <span><span className="font-bold text-[#008058]">{inactiveStudents}</span> inativos</span>
-          </div>
+          <div className="ml-auto text-xl font-bold text-white drop-shadow-sm">{activePercentage}%</div>
         </div>
+        <div className="w-full bg-gray-100 rounded-full h-3 mb-3">
+          <div
+            className="h-3 bg-[#008058] rounded-full transition-all duration-1000 shadow"
+            style={{ width: `${Math.min(100, activePercentage)}%` }}
+          ></div>
+        </div>
+        <div className="flex justify-between text-sm text-gray-700 font-medium mt-2">
+          <span><span className="font-bold text-[#008058]">{animatedValues.active}</span> ativos</span>
+          <span><span className="font-bold text-[#008058]">{inactiveStudents}</span> inativos</span>
+        </div>
+      </div>
     </div>
   );
 };
