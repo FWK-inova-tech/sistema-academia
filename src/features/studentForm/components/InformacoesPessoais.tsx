@@ -14,6 +14,7 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
   const [name, setName] = useState(editingStudent.nome)
   const [contact, setContact] = useState(editingStudent.contato)
   const [date, setDate] = useState(editingStudent.dataNascimento.toISOString().split('T')[0])
+  const [status, setStatus] = useState(editingStudent.status)
 
   function handleInputChange(info: 'nome' | 'contato' | 'dataNascimento', value: string) {
     resetError()
@@ -37,6 +38,16 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
     }
   }
 
+  function handleStatusChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    setStatus (e.target.value as 'active' | 'inactive')
+    resetError()
+    handleUpdateInformacoes({
+      ...editingStudent,
+      status: e.target.value as 'active' | 'inactive'
+    })
+  }
+
+
   function getFormatedMaskContact(defaultString: string) {
     const mask = IMask.createMask({ mask: '(00) 0 0000-0000' })
     mask.resolve(defaultString)
@@ -58,6 +69,20 @@ export const InformacoesPessoais = ({ editingStudent, erroMsg, handleUpdateInfor
       </div>
       
       <div className="space-y-6">
+        <div className={spanContainerClassname}>
+          <label htmlFor="student-name" className={labelClassname}>Status da matricula</label>
+          <select 
+          id='level'
+          required
+          value={status}
+          onChange={handleStatusChange}
+          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 font-medium"
+          >
+            <option value='active'>🟢 Ativo</option>
+            <option value='inactive'>🔴 Inativo</option>
+          </select>
+        </div>
+
         <div className={spanContainerClassname}>
           <label htmlFor="student-name" className={labelClassname}>Nome completo</label>
           <input 

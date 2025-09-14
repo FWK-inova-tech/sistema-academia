@@ -19,10 +19,11 @@ export function useStudentForm({ student, closeForm }: useStudentFormParams) {
   const dispatch = useAppDispatch()
 
 
-  const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento'>>({
+  const [infoPessoais, setInfoPessoais] = useState<Pick<AlunoType, 'nome' | 'contato' | 'dataNascimento' | 'status'>>({
     contato: student.contato,
     dataNascimento: student.dataNascimento,
-    nome: student.nome
+    nome: student.nome,
+    status: student.status
   })
 
   const [agenda, setAgenda] = useState(student.agenda)
@@ -131,6 +132,7 @@ export function useStudentForm({ student, closeForm }: useStudentFormParams) {
       professor: infosTreino.professor,
       perimetria,
       treino,
+      status: infoPessoais.status
     }
     return saveStudent
   }

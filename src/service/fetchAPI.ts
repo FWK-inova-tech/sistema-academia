@@ -44,7 +44,7 @@ export const login = async (credentials: Adm): Promise<string> => {
 
 export interface GetAlunosResponse {
   alunos: Pick<AlunoType, 'nome' | '_id'>[];
-  stats: { total: number; novosMes: number,  alunosAtivos: number};
+  stats: { total: number; novosMes: number,  };
 }
 
 export const getAlunos = async (): Promise<GetAlunosResponse> => {
@@ -116,13 +116,13 @@ export const updateAluno = async (student: AlunoType) => {
     anaminese: student.anaminese,
     agenda: student.agenda,
     treino: student.treino,
-    perimetria: student.perimetria
+    perimetria: student.perimetria,
+    status: student.status
   }, {
     headers: {
       Authorization: `Bearer ${getToken()}`,
     }
   })
-  console.log('update data', data)
   return data
 
 }
