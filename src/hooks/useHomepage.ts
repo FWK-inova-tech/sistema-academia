@@ -3,8 +3,9 @@ import type { AlunoType } from "../types/AlunoType";
 
 interface useDashboardParams {
   students: Pick<AlunoType, '_id' | 'nome'>[];
+  fetchData: () => void;
 }
-export const useHomepage = ({ students }: useDashboardParams) => {
+export const useHomepage = ({ students, fetchData }: useDashboardParams) => {
   const [onSearch, setOnSearch] = useState(false);
   const [current, setCurrent] = useState<'students' | 'settings' | 'register/edit/sheet'>('students')
   type apiErrorType = {
@@ -43,6 +44,7 @@ export const useHomepage = ({ students }: useDashboardParams) => {
       setCurrent('register/edit/sheet')
     } else {
       setCurrent('students')
+      fetchData()
     }
   }
 

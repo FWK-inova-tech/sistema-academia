@@ -21,9 +21,9 @@ export const Homepage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
-  const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number } | null>(null)
+  const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number, alunosAtivos: number } | null>(null)
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
-  const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students })
+  const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students, fetchData })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   useEffect(() => {

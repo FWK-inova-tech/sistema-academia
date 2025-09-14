@@ -15,7 +15,7 @@ export interface AlunoType {
   agenda: string[];
   treino: TreinoType[];
   perimetria: PerimetriaType;
-  status: 'active' | 'inactve'
+  status: 'active' | 'inactive'
 }
 
 export type NovoAluno = Omit<AlunoType, '_id'>
