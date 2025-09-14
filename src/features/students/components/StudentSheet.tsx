@@ -41,6 +41,11 @@ export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: student
   // Render principal
   return (
     <div className="space-y-6">
+      {/* Status */}
+      <div className={`flex flex-row gap-2 items-center pl-4 rounded-xl shadow-sm border overflow-hidden
+      ${currentStudentSheet.status == 'active' ? 'bg-green-100 text-green-700 border-green-300' : 'bg-red-100 text-red-700 border-red-300'}`}>
+        <h3>{currentStudentSheet.status == 'active' ? 'Matricula ativa' : 'Matricula inativa'}</h3>
+      </div>
       {/* Dados Pessoais */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
         <div className="bg-gray-50 border-b border-gray-200 p-4">
