@@ -31,6 +31,7 @@ const AlunoSchema: Schema = new Schema<IAluno>({
     anaminese: { type: String, required: true },
     agenda: { type: [String], required: true },
     treino: { type: [TreinoSchema], required: true },
+    status: {type: String, default: 'active'},
     perimetria: { type: PerimetriaSchema, required: true }
 }, { timestamps: true });
 
