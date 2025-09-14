@@ -16,6 +16,10 @@ export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: student
     closeStudentSheet()
   }
 
+  function perimetriaValueInformed(value: number) {
+    return value >= 1
+  }
+
   useState(() => {
     const handleOpenDeleteModal = () => setModalDelete(true);
     window.addEventListener('openDeleteModal', handleOpenDeleteModal);
@@ -150,15 +154,16 @@ export const StudentSheet = ({ closeStudentSheet, currentStudentSheet }: student
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left font-semibold text-gray-700 p-3">Região Corporal</th>
-                  <th className="text-center font-semibold text-gray-700 p-3">Medida (cm)</th>
+                  <th className="text-center font-semibold text-gray-700 p-3">Medida</th>
                 </tr>
               </thead>
               <tbody>
                 {currentStudentSheet.perimetria.medidas.map((item, index) => (
                   <tr key={item.nome} className={`border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
                     <td className="p-3 text-gray-800">{item.nome}</td>
-                    <td className="p-3 text-center font-semibold text-gray-900">
-                      {item.valor} cm
+                    <td className={`p-3 text-center font-semibold ${perimetriaValueInformed(item.valor) ? 'text-gray-900' : 'text-red-500'}`}>
+                      {!perimetriaValueInformed(item.valor) && 'Medida não informada'}
+                      {perimetriaValueInformed(item.valor) && (<>{item.valor}{item.nome == 'Peso' ? 'kg' : 'cm'}</>)}
                     </td>
                   </tr>
                 ))}
