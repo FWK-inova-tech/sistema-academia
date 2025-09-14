@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 interface DashboardStatsProps {
   totalStudents: number;
   newThisMonth: number;
+  activeStudents: number;
 }
 
-export const DashboardStats = ({ totalStudents, newThisMonth }: DashboardStatsProps) => {
+export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: DashboardStatsProps) => {
   // Calculamos métricas baseadas nos dados reais com validações
   const safeTotal = Math.max(0, totalStudents);
   const safeNewMonth = Math.max(0, newThisMonth);
-  const activeStudents = Math.round(safeTotal * 0.87); // 87% de retenção é uma boa taxa
   const inactiveStudents = safeTotal - activeStudents;
   const [animatedValues, setAnimatedValues] = useState({
     total: 0,

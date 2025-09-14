@@ -44,7 +44,7 @@ export const login = async (credentials: Adm): Promise<string> => {
 
 export interface GetAlunosResponse {
   alunos: Pick<AlunoType, 'nome' | '_id'>[];
-  stats: { total: number; novosMes: number };
+  stats: { total: number; novosMes: number,  alunosAtivos: number};
 }
 
 export const getAlunos = async (): Promise<GetAlunosResponse> => {

@@ -116,6 +116,7 @@ export const Homepage = () => {
                     <DashboardStats
                       totalStudents={dashboardStats ? dashboardStats.total : students.length}
                       newThisMonth={dashboardStats ? dashboardStats.novosMes : 0}
+                      activeStudents={dashboardStats ? dashboardStats.alunosAtivos : 0}
                     />
                   </div>
                 </section>
