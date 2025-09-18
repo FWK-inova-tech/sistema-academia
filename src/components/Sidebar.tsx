@@ -93,7 +93,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
           onClick={openConfig}
           disabled={Boolean(isStudentsLoading || isAuthLoading || current === 'settings')}
           className={`
-        flex items-center justify-center md:justify-between gap-4 w-5/12 md:w-full
+        flex items-center justify-center md:justify-between gap-4 min-w-fit w-5/12 md:w-full
         px-2 md:px-4 py-4 rounded-xl font-medium text-white
         border border-white/20 bg-white/10 backdrop-blur-md
         transition-all duration-300
