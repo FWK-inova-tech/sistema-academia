@@ -73,7 +73,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   closeForm={handleCloseEdit}
                 />
               ) : (
-                <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+                <div className="h-fit bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
                   {/* Header da Ficha do Aluno */}
                   <div className="bg-white shadow-lg border-b border-gray-200">
                     <div className="w-full mx-auto px-6 py-6">
@@ -189,7 +189,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
               <p>Não foi encontrado nenhum aluno com o id informado</p>
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <div className="bg-white min-h-fit rounded-xl shadow-sm border border-gray-200">
               {/* Header da Tabela */}
               <div className="bg-gray-50 border-b border-gray-200 px-6 py-4">
                 <div className="grid grid-cols-12 gap-4 items-center font-semibold text-gray-700 text-sm">

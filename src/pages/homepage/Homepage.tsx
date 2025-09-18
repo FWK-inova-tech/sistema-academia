@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../stores/appStore"
 import { setAlunos, setLoading } from "../../stores/studentsStore"
 import { getAlunos } from "../../service/fetchAPI"
-import '../../style/homepage.css'
 import axios from "axios"
 import { logout } from "../../stores/authStore";
 import { useHomepage } from "../../hooks/useHomepage";
@@ -61,15 +60,16 @@ export const Homepage = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-gray-50'>
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-white flex-col md:flex-row overflow-y-hidden">
       <ToastContainer />
       <Sidebar
         current={current}
         openAlunos={() => setCurrent('students')}
-        openConfig={() => setCurrent('settings')} />
+        openConfig={() => setCurrent('settings')}
+      />
 
-      <main className='main-content flex-1'>
-        {apiError &&
+      <main className="flex-1 flex flex-col bg-gray-50 h-screen min-h-fit overflow-y-scroll">
+        {apiError && (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">
               <h2 className="text-xl font-semibold text-red-600 mb-2">Erro</h2>
@@ -84,7 +84,8 @@ export const Homepage = () => {
               </Button>
             </Card>
           </div>
-        }
+        )}
+
         {!apiError && (
           <>
             {current === 'students' && (
@@ -98,7 +99,7 @@ export const Homepage = () => {
                     <div className="absolute bottom-8 right-1/4 w-1.5 h-1.5 bg-white rounded-full animate-ping delay-500"></div>
                   </div>
 
-                  <div className="max-w-none relative z-10">
+                  <div className="relative z-10 max-w-none">
                     <div className="mb-6">
                       <div className="flex justify-between items-center mb-2">
                         <div className="text-white text-sm font-normal flex items-center gap-2">
@@ -121,28 +122,41 @@ export const Homepage = () => {
                   </div>
                 </section>
 
-
-                {/* Content */}
-                <section className="p-6 space-y-6">
-                  <div className="bg-[#ffffff54] flex flex-col gap-2 rounded-lg p-2">
-                    {/* Barra de Ações */}
+                <section className="p-6 space-y-6 min-h-fit">
+                  <div className="bg-[#ffffff54] min-h-fit flex flex-col gap-2 rounded-lg p-2">
                     <div className="p-0">
-                      <div className=" studentsListHeader p-2 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+                      <div className="p-2 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
                         <div className="flex-1">
                           <h2 className="text-xl font-bold text-gray-900 mb-1 md:pl-3">Alunos</h2>
                           <p className="text-gray-600 text-sm flex items-center gap-2">
-                            {currentStudentsList.length === 0 &&
+                            {currentStudentsList.length === 0 && (
                               <span className="flex items-center gap-1">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-400">
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  className="text-gray-400"
+                                >
                                   <circle cx="12" cy="12" r="10"></circle>
                                   <path d="M8 12h8M12 8v8"></path>
                                 </svg>
                                 Nenhum aluno cadastrado ainda
                               </span>
-                            }
-                            {onSearch &&
+                            )}
+                            {onSearch && (
                               <span className="flex items-center gap-1">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#006043" strokeWidth="2" className="text-green-500">
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="#006043"
+                                  strokeWidth="2"
+                                  className="text-green-500"
+                                >
                                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                   <circle cx="9" cy="7" r="4"></circle>
                                   <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
@@ -151,7 +165,7 @@ export const Homepage = () => {
                                 <span className="font-medium text-gray-800">{currentStudentsList.length}</span>
                                 aluno{currentStudentsList.length !== 1 ? 's' : ''} encontrado{currentStudentsList.length !== 1 ? 's' : ''}
                               </span>
-                            }
+                            )}
                           </p>
                         </div>
 
@@ -163,7 +177,14 @@ export const Homepage = () => {
                             onClick={handleOpenRegister}
                             className="group relative bg-[#006043] text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
                           >
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <svg
+                              width="18"
+                              height="18"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
                               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
                               <circle cx="9" cy="7" r="4"></circle>
                               <path d="M19 8l5 5m0 0l-5 5m5-5H14"></path>
@@ -182,30 +203,28 @@ export const Homepage = () => {
                   </div>
                 </section>
               </div>
-            )
-            }
+            )}
 
-            {
-              current !== 'settings' && current !== 'students' && (
-                <div className="p-6">
-                  {openRegister ? (
-                    <StudentForm closeForm={handleCloseRegister} />
-                  ) : (
-                    <Students
-                      handleOpensheet={handleOpenStudentsheet}
-                      controlOpenSheet={handleCloseOpenEdit}
-                      currentStudentsList={currentStudentsList}
-                      setError={setApiError}
-                    />
-                  )}
-                </div>
-              )
-            }
+            {current !== 'settings' && current !== 'students' && (
+              <div className="p-6">
+                {openRegister ? (
+                  <StudentForm closeForm={handleCloseRegister} />
+                ) : (
+                  <Students
+                    handleOpensheet={handleOpenStudentsheet}
+                    controlOpenSheet={handleCloseOpenEdit}
+                    currentStudentsList={currentStudentsList}
+                    setError={setApiError}
+                  />
+                )}
+              </div>
+            )}
 
             {current === 'settings' && <Settings />}
           </>
         )}
-      </main >
-    </div >
+      </main>
+    </div>
+
   )
 }
