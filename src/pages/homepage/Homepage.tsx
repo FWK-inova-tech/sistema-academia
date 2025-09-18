@@ -61,14 +61,14 @@ export const Homepage = () => {
   }
 
   return (
-    <div className='flex min-h-screen bg-gray-50'>
+    <div className='flex flex-col md:flex-row h-screen overflow-y-hidden bg-gray-50'>
       <ToastContainer />
       <Sidebar
         current={current}
         openAlunos={() => setCurrent('students')}
         openConfig={() => setCurrent('settings')} />
 
-      <main className='main-content flex-1'>
+      <main className='main-content flex-1 overflow-y-scroll'>
         {apiError &&
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">

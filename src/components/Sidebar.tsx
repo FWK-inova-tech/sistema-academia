@@ -1,5 +1,5 @@
 import { useAppSelector } from "../stores/appStore"
-import '../style/Sidebar.css'
+// import '../style/Sidebar.css'
 import Logo from "../assets/logo.png"
 
 interface sidebarProps {
@@ -29,10 +29,113 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
   )
 
   return (
+    <aside
+      className="
+    bg-[#006043] shadow-[4px_0_15px_rgba(0,0,0,0.1)]
+    w-screen md:w-[280px] lg:w-[300px] md:min-h-screen md:h-full
+     flex flex-col 
+    md:flex-col
+  "
+    >
+      {/* Header */}
+      <div
+        className="
+      hidden md:flex justify-center items-center shrink-0 text-center
+      border-b border-white/20
+      px-6 pt-8 pb-6
+      
+    "
+      >
+        <div className="hidden md:flex">
+          <img
+            className="
+          h-[60px] w-auto max-w-full object-contain
+          transition-transform duration-300 ease-in-out
+          hover:scale-105
+        "
+            src={Logo}
+            alt="Academia Pro"
+          />
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav
+        className="
+      flex flex-row flex-1 gap-3 p-6
+      md:flex-col md:p-4 md:gap-4
+      justify-center md:justify-start
+    "
+      >
+        <button
+          type="button"
+          onClick={openAlunos}
+          disabled={Boolean(isStudentsLoading || isAuthLoading || current !== 'settings')}
+          className={`
+        flex items-center justify-center md:justify-between gap-4 w-5/12 md:w-full
+        px-2 md:px-4 py-4 rounded-xl font-medium text-white
+        border border-white/20 bg-white/10 backdrop-blur-md
+        transition-all duration-300
+        hover:translate-y-[-2px] hover:bg-white/20 hover:border-white/30
+        hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)]
+        disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none
+        [&>svg]:w-5 [&>svg]:h-5 [&>svg]:transition-transform [&>svg]:duration-200
+        hover:[&>svg]:scale-110
+        ${current !== "settings" ? "bg-white/25 border-white/40 shadow-[0_4px_15px_rgba(0,0,0,0.2)]" : ""}
+      `}
+        >
+          <UsersIcon />
+          <span className="flex justify-start w-fit md:w-full">Alunos</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={openConfig}
+          disabled={Boolean(isStudentsLoading || isAuthLoading || current === 'settings')}
+          className={`
+        flex items-center justify-center md:justify-between gap-4 w-5/12 md:w-full
+        px-2 md:px-4 py-4 rounded-xl font-medium text-white
+        border border-white/20 bg-white/10 backdrop-blur-md
+        transition-all duration-300
+        hover:translate-y-[-2px] hover:bg-white/20 hover:border-white/30
+        hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)]
+        disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none
+        [&>svg]:w-5 [&>svg]:h-5 [&>svg]:transition-transform [&>svg]:duration-200
+        hover:[&>svg]:scale-110
+        ${current === "settings" ? "bg-white/25 border-white/40 shadow-[0_4px_15px_rgba(0,0,0,0.2)]" : ""}
+      `}
+        >
+          <SettingsIcon />
+          <span className="flex justify-start w-fit md:w-full">Configurações</span>
+        </button>
+      </nav>
+
+      {/* Footer */}
+      <div className="mt-auto px-6 pb-8 max-md:px-4 max-md:pb-4">
+        <div
+          className="
+        flex items-center gap-3 px-4 py-4 rounded-xl text-white text-sm
+        bg-white/10 backdrop-blur-md
+      "
+        >
+          <div
+            className="hidden sm:flex
+          w-2 h-2 rounded-full bg-emerald-400
+          animate-pulse
+        "
+          ></div>
+          <span>Sistema Online</span>
+        </div>
+      </div>
+    </aside>
+
+  )
+
+  return (
     <aside className='sidebar sidebar-original'>
       <div className="sidebar-header">
         <div className="sidebar-logo">
-          <img className="sidebar-logo-icon" src={Logo} alt="Academia Pro"/>
+          <img className="sidebar-logo-icon" src={Logo} alt="Academia Pro" />
         </div>
       </div>
 
@@ -46,7 +149,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
           <UsersIcon />
           <span>Alunos</span>
         </button>
-        
+
         <button
           type="button"
           onClick={openConfig}
