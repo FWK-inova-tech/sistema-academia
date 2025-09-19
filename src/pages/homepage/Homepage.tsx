@@ -256,22 +256,23 @@ export const Homepage = () => {
             {current === 'settings' && <Settings />}
           </>
         )}
+        {/* Modais de Importação */}
+        {openImport && (
+          <ImportAlunos
+            onImportComplete={handleImportComplete}
+            onClose={handleCloseImport}
+          />
+        )}
+
+        {importResult && (
+          <ImportResultModal
+            result={importResult}
+            onClose={handleCloseImportResult}
+          />
+        )}
+
       </main>
 
-      {/* Modais de Importação */}
-      {openImport && (
-        <ImportAlunos
-          onImportComplete={handleImportComplete}
-          onClose={handleCloseImport}
-        />
-      )}
-
-      {importResult && (
-        <ImportResultModal
-          result={importResult}
-          onClose={handleCloseImportResult}
-        />
-      )}
     </div>
 
   )
