@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Button } from '../../../components/ui';
 import { Loading } from '../../../components/Loading';
+import { getToken } from '../../../service/fetchAPI';
 
 interface ImportAlunosProps {
   onImportComplete: (result: ImportResult) => void;
@@ -93,7 +94,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
       const formData = new FormData();
       formData.append('file', selectedFile);
 
-      const token = localStorage.getItem('token');
+      const token = getToken();
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alunos/import`, {
         method: 'POST',
         headers: {
@@ -110,7 +111,12 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
       const result: ImportResult = await response.json();
       onImportComplete(result);
     } catch (error: any) {
-      alert(`Erro na importação: ${error.message}`);
+      if (error.message === 'Sessão expirada') {
+        alert('Sua sessão expirou. Por favor, faça login novamente.');
+        window.location.reload();
+      } else {
+        alert(`Erro na importação: ${error.message}`);
+      }
     } finally {
       setIsUploading(false);
     }
@@ -118,7 +124,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
 
   const downloadTemplate = async () => {
     try {
-      const token = localStorage.getItem('token');
+      const token = getToken();
       const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/alunos/template/download`, {
         method: 'GET',
         headers: {
@@ -127,12 +133,19 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao baixar template');
+        let errorMessage = 'Erro ao baixar template';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.erro || errorMessage;
+        } catch {
+          errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
       }
 
       // Criar blob do arquivo
       const blob = await response.blob();
-
+      
       // Criar link de download
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
@@ -144,11 +157,16 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
       URL.revokeObjectURL(url);
 
     } catch (error: any) {
-      alert(`Erro ao baixar template: ${error.message}`);
+      if (error.message === 'Sessão expirada') {
+        alert('Sua sessão expirou. Por favor, faça login novamente.');
+        // Redirecionar para login ou recarregar a página
+        window.location.reload();
+      } else {
+        alert(`Erro ao baixar template: ${error.message}`);
+      }
+      console.error('Erro no download do template:', error);
     }
-  };
-
-  return (
+  };  return (
     <div className="w-full bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6">
         <div className="flex justify-between items-center mb-6">
