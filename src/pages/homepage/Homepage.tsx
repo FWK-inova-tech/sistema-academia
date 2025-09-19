@@ -82,7 +82,7 @@ export const Homepage = () => {
   }
 
   return (
-    <div className="flex h-full min-h-fit bg-[#006043] flex-col md:flex-row">
+    <div className="flex h-full min-h-fit bg-[#06302b] flex-col md:flex-row">
       <ToastContainer />
       {!importResult && !openImport && (
 
@@ -116,7 +116,7 @@ export const Homepage = () => {
           <>
             {current === 'students' && (
               <div className="min-h-screen">
-                <section className="bg-[#008058] p-6 relative overflow-hidden">
+                <section className="bg-[#0b453a] p-6 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-10">
                     <div className="absolute top-8 right-12 w-1 h-1 bg-white rounded-full animate-ping"></div>
                     <div className="absolute bottom-6 left-16 w-1.5 h-1.5 bg-white rounded-full animate-pulse delay-75"></div>
@@ -148,7 +148,7 @@ export const Homepage = () => {
                   </div>
                 </section>
 
-                <section className="p-6 space-y-6 min-h-fit">
+                <section className="p-6 space-y-6 min-h-fit bg-[#0b453a]">
                   <div className="bg-[#ffffff54] min-h-fit flex flex-col gap-2 rounded-lg p-2">
                     <div className="p-0">
                       <div className="p-2 flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
