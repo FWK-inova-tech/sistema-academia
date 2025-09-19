@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { getToken, login, validateToken } from "../service/fetchAPI";
-import { toast } from "react-toastify";
 
 const initialToken = localStorage.getItem('userToken') ?? null as string | null
 
@@ -29,8 +28,8 @@ export const loginUser = createAsyncThunk<{ token: string, email: string }, ICre
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const message = error as Error
-      toast.error(error.status == 400 ? "Credenciais erradas" : "Erro ao tentar fazer login")
-      return thunkAPI.rejectWithValue(message.message || "Erro ao tentar fazer a requisição do login")
+      const errorMessage = error.status == 400 ? "Credenciais erradas" : message.message ?? "Erro ao tentar fazer a requisição do login"
+      return thunkAPI.rejectWithValue(errorMessage)
     }
   }
 )
@@ -83,8 +82,9 @@ export const authSlice = createSlice({
         state.email = action.payload.email
         state.status = 'succeeded'
       })
-      .addCase(loginUser.rejected, (state) => {
-        state.status = 'failed'
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = 'failed',
+          state.error = action.payload || 'Erro ao tentar fazer login'
       })
 
       // checkToken
@@ -95,7 +95,7 @@ export const authSlice = createSlice({
         state.status = 'failed';
         state.authenticated = false
         state.token = null;
-        state.error = action.payload || "Token inválido"
+        state.error = action.payload || "Faça login para prosseguir"
       })
       .addCase(checkToken.fulfilled, (state) => {
         state.status = 'succeeded';

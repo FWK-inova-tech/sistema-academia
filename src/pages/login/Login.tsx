@@ -19,6 +19,7 @@ export const Login = () => {
   const error = useAppSelector((state) => state.auth.error)
   const authenticated = useAppSelector((state) => state.auth.authenticated)
 
+
   if (authenticated) return <Navigate to={'/'} />
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,11 +49,11 @@ export const Login = () => {
   return (
     <main className='login-page'>
       <ToastContainer />
-      
+
       <div className="login-container">
         <div className="login-header">
           <div className="login-logo">
-            <img src={Logo} alt="Logo da academia ProFitness" className="login-logo-img"/>
+            <img src={Logo} alt="Logo da academia ProFitness" className="login-logo-img" />
           </div>
         </div>
 
@@ -106,7 +107,7 @@ export const Login = () => {
               {status === "loading" ? "Entrando..." : "Entrar"}
             </Button>
 
-            {status === "failed" && (
+            {status === "failed" && error !== "Seção inválida" && (
               <div className="login-error">
                 <p>{error}</p>
               </div>
