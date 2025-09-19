@@ -6,7 +6,7 @@ import { getAlunos } from "../../service/fetchAPI"
 import axios from "axios"
 import { logout } from "../../stores/authStore";
 import { useHomepage } from "../../hooks/useHomepage";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { Sidebar } from "../../components/Sidebar";
 import { SearchStudent } from "../../features/students/components/SearchStudent";
 import { StudentForm } from "../../features/studentForm/components/@StudentForm";
@@ -15,36 +15,34 @@ import { Settings } from "../../features/settings/components/Settings";
 import { Button } from "../../components/ui/Button/Button";
 import { Card } from "../../components/ui/Card/Card";
 import { DashboardStats } from "../../features/dashboard/components/DashboardStats";
-import { ImportAlunos } from "../../features/students/components/ImportAlunos";
-import { ImportResultModal } from "../../features/students/components/ImportResultModal";
+// import { ImportAlunos } from "../../features/students/components/ImportAlunos";
+// import { ImportResultModal } from "../../features/students/components/ImportResultModal";
 
 export const Homepage = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
   const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number, alunosAtivos: number } | null>(null)
-  const [openImport, setOpenImport] = useState(false)
-  const [importResult, setImportResult] = useState<any>(null)
+  // const [openImport, setOpenImport] = useState(false)
+  // const [importResult, setImportResult] = useState<any>(null)
   const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students, fetchData })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
 
   // Handlers para importação
-  const handleOpenImport = () => setOpenImport(true)
-  const handleCloseImport = () => setOpenImport(false)
-
-  const handleImportComplete = (result: any) => {
-    setImportResult(result)
-    setOpenImport(false)
-    // Recarregar lista de alunos após importação
-    fetchData()
-
-    // Mostrar toast de sucesso
-    if (result.resumo.alunosImportados > 0) {
-      toast.success(`${result.resumo.alunosImportados} aluno(s) importado(s) com sucesso!`)
-    }
-  }
-
-  const handleCloseImportResult = () => setImportResult(null)
+  // const handleOpenImport = () => setOpenImport(true)
+  // const handleCloseImport = () => setOpenImport(false)
+  //
+  // const handleImportComplete = (result: any) => {
+  //   setImportResult(result)
+  //   setOpenImport(false)
+  //   fetchData()
+  //
+  //   if (result.resumo.alunosImportados > 0) {
+  //     toast.success(`${result.resumo.alunosImportados} aluno(s) importado(s) com sucesso!`)
+  //   }
+  // }
+  //
+  // const handleCloseImportResult = () => setImportResult(null)
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
@@ -82,18 +80,24 @@ export const Homepage = () => {
   return (
     <div className="flex h-full min-h-fit bg-[#06302b] flex-col md:flex-row">
       <ToastContainer />
-      {!importResult && !openImport && (
+      <Sidebar
+        current={current}
+        openAlunos={() => setCurrent('students')}
+        openConfig={() => setCurrent('settings')}
+      />
 
-        <Sidebar
-          current={current}
-          openAlunos={() => setCurrent('students')}
-          openConfig={() => setCurrent('settings')}
-        />
-      )}
+      {/* {!importResult && !openImport && ( */}
+      {/**/}
+      {/*   <Sidebar */}
+      {/*     current={current} */}
+      {/*     openAlunos={() => setCurrent('students')} */}
+      {/*     openConfig={() => setCurrent('settings')} */}
+      {/*   /> */}
+      {/* )} */}
 
 
       <main className="flex-1 flex flex-col bg-gray-50 min-h-screen h-fit">
-        {apiError && !openImport && !importResult && (
+        {apiError && (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">
               <h2 className="text-xl font-semibold text-red-600 mb-2">Erro</h2>
@@ -110,7 +114,7 @@ export const Homepage = () => {
           </div>
         )}
 
-        {!apiError && !openImport && !importResult && (
+        {!apiError && (
           <>
             {current === 'students' && (
               <div className="min-h-screen">
@@ -185,26 +189,26 @@ export const Homepage = () => {
                             <SearchStudent handleSearch={handleSearch} />
                           </div>
                           <div className="flex gap-2">
-                            <button
-                              onClick={handleOpenImport}
-                              className="group relative bg-blue-600 text-white font-medium h-12 px-4 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
-                              title="Importar alunos por planilha"
-                            >
-                              <svg
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                              >
-                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
-                                <polyline points="14,2 14,8 20,8"></polyline>
-                                <path d="M12 11l-4 4 4 4"></path>
-                                <path d="M8 15h8"></path>
-                              </svg>
-                              <span className="hidden sm:inline">Importar</span>
-                            </button>
+                            {/* <button */}
+                            {/*   onClick={handleOpenImport} */}
+                            {/*   className="group relative bg-blue-600 text-white font-medium h-12 px-4 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2" */}
+                            {/*   title="Importar alunos por planilha" */}
+                            {/* > */}
+                            {/*   <svg */}
+                            {/*     width="18" */}
+                            {/*     height="18" */}
+                            {/*     viewBox="0 0 24 24" */}
+                            {/*     fill="none" */}
+                            {/*     stroke="currentColor" */}
+                            {/*     strokeWidth="2" */}
+                            {/*   > */}
+                            {/*     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path> */}
+                            {/*     <polyline points="14,2 14,8 20,8"></polyline> */}
+                            {/*     <path d="M12 11l-4 4 4 4"></path> */}
+                            {/*     <path d="M8 15h8"></path> */}
+                            {/*   </svg> */}
+                            {/*   <span className="hidden sm:inline">Importar</span> */}
+                            {/* </button> */}
                             <button
                               onClick={handleOpenRegister}
                               className="group relative bg-[#006043] text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
@@ -238,7 +242,7 @@ export const Homepage = () => {
               </div>
             )}
 
-            {current !== 'settings' && current !== 'students' && !openImport && !importResult && (
+            {current !== 'settings' && current !== 'students' && (
               <div className="p-6">
                 {openRegister ? (
                   <StudentForm closeForm={handleCloseRegister} />
@@ -257,19 +261,19 @@ export const Homepage = () => {
           </>
         )}
         {/* Modais de Importação */}
-        {openImport && (
-          <ImportAlunos
-            onImportComplete={handleImportComplete}
-            onClose={handleCloseImport}
-          />
-        )}
-
-        {importResult && (
-          <ImportResultModal
-            result={importResult}
-            onClose={handleCloseImportResult}
-          />
-        )}
+        {/* {openImport && ( */}
+        {/*   <ImportAlunos */}
+        {/*     onImportComplete={handleImportComplete} */}
+        {/*     onClose={handleCloseImport} */}
+        {/*   /> */}
+        {/* )} */}
+        {/**/}
+        {/* {importResult && ( */}
+        {/*   <ImportResultModal */}
+        {/*     result={importResult} */}
+        {/*     onClose={handleCloseImportResult} */}
+        {/*   /> */}
+        {/* )} */}
 
       </main>
 
