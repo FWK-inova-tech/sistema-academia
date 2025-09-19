@@ -60,7 +60,7 @@ export const Homepage = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 to-white flex-col md:flex-row overflow-y-hidden">
+    <div className="flex h-full bg-[#006043] flex-col md:flex-row">
       <ToastContainer />
       <Sidebar
         current={current}
@@ -68,7 +68,7 @@ export const Homepage = () => {
         openConfig={() => setCurrent('settings')}
       />
 
-      <main className="flex-1 flex flex-col bg-gray-50 h-screen min-h-fit overflow-y-scroll">
+      <main className="flex-1 flex flex-col bg-gray-50 h-screen min-h-fit">
         {apiError && (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">

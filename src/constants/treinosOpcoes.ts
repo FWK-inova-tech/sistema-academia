@@ -67,7 +67,7 @@ export const treinosOpcoes: TreinoType[] = [
     ]
   },
   {
-    categoria: 'Ombors e Trapézio',
+    categoria: 'Ombros e Trapézio',
     exercicios: [
       'Desenvolvimento',
       'ABD. Ombro',

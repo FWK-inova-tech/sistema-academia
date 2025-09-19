@@ -31,8 +31,7 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
   return (
     <aside
       className="
-    bg-[#006043] shadow-[4px_0_15px_rgba(0,0,0,0.1)]
-    w-screen md:w-[280px] lg:w-[300px] md:min-h-screen md:h-full
+    bg-[#006043] w-screen md:w-[280px] lg:w-[300px] md:min-h-full md:h-full
      flex flex-col 
     md:flex-col
   "

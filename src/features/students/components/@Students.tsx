@@ -213,7 +213,7 @@ export const Students = ({ currentStudentsList, setError, handleOpensheet, contr
                   <p className="text-gray-500">Clique em "Novo Aluno" para começar a cadastrar seus alunos!</p>
                 </div>
               ) : (
-                <div className="divide-y divide-gray-100 overflow-x-scroll">
+                <div className="divide-y divide-gray-100">
                   {currentStudentsList.map((student, index) => (
                     <div
                       key={student._id}
