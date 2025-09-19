@@ -26,12 +26,12 @@ export const ItemTreino = ({ item, editing, studentList }: itemTreinoProps) => {
         <h3 className="text-white font-bold text-lg text-center flex items-center justify-center gap-3">
           <span className="text-xl">💪</span>
           {item.categoria}
-          <span className="bg-white bg-opacity-20 px-2 py-1 rounded-full text-sm">
+          <span className="bg-white text-gray-700 bg-opacity-20 px-2 py-1 rounded-full text-sm">
             {item.exercicios.length}
           </span>
         </h3>
       </div>
-      
+
       {/* Content */}
       {open && (
         <div className="p-4 space-y-3">
@@ -57,15 +57,15 @@ export const ItemTreino = ({ item, editing, studentList }: itemTreinoProps) => {
           )}
         </div>
       )}
-      
+
       {/* Footer Button */}
       <div className="p-4 bg-gray-50 border-t border-gray-200">
         <button
           type="button"
           className={`
             w-full py-3 px-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2
-            ${open 
-              ? 'bg-green-600 hover:bg-green-700 text-white shadow-md' 
+            ${open
+              ? 'bg-green-600 hover:bg-green-700 text-white shadow-md'
               : 'bg-white hover:bg-green-50 text-green-600 border-2 border-green-600 hover:border-green-700'
             }
           `}

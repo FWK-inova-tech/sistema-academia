@@ -51,7 +51,9 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
   const activePercentage = safeTotal > 0 ? Math.round((activeStudents / safeTotal) * 100) : 0;
   const growthRate = safeTotal > 0 ? Math.round((safeNewMonth / safeTotal) * 100) : 0;
 
-  const dashboardStatsCardsClassses = "bg-[#ffffff54] hover:bg-[#ffffff91] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
+  // const dashboardStatsCardsClassses = "bg-[#ffffffa6] text-white hover:bg-[#ffffff91] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
+  const dashboardStatsCardsClassses = "bg-[#06302b94] text-white border-1 border-[#ffffff12] hover:bg-[#06302b] rounded-lg p-6 shadow-xl hover:shadow-md transition-shadow";
+
 
   return (
     <div className="dashboard-stats space-y-6">
@@ -69,8 +71,8 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
               </svg>
             </div>
           </div>
-          <p className="text-gray-600 text-sm font-medium mb-2">Total de Alunos</p>
-          <p className="text-3xl font-bold text-gray-900">{animatedValues.total}</p>
+          <p className="text-sm font-medium mb-2" style={{ color: 'white' }}>Total de Alunos</p>
+          <p className="text-3xl font-bold" style={{ color: 'white' }}>{animatedValues.total}</p>
         </div>
 
         {/* Alunos Ativos */}
@@ -85,8 +87,8 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
               {activePercentage}%
             </span>
           </div>
-          <p className="text-gray-600 text-sm font-medium mb-2">Alunos Ativos</p>
-          <p className="text-3xl font-bold text-gray-900">{animatedValues.active}</p>
+          <p className="text-sm font-medium mb-2" style={{ color: 'white' }}>Alunos Ativos</p>
+          <p className="text-3xl font-bold" style={{ color: 'white' }}>{animatedValues.active}</p>
         </div>
 
         {/* Novos Este Mês */}
@@ -104,8 +106,8 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
               </span>
             )}
           </div>
-          <p className="text-gray-600 text-sm font-medium mb-2">Novos Este Mês</p>
-          <p className="text-3xl font-bold text-gray-900">{animatedValues.newMonth}</p>
+          <p className="text-sm font-medium mb-2" style={{ color: 'white' }}>Novos Este Mês</p>
+          <p className="text-3xl font-bold" style={{ color: 'white' }}>{animatedValues.newMonth}</p>
         </div>
 
         {/* Taxa de Retenção */}
@@ -118,13 +120,13 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
               </svg>
             </div>
           </div>
-          <p className="text-gray-600 text-sm font-medium mb-2">Taxa de Retenção</p>
-          <p className="text-3xl font-bold text-gray-900">{activePercentage}%</p>
+          <p className="text-sm font-medium mb-2" style={{ color: 'white' }}>Taxa de Retenção</p>
+          <p className="text-3xl font-bold text-gray-900" style={{ color: 'white' }}>{activePercentage}%</p>
         </div>
       </div>
 
       {/* Card de Progresso - novo visual */}
-      <div className="bg-[#ffffff54] rounded-xl p-7 shadow-md mt-4 backdrop-blur-sm">
+      <div className="bg-[#fffffff2] bg-[#ffffffa6 rounded-xl p-7 shadow-xl mt-4 backdrop-blur-sm">
         <div className="flex items-center gap-5 mb-5">
           <div className="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100/60 shadow">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
@@ -134,9 +136,9 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
           </div>
           <div>
             <h3 className="text-xl font-bold text-gray-900 tracking-tight">Progresso da Academia</h3>
-            <span className="text-xs font-medium text-gray-700">Taxa de Retenção</span>
+            <span className="text-xs font-medium text-gray-900">Taxa de Retenção</span>
           </div>
-          <div className="ml-auto text-xl font-bold text-white drop-shadow-sm">{activePercentage}%</div>
+          <div className="ml-auto text-xl font-bold text-gray-700 drop-shadow-sm">{activePercentage}%</div>
         </div>
         <div className="w-full bg-gray-100 rounded-full h-3 mb-3">
           <div

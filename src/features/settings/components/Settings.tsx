@@ -10,7 +10,7 @@ export const Settings = () => {
   const { confirmPassword, currentPassword, errorMessage, handleLogout, handleSubmit, onChangePassword, password, setConfirmPassword, setCurrentPassword, setErrorMessage, setOnChangePassword, setPassword } = useSettings()
 
   return (
-    <div className="settings-container min-h-screen p-6" style={{ background: '#008058' }}>
+    <div className="settings-container min-h-screen p-6" style={{ background: '#0b453a' }}>
       <div className="max-w-md mx-auto">
         {isAuthLoading ? (
           <Loading loadingMessage={isAuthLoading} />
