@@ -51,8 +51,8 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
   const activePercentage = safeTotal > 0 ? Math.round((activeStudents / safeTotal) * 100) : 0;
   const growthRate = safeTotal > 0 ? Math.round((safeNewMonth / safeTotal) * 100) : 0;
 
-  // const dashboardStatsCardsClassses = "bg-[#ffffffa6] text-white hover:bg-[#ffffff91] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
-  const dashboardStatsCardsClassses = "bg-[#06302b94] text-white border-1 border-[#ffffff12] hover:bg-[#06302b] rounded-lg p-6 shadow-xl hover:shadow-md transition-shadow";
+  // const dashboardStatsCardsClassses = "bg-[#ffffffa6#06302b94] #06302b63 text-white hover:bg-[#ffffff91] rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow";
+  const dashboardStatsCardsClassses = "bg-[#03624c] text-white border-1 border-[#ffffff12] hover:bg-[#06302b] rounded-lg p-6 shadow-xl hover:shadow-md transition-shadow";
 
 
   return (
