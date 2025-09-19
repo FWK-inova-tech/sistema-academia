@@ -21,8 +21,8 @@ export const PerimetriaItem = ({ item, handleUpdateMedida }: perimetriaItemProps
 
   return (
     <div className="flex flex-col space-y-2">
-      <label 
-        htmlFor={formatNameForId(item.nome)} 
+      <label
+        htmlFor={formatNameForId(item.nome)}
         className="text-sm font-semibold text-gray-700 flex items-center gap-2"
       >
         <span className="text-green-600">📐</span>
@@ -37,10 +37,10 @@ export const PerimetriaItem = ({ item, handleUpdateMedida }: perimetriaItemProps
           id={formatNameForId(item.nome)}
           placeholder='0.0'
           value={value}
-          onChange={(e) => handleInputChange(e.target.value)} 
+          onChange={(e) => handleInputChange(e.target.value)}
         />
-        <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 font-medium">
-          cm
+        <span className="absolute right-10 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 font-medium">
+          {item.nome === 'peso' || item.nome === 'Peso' ? 'kg' : 'cm'}
         </span>
       </div>
     </div>
