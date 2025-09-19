@@ -137,6 +137,20 @@ export const deleteAluno = async (id: string) => {
 
 }
 
+export const importAlunos = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const { data } = await axios.post(`${backendUrl}/alunos/import`, formData, {
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+
+  return data;
+}
+
 export const changePassword = async (newPassword: string, oldPassword: string) => {
   const { data } = await axios.put<{ message: string; updatedStatus: number }>(`${backendUrl}/auth/change-password`, { newPassword, oldPassword }, {
     headers: {
