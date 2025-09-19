@@ -6,7 +6,7 @@ import { getAlunos } from "../../service/fetchAPI"
 import axios from "axios"
 import { logout } from "../../stores/authStore";
 import { useHomepage } from "../../hooks/useHomepage";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { Sidebar } from "../../components/Sidebar";
 import { SearchStudent } from "../../features/students/components/SearchStudent";
 import { StudentForm } from "../../features/studentForm/components/@StudentForm";
@@ -15,6 +15,8 @@ import { Settings } from "../../features/settings/components/Settings";
 import { Button } from "../../components/ui/Button/Button";
 import { Card } from "../../components/ui/Card/Card";
 import { DashboardStats } from "../../features/dashboard/components/DashboardStats";
+import { ImportAlunos } from "../../features/students/components/ImportAlunos";
+import { ImportResultModal } from "../../features/students/components/ImportResultModal";
 
 export const Homepage = () => {
   const navigate = useNavigate()
@@ -22,8 +24,28 @@ export const Homepage = () => {
   const students = useAppSelector((state) => state.students.studentsList)
   const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number, alunosAtivos: number } | null>(null)
   const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
+  const [openImport, setOpenImport] = useState(false)
+  const [importResult, setImportResult] = useState<any>(null)
   const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students, fetchData })
   const { handleCloseOpenEdit, handleCloseRegister, handleOpenRegister, handleSearch, handleOpenStudentsheet } = handlers
+
+  // Handlers para importação
+  const handleOpenImport = () => setOpenImport(true)
+  const handleCloseImport = () => setOpenImport(false)
+  
+  const handleImportComplete = (result: any) => {
+    setImportResult(result)
+    setOpenImport(false)
+    // Recarregar lista de alunos após importação
+    fetchData()
+    
+    // Mostrar toast de sucesso
+    if (result.resumo.alunosImportados > 0) {
+      toast.success(`${result.resumo.alunosImportados} aluno(s) importado(s) com sucesso!`)
+    }
+  }
+  
+  const handleCloseImportResult = () => setImportResult(null)
 
   useEffect(() => {
     dispatch(setLoading("Carregando lista de alunos"))
@@ -173,24 +195,46 @@ export const Homepage = () => {
                           <div className="flex-1 lg:flex-none lg:min-w-[300px]">
                             <SearchStudent handleSearch={handleSearch} />
                           </div>
-                          <button
-                            onClick={handleOpenRegister}
-                            className="group relative bg-[#006043] text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
-                          >
-                            <svg
-                              width="18"
-                              height="18"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
+                          <div className="flex gap-2">
+                            <button
+                              onClick={handleOpenImport}
+                              className="group relative bg-blue-600 text-white font-medium h-12 px-4 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+                              title="Importar alunos por planilha"
                             >
-                              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                              <circle cx="9" cy="7" r="4"></circle>
-                              <path d="M19 8l5 5m0 0l-5 5m5-5H14"></path>
-                            </svg>
-                            <span>Novo Aluno</span>
-                          </button>
+                              <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
+                                <polyline points="14,2 14,8 20,8"></polyline>
+                                <path d="M12 11l-4 4 4 4"></path>
+                                <path d="M8 15h8"></path>
+                              </svg>
+                              <span className="hidden sm:inline">Importar</span>
+                            </button>
+                            <button
+                              onClick={handleOpenRegister}
+                              className="group relative bg-[#006043] text-white font-medium h-12 px-6 rounded-xl shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2 min-w-[140px]"
+                            >
+                              <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              >
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M19 8l5 5m0 0l-5 5m5-5H14"></path>
+                              </svg>
+                              <span>Novo Aluno</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -224,6 +268,21 @@ export const Homepage = () => {
           </>
         )}
       </main>
+
+      {/* Modais de Importação */}
+      {openImport && (
+        <ImportAlunos
+          onImportComplete={handleImportComplete}
+          onClose={handleCloseImport}
+        />
+      )}
+
+      {importResult && (
+        <ImportResultModal
+          result={importResult}
+          onClose={handleCloseImportResult}
+        />
+      )}
     </div>
 
   )

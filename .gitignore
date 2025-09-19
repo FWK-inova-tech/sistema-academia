@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 **/*.env
+
+# Upload directories
+backend/uploads/
+uploads/

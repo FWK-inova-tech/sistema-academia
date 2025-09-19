@@ -2,6 +2,8 @@
 import { Request, Response } from "express";
 import Aluno, { IAluno } from "../models/Aluno";
 import { AlunoListItemType } from "../types/AlunoType";
+import { processSpreadsheet } from "../utils/spreadsheetProcessor";
+import { generateTemplate } from "../utils/templateGenerator";
 
 // Criar um novo aluno
 export const createAluno = async (req: Request, res: Response): Promise<void> => {
@@ -85,5 +87,64 @@ export const deleteAluno = async (req: Request, res: Response): Promise<void> =>
     res.status(200).json({ message: 'Aluno excluído com sucesso' });
   } catch (err: any) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+export const importAlunos = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.file) {
+      res.status(400).json({ message: 'Nenhum arquivo foi enviado' });
+      return;
+    }
+
+    // Processar planilha
+    const result = await processSpreadsheet(req.file.path);
+    
+    let alunosImportados = 0;
+    const errosImportacao: any[] = [];
+
+    // Importar alunos válidos
+    for (const alunoData of result.dadosValidos) {
+      try {
+        const novoAluno = new Aluno(alunoData);
+        await novoAluno.save();
+        alunosImportados++;
+      } catch (error: any) {
+        errosImportacao.push({
+          aluno: alunoData.nome,
+          erro: error.message
+        });
+      }
+    }
+
+    // Resposta com resumo da importação
+    res.status(200).json({
+      message: 'Importação concluída',
+      resumo: {
+        totalLinhas: result.totalLinhas,
+        linhasProcessadas: result.linhasProcessadas,
+        alunosImportados,
+        erros: result.erros.length,
+        errosValidacao: result.erros,
+        errosImportacao
+      }
+    });
+
+  } catch (error: any) {
+    res.status(500).json({ 
+      message: 'Erro durante a importação',
+      erro: error.message 
+    });
+  }
+};
+
+export const downloadTemplate = async (_req: Request, res: Response): Promise<void> => {
+  try {
+    generateTemplate(res);
+  } catch (error: any) {
+    res.status(500).json({ 
+      message: 'Erro ao gerar template',
+      erro: error.message 
+    });
   }
 };
