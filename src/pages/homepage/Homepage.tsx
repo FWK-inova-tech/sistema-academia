@@ -32,19 +32,19 @@ export const Homepage = () => {
   // Handlers para importação
   const handleOpenImport = () => setOpenImport(true)
   const handleCloseImport = () => setOpenImport(false)
-  
+
   const handleImportComplete = (result: any) => {
     setImportResult(result)
     setOpenImport(false)
     // Recarregar lista de alunos após importação
     fetchData()
-    
+
     // Mostrar toast de sucesso
     if (result.resumo.alunosImportados > 0) {
       toast.success(`${result.resumo.alunosImportados} aluno(s) importado(s) com sucesso!`)
     }
   }
-  
+
   const handleCloseImportResult = () => setImportResult(null)
 
   useEffect(() => {
@@ -84,14 +84,18 @@ export const Homepage = () => {
   return (
     <div className="flex h-full min-h-fit bg-[#006043] flex-col md:flex-row">
       <ToastContainer />
-      <Sidebar
-        current={current}
-        openAlunos={() => setCurrent('students')}
-        openConfig={() => setCurrent('settings')}
-      />
+      {!importResult && !openImport && (
+
+        <Sidebar
+          current={current}
+          openAlunos={() => setCurrent('students')}
+          openConfig={() => setCurrent('settings')}
+        />
+      )}
+
 
       <main className="flex-1 flex flex-col bg-gray-50 min-h-screen h-fit">
-        {apiError && (
+        {apiError && !openImport && !importResult && (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">
               <h2 className="text-xl font-semibold text-red-600 mb-2">Erro</h2>
@@ -108,7 +112,7 @@ export const Homepage = () => {
           </div>
         )}
 
-        {!apiError && (
+        {!apiError && !openImport && !importResult && (
           <>
             {current === 'students' && (
               <div className="min-h-screen">
@@ -249,7 +253,7 @@ export const Homepage = () => {
               </div>
             )}
 
-            {current !== 'settings' && current !== 'students' && (
+            {current !== 'settings' && current !== 'students' && !openImport && !importResult && (
               <div className="p-6">
                 {openRegister ? (
                   <StudentForm closeForm={handleCloseRegister} />

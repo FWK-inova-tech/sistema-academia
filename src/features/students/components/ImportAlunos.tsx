@@ -57,7 +57,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
-    
+
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
       handleFileSelect(files[0]);
@@ -88,7 +88,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
     }
 
     setIsUploading(true);
-    
+
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
@@ -132,7 +132,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
 
       // Criar blob do arquivo
       const blob = await response.blob();
-      
+
       // Criar link de download
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
@@ -149,7 +149,7 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div className="w-full bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-gray-900">Importar Alunos</h2>
@@ -171,13 +171,12 @@ export const ImportAlunos: React.FC<ImportAlunosProps> = ({ onImportComplete, on
           <>
             {/* Área de upload */}
             <div
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                dragOver
-                  ? 'border-blue-400 bg-blue-50'
-                  : selectedFile
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragOver
+                ? 'border-blue-400 bg-blue-50'
+                : selectedFile
                   ? 'border-green-400 bg-green-50'
                   : 'border-gray-300 hover:border-gray-400'
-              }`}
+                }`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}

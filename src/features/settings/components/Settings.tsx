@@ -7,7 +7,6 @@ import { useSettings } from "../hooks/useSettings"
 
 export const Settings = () => {
   const isAuthLoading = useAppSelector((state) => state.auth.loading)
-  const email = useAppSelector((state) => state.auth.email)
   const { confirmPassword, currentPassword, errorMessage, handleLogout, handleSubmit, onChangePassword, password, setConfirmPassword, setCurrentPassword, setErrorMessage, setOnChangePassword, setPassword } = useSettings()
 
   return (
@@ -90,7 +89,7 @@ export const Settings = () => {
                 <div className="space-y-2">
                   <label className='text-sm font-medium text-gray-700'>Email:</label>
                   <div className='p-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900'>
-                    {email}
+                    {'sistema.academia.dev@gmail.com'}
                   </div>
                 </div>
 
