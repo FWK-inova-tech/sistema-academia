@@ -23,7 +23,6 @@ export const Homepage = () => {
   const dispatch = useAppDispatch()
   const students = useAppSelector((state) => state.students.studentsList)
   const [dashboardStats, setDashboardStats] = useState<{ total: number; novosMes: number, alunosAtivos: number } | null>(null)
-  const [lastUpdate, setLastUpdate] = useState<Date>(new Date())
   const [openImport, setOpenImport] = useState(false)
   const [importResult, setImportResult] = useState<any>(null)
   const { handlers, onSearch, apiError, current, currentStudentsList, openRegister, setApiError, setCurrent, setCurrentStudentsList } = useHomepage({ students, fetchData })
@@ -68,7 +67,6 @@ export const Homepage = () => {
       const { alunos, stats } = await getAlunos()
       dispatch(setAlunos(alunos))
       setDashboardStats(stats)
-      setLastUpdate(new Date())
       dispatch(setLoading(false))
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Erro na requisição para buscar a lista de alunos"
@@ -126,19 +124,6 @@ export const Homepage = () => {
                   </div>
 
                   <div className="relative z-10 max-w-none">
-                    <div className="mb-6">
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="text-white text-sm font-normal flex items-center gap-2">
-                          <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                          <span>Atualização automática</span>
-                          {lastUpdate && (
-                            <span className="text-xs opacity-75">
-                              {lastUpdate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
 
                     <DashboardStats
                       totalStudents={dashboardStats ? dashboardStats.total : students.length}
