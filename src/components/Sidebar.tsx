@@ -110,63 +110,8 @@ flex items-center justify-center md:justify-between gap-4 min-w-fit w-5/12 md:w-
         </button>
       </nav>
 
-      {/* Footer */}
-      <div className="mt-auto px-6 pb-8 max-md:px-4 max-md:pb-4">
-        <div
-          className="
-        flex items-center gap-3 px-4 py-4 rounded-xl text-white text-sm
-        bg-white/10 backdrop-blur-md
-      "
-        >
-          <div
-            className="hidden sm:flex
-          w-2 h-2 rounded-full bg-emerald-400
-          animate-pulse
-        "
-          ></div>
-          <span>Sistema Online</span>
-        </div>
-      </div>
     </aside>
 
   )
 
-  return (
-    <aside className='sidebar sidebar-original'>
-      <div className="sidebar-header">
-        <div className="sidebar-logo">
-          <img className="sidebar-logo-icon" src={Logo} alt="Academia Pro" />
-        </div>
-      </div>
-
-      <nav className="sidebar-nav">
-        <button
-          type="button"
-          onClick={openAlunos}
-          className={`sidebar-button ${current !== "settings" ? 'sidebar-button--active' : ''}`}
-          disabled={Boolean(isStudentsLoading || isAuthLoading || current !== 'settings')}
-        >
-          <UsersIcon />
-          <span>Alunos</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={openConfig}
-          className={`sidebar-button ${current === "settings" ? 'sidebar-button--active' : ''}`}
-          disabled={Boolean(isStudentsLoading || isAuthLoading || current === 'settings')}
-        >
-          <SettingsIcon />
-          <span>Configurações</span>
-        </button>
-      </nav>
-
-      <div className="sidebar-footer">
-        <div className="sidebar-status">
-          <div className="sidebar-status-dot"></div>
-          <span>Sistema Online</span>
-        </div>
-      </div>
-    </aside>
-  )
 }
