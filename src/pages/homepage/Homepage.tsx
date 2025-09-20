@@ -92,7 +92,7 @@ export const Homepage = () => {
       )}
 
 
-      <main className="flex-1 flex flex-col bg-gray-50 min-h-screen h-fit">
+      <main className={`flex-1 flex flex-col min-h-screen h-fit ${openRegister ? 'bg-[#0b453a]' : 'bg-gray-50'}`}>
         {apiError && !openImport && !importResult && (
           <div className="p-6">
             <Card className="text-center shadow-lg border-0">
@@ -239,7 +239,7 @@ export const Homepage = () => {
             )}
 
             {current !== 'settings' && current !== 'students' && !openImport && !importResult && (
-              <div className="p-6">
+              <div className={openRegister ? "" : "p-6"}>
                 {openRegister ? (
                   <StudentForm closeForm={handleCloseRegister} />
                 ) : (

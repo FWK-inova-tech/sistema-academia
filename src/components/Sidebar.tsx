@@ -34,13 +34,13 @@ export const Sidebar = ({ openAlunos, openConfig, current }: sidebarProps) => {
     bg-[#06302b] w-screen md:w-[280px] lg:w-[300px] md:min-h-full md:h-full
      flex flex-col 
     md:flex-col
+    border-r border-green-800/50
   "
     >
       {/* Header */}
       <div
         className="
       hidden md:flex justify-center items-center shrink-0 text-center
-      border-b border-white/20
       px-6 pt-8 pb-6
       
     "
