@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/', auth, createAluno);
 router.get('/', auth, getAlunos);
-router.get('/template/download', auth, downloadTemplate);
+router.get('/template', auth, downloadTemplate);
 router.post('/import', auth, upload.single('file'), importAlunos);
 router.get('/:id', auth, getAlunoById);
 router.put('/:id', auth,  updateAluno);

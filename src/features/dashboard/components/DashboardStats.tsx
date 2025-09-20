@@ -125,30 +125,30 @@ export const DashboardStats = ({ totalStudents, newThisMonth, activeStudents }: 
         </div>
       </div>
 
-      {/* Card de Progresso - novo visual */}
-      <div className="bg-[#fffffff2] bg-[#ffffffa6 rounded-xl p-7 shadow-xl mt-4 backdrop-blur-sm">
+      {/* Card de Progresso - visual consistente com os cards principais */}
+      <div className="rounded-xl p-7 shadow-xl border border-white/10 bg-[#03624c] text-white">
         <div className="flex items-center gap-5 mb-5">
-          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-blue-100/60 shadow">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth="2">
+          <div className="w-14 h-14 flex items-center justify-center rounded-full bg-white/10 border border-white/20 shadow-sm">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8ff2c8" strokeWidth="2.5">
               <path d="M9 12l2 2 4-4"></path>
               <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9s4.03-9 9-9c1.51 0 2.93 0.37 4.18 1.03"></path>
             </svg>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-gray-900 tracking-tight">Progresso da Academia</h3>
-            <span className="text-xs font-medium text-gray-900">Taxa de Retenção</span>
+            <h3 className="text-xl font-bold tracking-tight">Progresso da Academia</h3>
+            <span className="text-xs font-medium text-white/80">Taxa de Retenção</span>
           </div>
-          <div className="ml-auto text-xl font-bold text-gray-700 drop-shadow-sm">{activePercentage}%</div>
+          <div className="ml-auto text-xl font-bold text-white drop-shadow-sm">{activePercentage}%</div>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-3 mb-3">
+        <div className="w-full bg-white/10 rounded-full h-3 mb-3 shadow-inner">
           <div
-            className="h-3 bg-[#008058] rounded-full transition-all duration-1000 shadow"
-            style={{ width: `${Math.min(100, activePercentage)}%` }}
+            className="h-3 rounded-full transition-all duration-1000 shadow-sm"
+            style={{ width: `${Math.min(100, activePercentage)}%`, backgroundColor: '#8ff2c8' }}
           ></div>
         </div>
-        <div className="flex justify-between text-sm text-gray-700 font-medium mt-2">
-          <span><span className="font-bold text-[#008058]">{animatedValues.active}</span> ativos</span>
-          <span><span className="font-bold text-[#008058]">{inactiveStudents}</span> inativos</span>
+        <div className="flex justify-between text-sm font-medium mt-3">
+          <span><span className="font-bold text-white">{animatedValues.active}</span> ativos</span>
+          <span><span className="font-bold text-white/80">{inactiveStudents}</span> inativos</span>
         </div>
       </div>
     </div>
