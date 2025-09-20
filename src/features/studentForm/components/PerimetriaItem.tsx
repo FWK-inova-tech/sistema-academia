@@ -25,12 +25,12 @@ export const PerimetriaItem = ({ item, handleUpdateMedida }: perimetriaItemProps
         htmlFor={formatNameForId(item.nome)}
         className="text-sm font-semibold text-gray-700 flex items-center gap-2"
       >
-        <span className="text-green-600">📐</span>
+        <span className="text-[var(--color-primary-600)]">📐</span>
         {item.nome}
       </label>
       <div className="relative">
         <input
-          className='w-full px-3 py-2 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 text-center font-medium'
+          className='w-full px-3 py-2 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200 text-center font-medium'
           type="number"
           step="0.1"
           min="0"

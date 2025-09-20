@@ -40,19 +40,14 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
 
 
   return (
-    <div className='perimetria bg-white p-8 rounded-lg shadow-lg border-2 border-gray-200'>
-      <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-900 border-l-4 border-[#4CAF50] pl-4">
-          📏 Medidas Corporais
-        </h3>
-      </div>
-
-      <div className='perimetria-date mb-6'>
-        <label htmlFor="perimetria-date" className="block text-sm font-semibold text-gray-700 mb-2">
-          📅 Data da Avaliação
+    <div className='space-y-6'>
+      <div className='perimetria-date'>
+        <label htmlFor="perimetria-date" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+          <span className="text-[var(--color-primary-600)]">📅</span>
+          Data da Avaliação
         </label>
         <input
-          className='w-full max-w-xs px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-[#4CAF50] focus:ring-2 focus:ring-[#4CAF50] focus:ring-opacity-20 transition-all duration-200 bg-white outline-none'
+          className='w-full max-w-xs px-4 py-3 border border-gray-300 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200 bg-white outline-none'
           type='date'
           id="perimetria-date"
           value={date}
@@ -61,7 +56,7 @@ export const Perimetria = ({ editingPerimetria, erroMsg, setPerimetria, resetErr
 
       <div className='perimetria-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
         {editingPerimetria.medidas.map(item =>
-          <div key={item.nome} className="bg-gray-50 border-2 border-gray-200 rounded-lg p-4 hover:border-[#4CAF50] hover:shadow-md transition-all duration-200">
+          <div key={item.nome} className="bg-gray-50 border border-gray-200 rounded-lg p-4 hover:border-[var(--color-primary-300)] hover:shadow-sm transition-all duration-200">
             <PerimetriaItem
               item={item}
               handleUpdateMedida={handleUpdatePerimetriaMedidas} />

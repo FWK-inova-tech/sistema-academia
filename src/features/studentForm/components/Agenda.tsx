@@ -26,23 +26,15 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
   }
 
   return (
-    <div className="agenda bg-white p-6 rounded-lg border border-gray-200">
-      <div className="mb-6">
-        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-          <span className="text-2xl">📅</span>
-          Agenda Semanal
-        </h3>
-        <p className="text-sm text-gray-600 mt-1">Selecione os dias da semana para treino</p>
-      </div>
-      
+    <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
         {days.map((day) => (
           <label 
             key={day} 
-            className={`cursor-pointer p-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-2 text-sm font-medium ${
+            className={`cursor-pointer p-3 rounded-lg border transition-all duration-200 flex items-center justify-center gap-2 text-sm font-medium ${
               checkValue(day) 
-                ? 'bg-green-500 border-green-500 text-white shadow-sm' 
-                : 'bg-gray-50 border-gray-200 text-gray-700 hover:border-green-300 hover:bg-green-50'
+                ? 'bg-[var(--color-primary-500)] border-[var(--color-primary-500)] text-white shadow-sm' 
+                : 'bg-gray-50 border-gray-300 text-gray-700 hover:border-[var(--color-primary-300)] hover:bg-[var(--color-primary-50)]'
             }`}
           >
             <input
@@ -57,7 +49,7 @@ export const Agenda = ({ editingAgenda, erroMsg, setAgenda, resetError }: agenda
                 ? 'bg-white border-white' 
                 : 'bg-white border-gray-400'
             }`}>
-              {checkValue(day) && <span className="text-[#4CAF50] text-sm font-bold">✓</span>}
+              {checkValue(day) && <span className="text-[var(--color-primary-600)] text-sm font-bold">✓</span>}
             </div>
             <span className="font-medium">{day}</span>
           </label>

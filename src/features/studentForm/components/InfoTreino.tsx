@@ -58,19 +58,11 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
     }
   }
   return (
-    <div className="info-treino bg-white p-6 rounded-lg border border-gray-200">
-      <div className="mb-6">
-        <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-          <span className="text-2xl">💪</span>
-          Informações para Treino
-        </h3>
-        <p className="text-sm text-gray-600 mt-1">Dados técnicos e objetivos do aluno</p>
-      </div>
-
-      {/* Nível Selection */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <label htmlFor='level' className='block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2'>
-          <span className="text-green-600">⭐</span>
+    <div className="space-y-6">
+      {/* Nível de Treinamento */}
+      <div className="space-y-2">
+        <label htmlFor='level' className='block text-sm font-semibold text-gray-700 flex items-center gap-2'>
+          <span className="text-[var(--color-primary-600)]">⭐</span>
           Nível de Treinamento
         </label>
         <select 
@@ -78,7 +70,7 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
           required
           value={editingInfoTreino.nivel}
           onChange={handleLevelChange}
-          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 font-medium"
+          className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200 font-medium"
         >
           <option value='Iniciante'>🌱 Iniciante</option>
           <option value='Intermediário'>💪 Intermediário</option>
@@ -87,14 +79,14 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       </div>
 
       {/* Datas e Professor */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <label htmlFor="teacher" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <span className="text-green-600">👨‍🏫</span>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="space-y-2">
+          <label htmlFor="teacher" className="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <span className="text-[var(--color-primary-600)]">👨‍🏫</span>
             Professor(a)
           </label>
           <input
-            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200"
             id="teacher"
             type="text"
             maxLength={150}
@@ -105,13 +97,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
           />
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <span className="text-green-600">📅</span>
+        <div className="space-y-2">
+          <label htmlFor="start-date" className="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <span className="text-[var(--color-primary-600)]">📅</span>
             Data de Início
           </label>
           <input
-            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200"
             id="start-date"
             type="date"
             value={startDate}
@@ -119,13 +111,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
           />
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <label htmlFor="review-date" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-            <span className="text-green-600">🔄</span>
+        <div className="space-y-2">
+          <label htmlFor="review-date" className="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <span className="text-[var(--color-primary-600)]">🔄</span>
             Data de Revisão
           </label>
           <input
-            className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
+            className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200"
             id="review-date"
             type="date"
             value={reviewDate}
@@ -135,13 +127,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       </div>
 
       {/* Objetivo */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <label htmlFor="goal" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-          <span className="text-green-600">🎯</span>
+      <div className="space-y-2">
+        <label htmlFor="goal" className="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <span className="text-[var(--color-primary-600)]">🎯</span>
           Objetivo do Treino
         </label>
         <input
-          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200"
+          className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200"
           id="goal"
           type="text"
           maxLength={500}
@@ -153,13 +145,13 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       </div>
 
       {/* Anamnese */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <label htmlFor="anaminese" className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-          <span className="text-green-600">📋</span>
+      <div className="space-y-2">
+        <label htmlFor="anaminese" className="block text-sm font-semibold text-gray-700 flex items-center gap-2">
+          <span className="text-[var(--color-primary-600)]">📋</span>
           Anamnese
         </label>
         <textarea
-          className="w-full px-4 py-3 bg-white border-2 border-gray-200 text-gray-800 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-200 resize-none"
+          className="w-full px-4 py-3 bg-white border border-gray-300 text-gray-800 rounded-lg focus:border-[var(--color-primary-500)] focus:ring-2 focus:ring-[var(--color-primary-100)] transition-all duration-200 resize-none"
           id="anaminese"
           rows={4}
           maxLength={500}
@@ -174,7 +166,7 @@ export const InfoTreino = ({ editingInfoTreino, updateInfo, erroMsg }: infoTrein
       </div>
 
       {erroMsg && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg mt-4">
           <div className="flex items-center">
             <span className="text-red-400 mr-2">⚠️</span>
             <p className="text-red-700 font-medium">{erroMsg}</p>

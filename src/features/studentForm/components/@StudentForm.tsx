@@ -42,8 +42,8 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
         }
         className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
           isOpen 
-            ? 'bg-green-100 text-green-700 hover:bg-green-200 border border-green-300' 
-            : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm'
+            ? 'bg-[var(--color-primary-100)] text-[var(--color-primary-700)] hover:bg-[var(--color-primary-200)] border border-[var(--color-primary-300)]' 
+            : 'bg-white/90 text-gray-700 hover:bg-white border border-gray-300 shadow-sm backdrop-blur-sm'
         }`}
       >
         <svg 
@@ -134,21 +134,21 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
-      {/* Header fixo */}
-      <div className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-10">
+    <div className="min-h-screen bg-[#0b453a]">
+      {/* Header/Navbar fixo */}
+      <div className="bg-[#06302b] shadow-lg border-b border-green-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg">
+              <div className="w-12 h-12 bg-[var(--color-primary-700)] rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">
                 {currentStudentSheet ? '✏️' : '➕'}
               </div>
               <div>
-                <h1 className='text-2xl font-bold text-gray-800'>
+                <h1 className='text-2xl font-bold text-white'>
                   {currentStudentSheet ? 'Editando aluno' : 'Novo cadastro'}
                 </h1>
                 {currentStudentSheet && (
-                  <p className="text-gray-600 font-medium">{currentStudentSheet.student.nome}</p>
+                  <p className="text-green-200 font-medium">{currentStudentSheet.student.nome}</p>
                 )}
               </div>
             </div>
@@ -157,7 +157,7 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
               <button 
                 type="button" 
                 onClick={closeForm}
-                className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-all duration-200 font-medium"
+                className="flex items-center gap-2 px-4 py-2 text-green-200 hover:text-white hover:bg-green-800 rounded-lg transition-all duration-200 font-medium"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -170,80 +170,84 @@ export const StudentForm = ({ closeForm, currentStudentSheet }: studentFormProps
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="max-w-7xl mx-auto p-6">
-        {/* Progress indicator */}
-        <div className="mb-8">
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>Progresso do cadastro</span>
-              <span>{activeSections.length} de {sectionElements.length} seções abertas</span>
+      {/* Container principal com padding e máxima largura */}
+      <div className="max-w-6xl mx-auto p-6">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Progress indicator */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-green-700/30 p-6 shadow-lg">
+            <div className="flex items-center justify-between text-sm text-green-100 mb-3">
+              <span className="font-medium">Progresso do cadastro</span>
+              <span className="text-green-200">{activeSections.length} de {sectionElements.length} seções abertas</span>
             </div>
-            <div className="mt-2 bg-gray-200 rounded-full h-2">
+            <div className="bg-green-900/50 rounded-full h-3 border border-green-700/50">
               <div 
-                className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-[var(--color-primary-500)] to-[var(--color-primary-400)] h-full rounded-full transition-all duration-500 shadow-sm"
                 style={{ width: `${(activeSections.length / sectionElements.length) * 100}%` }}
               ></div>
             </div>
           </div>
-        </div>
-        
-        {/* Sections em layout vertical */}
-        <div className="grid grid-cols-1 gap-6 mb-8">
-          {sectionElements.map(section => (
-            <div 
-              key={section.name} 
-              className={`bg-white rounded-xl shadow-lg border-2 transition-all duration-300 hover:shadow-xl ${
-                sectionErrors[section.name as sectionType] 
-                  ? 'border-red-300 shadow-red-100' 
-                  : activeSections.includes(section.name as sectionType)
-                    ? 'border-green-300 shadow-green-100'
-                    : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#008058] rounded-xl flex items-center justify-center text-white text-xl shadow-md">
-                    {section.icon}
+          
+          {/* Sections organizadas em layout limpo */}
+          <div className="space-y-6">
+            {sectionElements.map(section => (
+              <div 
+                key={section.name} 
+                className={`bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border transition-all duration-300 overflow-hidden ${
+                  sectionErrors[section.name as sectionType] 
+                    ? 'border-red-400 shadow-red-200/50 bg-red-50/95' 
+                    : activeSections.includes(section.name as sectionType)
+                      ? 'border-[var(--color-primary-400)] shadow-green-200/30 bg-white/98'
+                      : 'border-green-200/50 hover:border-green-300/70 hover:shadow-xl'
+                }`}
+              >
+                {/* Header da seção */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-100/80 bg-gradient-to-r from-gray-50/80 to-white/90">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-[var(--color-primary-700)] rounded-xl flex items-center justify-center text-white text-xl shadow-md">
+                      {section.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800">
+                        {section.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-1 font-medium">
+                        {section.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800">
-                      {section.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-1 font-medium">
-                      {section.description}
-                    </p>
-                  </div>
+                  <SectionButton name={section.name as sectionType} />
                 </div>
-                <SectionButton name={section.name as sectionType} />
+                
+                {/* Conteúdo da seção */}
+                {activeSections.includes(section.name as sectionType) && (
+                  <div className="p-6 bg-white/98">
+                    {section.element}
+                  </div>
+                )}
               </div>
-              
-              {activeSections.includes(section.name as sectionType) && (
-                <div className="p-6 bg-gray-50 rounded-b-xl">
-                  {section.element}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-white border-t border-gray-200 sticky bottom-0 py-4 shadow-lg">
-          <div className="flex justify-center gap-4">
-            <button 
-              type="button" 
-              onClick={closeForm}
-              className="px-8 py-3 text-gray-600 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
-            >
-              Cancelar
-            </button>
-            <button 
-              type="submit" 
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 px-12 py-3 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
-            >
-              {currentStudentSheet ? 'Atualizar Aluno' : 'Cadastrar Aluno'}
-            </button>
+            ))}
           </div>
-        </div>
-      </form>
+
+          {/* Rodapé com ações fixo */}
+          <div className="bg-[#06302b]/95 backdrop-blur-sm border-t border-green-700/50 sticky bottom-0 py-6 mt-8 rounded-t-xl shadow-2xl">
+            <div className="flex justify-center gap-6">
+              <button 
+                type="button" 
+                onClick={closeForm}
+                className="px-8 py-3 text-green-200 bg-green-800/50 hover:bg-green-700/70 border border-green-600/50 rounded-lg font-medium transition-all duration-200 hover:shadow-lg backdrop-blur-sm"
+              >
+                Cancelar
+              </button>
+              <button 
+                type="submit" 
+                className="bg-[var(--color-primary-600)] hover:bg-[var(--color-primary-700)] px-12 py-3 text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200"
+              >
+                {currentStudentSheet ? 'Atualizar Aluno' : 'Cadastrar Aluno'}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
